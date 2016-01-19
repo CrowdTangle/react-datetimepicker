@@ -1,0 +1,165 @@
+.datepicker-wrapper {
+  display: flex; }
+
+.datepicker {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 13px;
+  width: 260px;
+  box-sizing: border-box;
+  background: #f7f7f7;
+  margin-top: 10px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  padding-bottom: 0px;
+  overflow: hidden; }
+  .datepicker.time-enabled {
+    padding-bottom: 20px; }
+  .datepicker h3 {
+    text-align: center;
+    height: 35px;
+    align-items: center;
+    font-size: 16px;
+    background: steelblue;
+    padding: 10px 0px;
+    margin-top: 0px;
+    color: white;
+    display: flex;
+    justify-content: space-between; }
+
+.datepicker-container input {
+  border: 0px;
+  margin-left: 5px; }
+
+.datepicker-container i.fa-calendar {
+  color: #666;
+  font-size: 12px; }
+
+.datepicker-timepicker {
+  text-align: center;
+  box-sizing: border-box;
+  color: steelblue;
+  border-top: 1px solid #eaeaea;
+  transition: all .2s;
+  cursor: pointer;
+  position: absolute;
+  bottom: -55px;
+  width: 100%;
+  height: 80px; }
+  .datepicker-timepicker:hover {
+    background: #eaeaea; }
+  .datepicker-timepicker .datepicker-timepicker-header {
+    text-align: center;
+    color: steelblue;
+    padding: 5px;
+    box-sizing: border-box;
+    height: 25px; }
+  .datepicker-timepicker.visible {
+    background: white;
+    bottom: 0px; }
+    .datepicker-timepicker.visible .datepicker-timepicker-header {
+      color: white;
+      animation: blue-pulse 5s infinite; }
+      .datepicker-timepicker.visible .datepicker-timepicker-header span {
+        line-height: 15px; }
+  .datepicker-timepicker .header-time {
+    display: inline-block;
+    margin-left: 5px; }
+  .datepicker-timepicker .timepicker-inputs {
+    display: flex;
+    align-items: center;
+    height: 55px;
+    font-size: 30px; }
+    .datepicker-timepicker .timepicker-inputs .input-row {
+      margin: auto;
+      width: 150px;
+      display: flex;
+      padding-left: 20px;
+      align-items: baseline; }
+    .datepicker-timepicker .timepicker-inputs input[type='number'] {
+      -moz-appearance: textfield; }
+    .datepicker-timepicker .timepicker-inputs .input-minutes {
+      width: 45px;
+      margin-right: 5px; }
+    .datepicker-timepicker .timepicker-inputs .input-hours {
+      width: 35px; }
+    .datepicker-timepicker .timepicker-inputs input::-webkit-outer-spin-button,
+    .datepicker-timepicker .timepicker-inputs input::-webkit-inner-spin-button {
+      -webkit-appearance: none; }
+    .datepicker-timepicker .timepicker-inputs input, .datepicker-timepicker .timepicker-inputs select {
+      border: 0px;
+      font-size: 35px;
+      background: none;
+      text-align: right;
+      color: steelblue;
+      -webkit-appearance: none;
+      -moz-appearance: none; }
+      .datepicker-timepicker .timepicker-inputs input:focus, .datepicker-timepicker .timepicker-inputs select:focus {
+        outline: none; }
+    .datepicker-timepicker .timepicker-inputs select {
+      font-size: 20px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 30px; }
+
+.datepicker-day-headers {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  color: #666;
+  padding-bottom: 10px; }
+  .datepicker-day-headers span {
+    text-align: center;
+    display: block;
+    width: 100%; }
+
+.month-switcher {
+  font-size: 20px;
+  cursor: pointer; }
+  .month-switcher.back {
+    padding-left: 20px; }
+  .month-switcher.forward {
+    padding-right: 20px; }
+
+.datepicker-divider {
+  text-align: center;
+  display: block;
+  width: 20px;
+  margin-right: 10px;
+  line-height: 15px; }
+
+.datepicker-weekrow {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  justify-content: space-between; }
+
+.day-block {
+  text-align: center;
+  color: steelblue;
+  opacity: .5;
+  width: 100%;
+  cursor: pointer;
+  height: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around; }
+  .day-block.in-month {
+    opacity: 1; }
+  .day-block.today {
+    font-weight: bold; }
+  .day-block.selected {
+    background: white;
+    border-radius: 50%;
+    color: black;
+    border: 1px solid steelblue; }
+  .day-block.disabled {
+    opacity: .3;
+    cursor: initial; }
+
+@keyframes blue-pulse {
+  0% {
+    background: steelblue; }
+  50% {
+    background: #33adff; }
+  100% {
+    background: steelblue; } }
