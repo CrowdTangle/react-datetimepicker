@@ -7,18 +7,19 @@ import moment from 'moment';
 class DatePicker extends React.Component {
 
     static propTypes = { 
-        IsRange: React.PropTypes.bool,
+        isRange: React.PropTypes.bool,
         minDate: React.PropTypes.instanceOf(moment),
         maxDate: React.PropTypes.instanceOf(moment),
         ignoreFontAwesome: React.PropTypes.bool,
         enableTime: React.PropTypes.bool,
         format: React.PropTypes.string,
+        inputWidth: React.PropTypes.number,
         onChange: React.PropTypes.func,
         defaultDate: React.PropTypes.instanceOf(moment) // TODO: validate that it's b/w dates
     };
 
     static defaultProps = {
-        IsRange: false,
+        isRange: false,
         minDate: moment(new Date(0)),
         maxDate: moment().add(20, "years"),
         ignoreFontAwesome: false,
@@ -35,6 +36,10 @@ class DatePicker extends React.Component {
             endDate: this.props.defaultDate ? moment(this.props.defaultDate).add(1, "months") : moment().add(1, "months")
         }
 
+        var toggleFunction = this.toggleDatepicker.bind(this, null);
+
+        this.naturalBinders = getBinders(toggleFunction);
+
         if(props.enableTime) {
             this.state.format = "MM/DD/YYYY h:mm a";
         } else {
@@ -43,6 +48,19 @@ class DatePicker extends React.Component {
 
         if(props.format) {
             this.state.format = this.props.format;
+        }
+    }
+
+    componentDidMount() {}
+
+
+    toggleGlobalClickBinding() {
+        var wrapper = ReactDOM.findDOMNode(this);
+
+        if(this.state.datepickerVisible) {
+            this.naturalBinders.bind();
+        } else {
+            this.naturalBinders.unbind();
         }
     }
 
@@ -79,10 +97,12 @@ class DatePicker extends React.Component {
 
     /**** handlers ****/
 
-    toggleDatepicker(type) {
+    toggleDatepicker(type, e) {
+        if(e) e.stopPropagation();
+
         this.setState({
             datepickerVisible: type
-        })
+        }, this.toggleGlobalClickBinding.bind(this));
     }
 
     handleDateSelection(type, date, options) {
@@ -116,7 +136,7 @@ class DatePicker extends React.Component {
     
         newState[type] = date;
         this.setState(newState, function() {
-            if(this.props.IsRange) {
+            if(this.props.isRange) {
                 this.props.onChange({
                     startDate: this.state.startDate.toDate(),
                     endDate: this.state.endDate.toDate()
@@ -126,6 +146,8 @@ class DatePicker extends React.Component {
                     date: this.state.startDate.toDate()
                 })
             }
+
+            this.toggleGlobalClickBinding();
         }.bind(this));
 
 
@@ -140,13 +162,21 @@ class DatePicker extends React.Component {
     }
 
     render() {
-        var endDateDatepicker = null, divider = null;
+        var endDateDatepicker = null, divider = null, styles = {};
 
-        if(this.props.IsRange) {
+        if(this.props.inputWidth) {
+            styles.width = this.props.inputWidth + "px";
+        } else if(this.props.enableTime) {
+            styles.width = "120px";
+        } else {
+            styles.width = "70px";
+        }
+
+        if(this.props.isRange) {
             endDateDatepicker = (
                 <div className="datepicker-container">
                     <i className="fa fa-calendar"></i>
-                    <input className="datepicker-input" readOnly={true} value={this.state.endDate.format(this.state.format)} type="text" onClick={this.toggleDatepicker.bind(this, "endDate")} />
+                    <input style={styles} className="datepicker-input" readOnly={true} value={this.state.endDate.format(this.state.format)} type="text" onClick={this.toggleDatepicker.bind(this, "endDate")} />
                     {this.renderDatepicker("endDate")}
                 </div> 
             );
@@ -154,10 +184,10 @@ class DatePicker extends React.Component {
         }
 
         var content = (
-            <div className="datepicker-wrapper">
+            <div onClick={stopBubble} className="datepicker-wrapper">
                 <div className="datepicker-container">
                     <i className="fa fa-calendar"></i>
-                    <input className="datepicker-input" readOnly={true} value={this.state.startDate.format(this.state.format)} type="text" onClick={this.toggleDatepicker.bind(this, "startDate")} />
+                    <input style={styles} className="datepicker-input" readOnly={true} value={this.state.startDate.format(this.state.format)} type="text" onClick={this.toggleDatepicker.bind(this, "startDate")} />
                     {this.renderDatepicker("startDate")}
                 </div>
                 {divider}
@@ -168,8 +198,27 @@ class DatePicker extends React.Component {
     }
 }
 
+function stopBubble(e) {
+    e.nativeEvent.stopImmediatePropagation();
+
+}
+
+function getBinders(callback) {
+    
+    return {
+        bind: function(){
+            document.addEventListener("click", callback, false);
+        },
+
+        unbind: function() {
+            document.removeEventListener("click", callback, false);
+        }
+    }   
+}
+
 function noop(data) {
    console.log("changing", data);
 }
+
 
 module.exports = DatePicker;

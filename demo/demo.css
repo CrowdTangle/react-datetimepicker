@@ -1,0 +1,71 @@
+body, html {
+    padding: 0px;
+    margin: 0px;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+#content {
+    margin-top: 70px;
+    margin-bottom: 70px;
+    padding: 0px 20px;
+}
+
+.header {
+    height: 250px;
+    background: green;
+    color: white;
+    padding-top: 80px;
+    background: #def;
+}
+
+.header h1 {
+    margin: 0px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    font-size: 4em;
+    line-height: 1em;
+    color: rgba(10,60,150, 0.8);
+    text-shadow: 1px 4px 6px #def, 0 0 0 #000, 1px 4px 6px #def;
+}
+
+.header p {
+    color: rgba(10,60,150, 0.8);
+    text-align: center;
+}
+
+.example {
+    max-width: 900px;
+    margin: auto;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 40px;
+}
+
+.example h3 {
+    margin-bottom: 5px;
+}
+
+.example p {
+    font-size: 13px;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    width: 80%;
+}
+
+pre {
+    font-family: monospace;
+    background: #f7f7f7;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.footer {
+    height: 200px;
+    background: rgba(10,60,150, 0.8);
+}
+
+/* Don't show shadows when selecting text */
+::-moz-selection { background: #5af; color: #fff; text-shadow: none; }
+::selection { background: #5af; color: #fff; text-shadow: none; }
