@@ -1,7 +1,7 @@
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="main.css">
-        <link rel="stylesheet" type="text/css" href="demo.css">
+        <link rel="stylesheet" type="text/css" href="demo/main.css">
+        <link rel="stylesheet" type="text/css" href="demo/demo.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -19,7 +19,7 @@
                 <p>Nothing special here...</p>
                 <div id="example-1"></div>
                 <pre><code>
-    var DatePicker = require("react-datepicker");         
+    var DatePicker = require("react-datetimepicker");         
 
     ReactDOM.render(&lt;DatePicker  /&gt;, document.getElementById("content"));
     </code></pre>    
@@ -29,7 +29,7 @@
                 <p>Setting isRange to true provides two connected pickers.</p>
                 <div id="example-2"></div>
                 <pre><code>
-    var DatePicker = require("react-datepicker");         
+    var DatePicker = require("react-datetimepicker");         
 
     ReactDOM.render(&lt;DatePicker isRange={true}  /&gt;, document.getElementById("content"));
     </code></pre>    
@@ -39,7 +39,7 @@
                 <p>Setting timeEnabled to true provides a timepicker at the bottom and reformats the output.</p>
                 <div id="example-3"></div>
                 <pre><code>
-    var DatePicker = require("react-datepicker");         
+    var DatePicker = require("react-datetimepicker");         
 
     ReactDOM.render(&lt;DatePicker enableTime={true}  /&gt;, document.getElementById("content"));
     </code></pre>    
@@ -49,7 +49,7 @@
                 <p>minDate and maxDate provide selection boundaries for both single and range pickers. defaultDate allows you to specify the starting date. Otherwise the datepickers will begin on today.</p>
                 <div id="example-4"></div>
                 <pre><code>
-    var DatePicker = require("react-datepicker");         
+    var DatePicker = require("react-datetimepicker");         
 
     ReactDOM.render(&lt;DatePicker defaultDate={moment("10/31/2015", "MM/DD/YYYY")} 
                         minDate={moment("10/21/2015", "MM/DD/YYYY")} 
@@ -58,6 +58,6 @@
             </section>
         </div>
         <div class="footer"></div>
-        <script type="text/javascript" src="/bundle.js"></script>
+        <script type="text/javascript" src="demo/bundle.js"></script>
     </body>
 </html>
