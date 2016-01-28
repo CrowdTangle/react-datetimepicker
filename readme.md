@@ -16,7 +16,7 @@ A simple and flexible datepicker for react. Has options for ranges and times.
     <Datepicker />
 ```
 
-See the [demo](crowdtangle.github.io/react-datetimepicker) for more examples.
+See the [demo](http://crowdtangle.github.io/react-datetimepicker/) for more examples.
 
 ## Contributing
 
