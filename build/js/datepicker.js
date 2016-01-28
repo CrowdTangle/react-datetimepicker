@@ -40,6 +40,10 @@ var DatePicker = function (_React$Component) {
             endDate: _this.props.defaultDate ? (0, _moment2.default)(_this.props.defaultDate).add(1, "months") : (0, _moment2.default)().add(1, "months")
         };
 
+        var toggleFunction = _this.toggleDatepicker.bind(_this, null);
+
+        _this.naturalBinders = getBinders(toggleFunction);
+
         if (props.enableTime) {
             _this.state.format = "MM/DD/YYYY h:mm a";
         } else {
@@ -50,13 +54,26 @@ var DatePicker = function (_React$Component) {
             _this.state.format = _this.props.format;
         }
         return _this;
-    }
-
-    /**** helpers ****/
-
-    // TODO: validate that it's b/w dates
+    } // TODO: validate that it's b/w dates
 
     _createClass(DatePicker, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {}
+    }, {
+        key: 'toggleGlobalClickBinding',
+        value: function toggleGlobalClickBinding() {
+            var wrapper = _reactDom2.default.findDOMNode(this);
+
+            if (this.state.datepickerVisible) {
+                this.naturalBinders.bind();
+            } else {
+                this.naturalBinders.unbind();
+            }
+        }
+
+        /**** helpers ****/
+
+    }, {
         key: 'getMinDateForType',
         value: function getMinDateForType(type) {
             if (type === "startDate") {
@@ -91,10 +108,12 @@ var DatePicker = function (_React$Component) {
 
     }, {
         key: 'toggleDatepicker',
-        value: function toggleDatepicker(type) {
+        value: function toggleDatepicker(type, e) {
+            if (e) e.stopPropagation();
+
             this.setState({
                 datepickerVisible: type
-            });
+            }, this.toggleGlobalClickBinding.bind(this));
         }
     }, {
         key: 'handleDateSelection',
@@ -128,7 +147,7 @@ var DatePicker = function (_React$Component) {
 
             newState[type] = date;
             this.setState(newState, function () {
-                if (this.props.IsRange) {
+                if (this.props.isRange) {
                     this.props.onChange({
                         startDate: this.state.startDate.toDate(),
                         endDate: this.state.endDate.toDate()
@@ -138,6 +157,8 @@ var DatePicker = function (_React$Component) {
                         date: this.state.startDate.toDate()
                     });
                 }
+
+                this.toggleGlobalClickBinding();
             }.bind(this));
         }
 
@@ -154,14 +175,23 @@ var DatePicker = function (_React$Component) {
         key: 'render',
         value: function render() {
             var endDateDatepicker = null,
-                divider = null;
+                divider = null,
+                styles = {};
 
-            if (this.props.IsRange) {
+            if (this.props.inputWidth) {
+                styles.width = this.props.inputWidth + "px";
+            } else if (this.props.enableTime) {
+                styles.width = "120px";
+            } else {
+                styles.width = "70px";
+            }
+
+            if (this.props.isRange) {
                 endDateDatepicker = _react2.default.createElement(
                     'div',
                     { className: 'datepicker-container' },
                     _react2.default.createElement('i', { className: 'fa fa-calendar' }),
-                    _react2.default.createElement('input', { className: 'datepicker-input', readOnly: true, value: this.state.endDate.format(this.state.format), type: 'text', onClick: this.toggleDatepicker.bind(this, "endDate") }),
+                    _react2.default.createElement('input', { style: styles, className: 'datepicker-input', readOnly: true, value: this.state.endDate.format(this.state.format), type: 'text', onClick: this.toggleDatepicker.bind(this, "endDate") }),
                     this.renderDatepicker("endDate")
                 );
                 divider = _react2.default.createElement(
@@ -173,12 +203,12 @@ var DatePicker = function (_React$Component) {
 
             var content = _react2.default.createElement(
                 'div',
-                { className: 'datepicker-wrapper' },
+                { onClick: stopBubble, className: 'datepicker-wrapper' },
                 _react2.default.createElement(
                     'div',
                     { className: 'datepicker-container' },
                     _react2.default.createElement('i', { className: 'fa fa-calendar' }),
-                    _react2.default.createElement('input', { className: 'datepicker-input', readOnly: true, value: this.state.startDate.format(this.state.format), type: 'text', onClick: this.toggleDatepicker.bind(this, "startDate") }),
+                    _react2.default.createElement('input', { style: styles, className: 'datepicker-input', readOnly: true, value: this.state.startDate.format(this.state.format), type: 'text', onClick: this.toggleDatepicker.bind(this, "startDate") }),
                     this.renderDatepicker("startDate")
                 ),
                 divider,
@@ -192,22 +222,40 @@ var DatePicker = function (_React$Component) {
 }(_react2.default.Component);
 
 DatePicker.propTypes = {
-    IsRange: _react2.default.PropTypes.bool,
+    isRange: _react2.default.PropTypes.bool,
     minDate: _react2.default.PropTypes.instanceOf(_moment2.default),
     maxDate: _react2.default.PropTypes.instanceOf(_moment2.default),
     ignoreFontAwesome: _react2.default.PropTypes.bool,
     enableTime: _react2.default.PropTypes.bool,
     format: _react2.default.PropTypes.string,
+    inputWidth: _react2.default.PropTypes.number,
     onChange: _react2.default.PropTypes.func,
     defaultDate: _react2.default.PropTypes.instanceOf(_moment2.default) };
 DatePicker.defaultProps = {
-    IsRange: false,
+    isRange: false,
     minDate: (0, _moment2.default)(new Date(0)),
     maxDate: (0, _moment2.default)().add(20, "years"),
     ignoreFontAwesome: false,
     enableTime: false,
     onChange: noop
 };
+
+function stopBubble(e) {
+    e.nativeEvent.stopImmediatePropagation();
+}
+
+function getBinders(callback) {
+
+    return {
+        bind: function bind() {
+            document.addEventListener("click", callback, false);
+        },
+
+        unbind: function unbind() {
+            document.removeEventListener("click", callback, false);
+        }
+    };
+}
 
 function noop(data) {
     console.log("changing", data);
