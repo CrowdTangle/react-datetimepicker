@@ -36,7 +36,7 @@ var DatePicker = function (_React$Component) {
     function DatePicker(props) {
         _classCallCheck(this, DatePicker);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DatePicker).call(this, props));
+        var _this = _possibleConstructorReturn(this, (DatePicker.__proto__ || Object.getPrototypeOf(DatePicker)).call(this, props));
 
         _this.state = {
             date: (0, _moment2.default)(_this.props.selectedDate),
@@ -174,13 +174,13 @@ var DatePicker = function (_React$Component) {
                     content = _react2.default.createElement(
                         'span',
                         null,
-                        '‹'
+                        '\u2039'
                     );
                 } else {
                     content = _react2.default.createElement(
                         'span',
                         null,
-                        '›'
+                        '\u203A'
                     );
                 }
             } else {
@@ -256,7 +256,7 @@ var DatePicker = function (_React$Component) {
                     this.getHour(),
                     ':',
                     this.getMinute(),
-                    ' ',
+                    '\xA0',
                     this.getAmPm()
                 )
             );
@@ -355,5 +355,6 @@ DatePicker.propTypes = {
     enableTime: _react2.default.PropTypes.bool
 };
 DatePicker.defaultProps = {};
+
 
 module.exports = DatePicker;

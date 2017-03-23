@@ -32,12 +32,12 @@ var DatePicker = function (_React$Component) {
     function DatePicker(props) {
         _classCallCheck(this, DatePicker);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(DatePicker).call(this, props));
+        var _this = _possibleConstructorReturn(this, (DatePicker.__proto__ || Object.getPrototypeOf(DatePicker)).call(this, props));
 
         _this.state = {
             datepickerVisible: null,
             startDate: _this.props.defaultDate ? _this.props.defaultDate : (0, _moment2.default)(),
-            endDate: _this.props.defaultDate ? (0, _moment2.default)(_this.props.defaultDate).add(1, "months") : (0, _moment2.default)().add(1, "months")
+            endDate: _this.props.defaultEndDate ? _this.props.defaultEndDate : _this.props.defaultDate ? (0, _moment2.default)(_this.props.defaultDate).add(1, "months") : (0, _moment2.default)().add(1, "months")
         };
 
         var toggleFunction = _this.toggleDatepicker.bind(_this, null);
@@ -54,7 +54,7 @@ var DatePicker = function (_React$Component) {
             _this.state.format = _this.props.format;
         }
         return _this;
-    } // TODO: validate that it's b/w dates
+    }
 
     _createClass(DatePicker, [{
         key: 'componentDidMount',
@@ -230,7 +230,9 @@ DatePicker.propTypes = {
     format: _react2.default.PropTypes.string,
     inputWidth: _react2.default.PropTypes.number,
     onChange: _react2.default.PropTypes.func,
-    defaultDate: _react2.default.PropTypes.instanceOf(_moment2.default) };
+    defaultDate: _react2.default.PropTypes.instanceOf(_moment2.default),
+    defaultEndDate: _react2.default.PropTypes.instanceOf(_moment2.default) // TODO: validate that it's b/w dates
+};
 DatePicker.defaultProps = {
     isRange: false,
     minDate: (0, _moment2.default)(new Date(0)),
@@ -239,6 +241,7 @@ DatePicker.defaultProps = {
     enableTime: false,
     onChange: noop
 };
+
 
 function stopBubble(e) {
     e.nativeEvent.stopImmediatePropagation();

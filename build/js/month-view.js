@@ -32,7 +32,7 @@ var MonthView = function (_React$Component) {
     function MonthView(props) {
         _classCallCheck(this, MonthView);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(MonthView).call(this, props));
+        return _possibleConstructorReturn(this, (MonthView.__proto__ || Object.getPrototypeOf(MonthView)).call(this, props));
     }
 
     _createClass(MonthView, [{
@@ -86,5 +86,6 @@ MonthView.propTypes = {
     maxDate: _react2.default.PropTypes.instanceOf(_moment2.default),
     selectedDate: _react2.default.PropTypes.instanceOf(_moment2.default)
 };
+
 
 module.exports = MonthView;

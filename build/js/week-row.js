@@ -32,7 +32,7 @@ var WeekRow = function (_React$Component) {
     function WeekRow(props) {
         _classCallCheck(this, WeekRow);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(WeekRow).call(this, props));
+        return _possibleConstructorReturn(this, (WeekRow.__proto__ || Object.getPrototypeOf(WeekRow)).call(this, props));
     }
 
     _createClass(WeekRow, [{
@@ -91,5 +91,6 @@ WeekRow.propTypes = {
     selectedDate: _react2.default.PropTypes.instanceOf(_moment2.default)
 };
 WeekRow.defaultProps = {};
+
 
 module.exports = WeekRow;

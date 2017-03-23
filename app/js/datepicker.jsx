@@ -6,7 +6,7 @@ import moment from 'moment';
 
 class DatePicker extends React.Component {
 
-    static propTypes = { 
+    static propTypes = {
         isRange: React.PropTypes.bool,
         minDate: React.PropTypes.instanceOf(moment),
         maxDate: React.PropTypes.instanceOf(moment),
@@ -15,7 +15,8 @@ class DatePicker extends React.Component {
         format: React.PropTypes.string,
         inputWidth: React.PropTypes.number,
         onChange: React.PropTypes.func,
-        defaultDate: React.PropTypes.instanceOf(moment) // TODO: validate that it's b/w dates
+        defaultDate: React.PropTypes.instanceOf(moment),
+        defaultEndDate: React.PropTypes.instanceOf(moment) // TODO: validate that it's b/w dates
     };
 
     static defaultProps = {
@@ -33,7 +34,7 @@ class DatePicker extends React.Component {
         this.state = {
             datepickerVisible: null,
             startDate: this.props.defaultDate ? this.props.defaultDate : moment(),
-            endDate: this.props.defaultDate ? moment(this.props.defaultDate).add(1, "months") : moment().add(1, "months")
+            endDate: this.props.defaultEndDate ? this.props.defaultEndDate : (this.props.defaultDate ? moment(this.props.defaultDate).add(1, "months") : moment().add(1, "months"))
         }
 
         var toggleFunction = this.toggleDatepicker.bind(this, null);
@@ -130,10 +131,10 @@ class DatePicker extends React.Component {
         if(options && typeof options.collapse === "boolean") {
             if(!options.collapse) {
                 newState.datepickerVisible = type;
-            } 
-        } 
+            }
+        }
 
-    
+
         newState[type] = date;
         this.setState(newState, function() {
             if(this.props.isRange) {
@@ -178,7 +179,7 @@ class DatePicker extends React.Component {
                     <i className="fa fa-calendar"></i>
                     <input style={styles} className="datepicker-input" readOnly={true} value={this.state.endDate.format(this.state.format)} type="text" onClick={this.toggleDatepicker.bind(this, "endDate")} />
                     {this.renderDatepicker("endDate")}
-                </div> 
+                </div>
             );
             divider =  <span className="datepicker-divider">-</span>;
         }
@@ -192,7 +193,7 @@ class DatePicker extends React.Component {
                 </div>
                 {divider}
                 {endDateDatepicker}
-            </div>    
+            </div>
         )
         return content;
     }
@@ -204,7 +205,7 @@ function stopBubble(e) {
 }
 
 function getBinders(callback) {
-    
+
     return {
         bind: function(){
             document.addEventListener("click", callback, false);
@@ -213,7 +214,7 @@ function getBinders(callback) {
         unbind: function() {
             document.removeEventListener("click", callback, false);
         }
-    }   
+    }
 }
 
 function noop(data) {

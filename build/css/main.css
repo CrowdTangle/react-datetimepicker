@@ -1,7 +1,4 @@
 .datepicker-wrapper {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex; }
 
 .datepicker {
@@ -20,23 +17,14 @@
   .datepicker h3 {
     text-align: center;
     height: 35px;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     font-size: 16px;
     background: steelblue;
     padding: 10px 0px;
     margin-top: 0px;
     color: white;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
-            justify-content: space-between; }
+    justify-content: space-between; }
 
 .datepicker-container input {
   border: 0px;
@@ -51,7 +39,6 @@
   box-sizing: border-box;
   color: steelblue;
   border-top: 1px solid #eaeaea;
-  -webkit-transition: all .2s;
   transition: all .2s;
   cursor: pointer;
   position: absolute;
@@ -71,36 +58,23 @@
     bottom: 0px; }
     .datepicker-timepicker.visible .datepicker-timepicker-header {
       color: white;
-      -webkit-animation: blue-pulse 5s infinite;
-              animation: blue-pulse 5s infinite; }
+      animation: blue-pulse 5s infinite; }
       .datepicker-timepicker.visible .datepicker-timepicker-header span {
         line-height: 15px; }
   .datepicker-timepicker .header-time {
     display: inline-block;
     margin-left: 5px; }
   .datepicker-timepicker .timepicker-inputs {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: 55px;
     font-size: 30px; }
     .datepicker-timepicker .timepicker-inputs .input-row {
       margin: auto;
       width: 150px;
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
       display: flex;
       padding-left: 20px;
-      -webkit-box-align: baseline;
-      -webkit-align-items: baseline;
-          -ms-flex-align: baseline;
-              align-items: baseline; }
+      align-items: baseline; }
     .datepicker-timepicker .timepicker-inputs input[type='number'] {
       -moz-appearance: textfield; }
     .datepicker-timepicker .timepicker-inputs .input-minutes {
@@ -128,14 +102,8 @@
       width: 30px; }
 
 .datepicker-day-headers {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  justify-content: space-between;
   font-size: 9px;
   padding: 5px;
   color: #666; }
@@ -161,15 +129,9 @@
 
 .datepicker-weekrow {
   box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   width: 100%;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between; }
+  justify-content: space-between; }
 
 .datepicker-monthview {
   padding: 5px; }
@@ -181,17 +143,9 @@
   width: 100%;
   cursor: pointer;
   height: 34px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-justify-content: space-around;
-      -ms-flex-pack: distribute;
-          justify-content: space-around; }
+  align-items: center;
+  justify-content: space-around; }
   .day-block.in-month {
     opacity: 1; }
   .day-block.today {
@@ -205,14 +159,6 @@
   .day-block.disabled {
     opacity: .3;
     cursor: initial; }
-
-@-webkit-keyframes blue-pulse {
-  0% {
-    background: steelblue; }
-  50% {
-    background: #33adff; }
-  100% {
-    background: steelblue; } }
 
 @keyframes blue-pulse {
   0% {
