@@ -31,11 +31,23 @@ class DatePicker extends React.Component {
     constructor(props) {
         super(props);
 
+        let endDate = this.props.defaultEndDate;
+        let startDate = this.props.defaultDate;
+
+
+        if(!startDate) {
+            startDate = moment();
+        }
+
+        if (!endDate) {
+            endDate = startDate.add(1, "months");
+        }
+
         this.state = {
             datepickerVisible: null,
-            startDate: this.props.defaultDate ? this.props.defaultDate : moment(),
-            endDate: this.props.defaultEndDate ? this.props.defaultEndDate : (this.props.defaultDate ? moment(this.props.defaultDate).add(1, "months") : moment().add(1, "months"))
-        }
+            endDate: endDate,
+            startDate: startDate
+        };
 
         var toggleFunction = this.toggleDatepicker.bind(this, null);
 
