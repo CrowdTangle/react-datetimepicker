@@ -34,7 +34,7 @@ class DatePicker extends React.Component {
         console.log(this.props, this.props.startDate, this.props.endDate)
 
         let endDate = this.props.defaultEndDate;
-        let startDate = tghis.props.defaultDate;
+        let startDate = this.props.defaultDate;
 
 
         if(!startDate) {

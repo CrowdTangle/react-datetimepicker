@@ -37,7 +37,7 @@ var DatePicker = function (_React$Component) {
         console.log(_this.props, _this.props.startDate, _this.props.endDate);
 
         var endDate = _this.props.defaultEndDate;
-        var startDate = tghis.props.defaultDate;
+        var startDate = _this.props.defaultDate;
 
         if (!startDate) {
             startDate = (0, _moment2.default)();
