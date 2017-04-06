@@ -31,8 +31,6 @@ class DatePicker extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log(this.props, this.props.startDate, this.props.endDate)
-
         let endDate = this.props.defaultEndDate;
         let startDate = this.props.defaultDate;
 
