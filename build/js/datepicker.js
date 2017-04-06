@@ -34,10 +34,23 @@ var DatePicker = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (DatePicker.__proto__ || Object.getPrototypeOf(DatePicker)).call(this, props));
 
+        console.log(_this.props, _this.props.startDate, _this.props.endDate);
+
+        var endDate = _this.props.defaultEndDate;
+        var startDate = tghis.props.defaultDate;
+
+        if (!startDate) {
+            startDate = (0, _moment2.default)();
+        }
+
+        if (!endDate) {
+            endDate = startDate.add(1, "months");
+        }
+
         _this.state = {
             datepickerVisible: null,
-            startDate: _this.props.defaultDate ? _this.props.defaultDate : (0, _moment2.default)(),
-            endDate: _this.props.defaultEndDate ? _this.props.defaultEndDate : _this.props.defaultDate ? (0, _moment2.default)(_this.props.defaultDate).add(1, "months") : (0, _moment2.default)().add(1, "months")
+            endDate: endDate,
+            startDate: startDate
         };
 
         var toggleFunction = _this.toggleDatepicker.bind(_this, null);
