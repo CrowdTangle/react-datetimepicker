@@ -34,8 +34,6 @@ var DatePicker = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (DatePicker.__proto__ || Object.getPrototypeOf(DatePicker)).call(this, props));
 
-        console.log(_this.props, _this.props.startDate, _this.props.endDate);
-
         var endDate = _this.props.defaultEndDate;
         var startDate = _this.props.defaultDate;
 
