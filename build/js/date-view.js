@@ -105,11 +105,11 @@ var DatePicker = function (_React$Component) {
         key: 'handleHourChange',
         value: function handleHourChange() {
             var date = this.state.date;
-            var hourVal = this.refs.hour.value;
+            var hourVal = parseInt(this.refs.hour.value);
             var value = DEFAULT_HOUR_VAL;
 
             if (!isNaN(hourVal)) {
-                value = parseInt(this.refs.hour.value);
+                value = hourVal;
             }
 
             if (this.getAmPm() === "pm") {
@@ -128,11 +128,11 @@ var DatePicker = function (_React$Component) {
         key: 'handleMinuteChange',
         value: function handleMinuteChange() {
             var date = this.state.date;
-            var minuteVal = this.refs.minute.value;
+            var minuteVal = parseInt(this.refs.minute.value);
             var value = DEFAULT_MINUTE_VAL;
 
             if (!isNaN(minuteVal)) {
-                value = parseInt(this.refs.minute.value);
+                value = minuteVal;
             }
 
             date.minute(value);
@@ -318,9 +318,9 @@ var DatePicker = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'input-row' },
-                        _react2.default.createElement('input', { className: 'input-hours', ref: 'hour', value: this.getHour(), type: 'number', min: 1, max: 12, maxlength: 2, onChange: this.handleHourChange.bind(this), onKeyDown: this.handleKeyDown.bind(this) }),
+                        _react2.default.createElement('input', { className: 'input-hours', ref: 'hour', value: this.getHour(), type: 'number', min: 1, max: 12, maxLength: 2, onChange: this.handleHourChange.bind(this), onKeyDown: this.handleKeyDown.bind(this) }),
                         ':',
-                        _react2.default.createElement('input', { className: 'input-minutes', ref: 'minute', value: this.getMinute(), type: 'number', min: 0, max: 59, maxlength: 2, onChange: this.handleMinuteChange.bind(this), onKeyDown: this.handleKeyDown.bind(this) }),
+                        _react2.default.createElement('input', { className: 'input-minutes', ref: 'minute', value: this.getMinute(), type: 'number', min: 0, max: 59, maxLength: 2, onChange: this.handleMinuteChange.bind(this), onKeyDown: this.handleKeyDown.bind(this) }),
                         _react2.default.createElement(
                             'select',
                             { ref: 'ampm', value: this.getAmPm(), onChange: this.handleAmPmChange.bind(this) },
