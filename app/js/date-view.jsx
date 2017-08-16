@@ -76,11 +76,11 @@ class DatePicker extends React.Component {
 
     handleHourChange() {
         let date = this.state.date;
-        const hourVal = this.refs.hour.value;
+        const hourVal = parseInt(this.refs.hour.value);
         let value = DEFAULT_HOUR_VAL;
 
         if (!isNaN(hourVal)) {
-            value = parseInt(this.refs.hour.value);
+            value = hourVal;
         }
 
         if(this.getAmPm() === "pm") {
@@ -98,11 +98,11 @@ class DatePicker extends React.Component {
 
     handleMinuteChange() {
         let date = this.state.date;
-        const minuteVal = this.refs.minute.value;
+        const minuteVal = parseInt(this.refs.minute.value);
         let value = DEFAULT_MINUTE_VAL;
 
         if (!isNaN(minuteVal)) {
-            value = parseInt(this.refs.minute.value);
+            value = minuteVal;
         }
 
         date.minute(value);
@@ -223,8 +223,8 @@ class DatePicker extends React.Component {
                 </div>
                 <div className="timepicker-inputs">
                     <div className="input-row">
-                        <input className="input-hours" ref="hour" value={this.getHour()} type="number" min={1} max={12} maxlength={2} onChange={this.handleHourChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)}/>:
-                        <input className="input-minutes" ref="minute" value={this.getMinute()} type="number" min={0} max={59} maxlength={2} onChange={this.handleMinuteChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)}/>
+                        <input className="input-hours" ref="hour" value={this.getHour()} type="number" min={1} max={12} maxLength={2} onChange={this.handleHourChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)}/>:
+                        <input className="input-minutes" ref="minute" value={this.getMinute()} type="number" min={0} max={59} maxLength={2} onChange={this.handleMinuteChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)}/>
                         <select ref="ampm" value={this.getAmPm()} onChange={this.handleAmPmChange.bind(this)}>
                             <option value="am">AM</option>
                             <option value="pm">PM</option>
