@@ -4,7 +4,7 @@ import moment from 'moment';
 import MonthView from './month-view';
 import classnames from 'classnames';
 
-const DEFAULT_HOUR_VAL = 0;
+const DEFAULT_HOUR_VAL = 12;
 const DEFAULT_MINUTE_VAL = 0;
 
 class DatePicker extends React.Component {
@@ -59,6 +59,10 @@ class DatePicker extends React.Component {
         }
         if(hour > 12) {
             hour = hour - 12;
+        }
+
+        if(hour === 0) {
+            hour = 12;
         }
 
         return hour;
