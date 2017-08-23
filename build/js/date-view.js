@@ -323,7 +323,7 @@ var DatePicker = function (_React$Component) {
                         _react2.default.createElement('input', { className: 'input-minutes', ref: 'minute', value: this.getMinute(), type: 'number', min: 0, max: 59, maxLength: 2, onChange: this.handleMinuteChange.bind(this), onKeyDown: this.handleKeyDown.bind(this) }),
                         _react2.default.createElement(
                             'select',
-                            { ref: 'ampm', value: this.getAmPm(), onChange: this.handleAmPmChange.bind(this) },
+                            { className: 'ampm-picker ignore-chosen', ref: 'ampm', value: this.getAmPm(), onChange: this.handleAmPmChange.bind(this) },
                             _react2.default.createElement(
                                 'option',
                                 { value: 'am' },
