@@ -30,6 +30,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var DEFAULT_HOUR_VAL = 0;
+var DEFAULT_MINUTE_VAL = 0;
+
 var DatePicker = function (_React$Component) {
     _inherits(DatePicker, _React$Component);
 
@@ -63,6 +66,10 @@ var DatePicker = function (_React$Component) {
         key: 'getMinute',
         value: function getMinute() {
             var minute = this.state.date.minute();
+            if (isNaN(minute)) {
+                minute = DEFAULT_MINUTE_VAL;
+            }
+
             if (minute < 10) {
                 minute = "0" + minute;
             }
@@ -73,6 +80,9 @@ var DatePicker = function (_React$Component) {
         key: 'getHour',
         value: function getHour() {
             var hour = this.state.date.hour();
+            if (isNaN(hour)) {
+                hour = DEFAULT_HOUR_VAL;
+            }
             if (hour > 12) {
                 hour = hour - 12;
             }
@@ -94,8 +104,13 @@ var DatePicker = function (_React$Component) {
     }, {
         key: 'handleHourChange',
         value: function handleHourChange() {
-            var date = this.state.date,
-                value = parseInt(this.refs.hour.value);
+            var date = this.state.date;
+            var hourVal = parseInt(this.refs.hour.value);
+            var value = DEFAULT_HOUR_VAL;
+
+            if (!isNaN(hourVal)) {
+                value = hourVal;
+            }
 
             if (this.getAmPm() === "pm") {
                 value += 12;
@@ -113,7 +128,14 @@ var DatePicker = function (_React$Component) {
         key: 'handleMinuteChange',
         value: function handleMinuteChange() {
             var date = this.state.date;
-            date.minute(this.refs.minute.value);
+            var minuteVal = parseInt(this.refs.minute.value);
+            var value = DEFAULT_MINUTE_VAL;
+
+            if (!isNaN(minuteVal)) {
+                value = minuteVal;
+            }
+
+            date.minute(value);
 
             this.setState({
                 date: date
@@ -296,12 +318,12 @@ var DatePicker = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'input-row' },
-                        _react2.default.createElement('input', { className: 'input-hours', ref: 'hour', value: this.getHour(), type: 'number', min: 1, max: 12, onChange: this.handleHourChange.bind(this), onKeyDown: this.handleKeyDown.bind(this) }),
+                        _react2.default.createElement('input', { className: 'input-hours', ref: 'hour', value: this.getHour(), type: 'number', min: 1, max: 12, maxLength: 2, onChange: this.handleHourChange.bind(this), onKeyDown: this.handleKeyDown.bind(this) }),
                         ':',
-                        _react2.default.createElement('input', { className: 'input-minutes', ref: 'minute', value: this.getMinute(), type: 'number', min: 0, max: 59, onChange: this.handleMinuteChange.bind(this), onKeyDown: this.handleKeyDown.bind(this) }),
+                        _react2.default.createElement('input', { className: 'input-minutes', ref: 'minute', value: this.getMinute(), type: 'number', min: 0, max: 59, maxLength: 2, onChange: this.handleMinuteChange.bind(this), onKeyDown: this.handleKeyDown.bind(this) }),
                         _react2.default.createElement(
                             'select',
-                            { ref: 'ampm', value: this.getAmPm(), onChange: this.handleAmPmChange.bind(this) },
+                            { className: 'ampm-picker ignore-chosen', ref: 'ampm', value: this.getAmPm(), onChange: this.handleAmPmChange.bind(this) },
                             _react2.default.createElement(
                                 'option',
                                 { value: 'am' },
