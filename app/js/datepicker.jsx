@@ -66,6 +66,27 @@ class DatePicker extends React.Component {
 
     componentDidMount() {}
 
+    componentWillReceiveProps(newProps) {
+        if (newProps.defaultEndDate !== this.props.defaultEndDate ||
+            newProps.defaultDate !== this.props.defaultDate) {
+            let endDate = newProps.defaultEndDate;
+            let startDate = newProps.defaultDate;
+
+            if(!startDate) {
+                startDate = moment();
+            }
+
+            if (!endDate) {
+                endDate = startDate.add(1, "months");
+            }
+
+            this.setState({
+                endDate: endDate,
+                startDate: startDate
+            });
+        }
+    }
+
 
     toggleGlobalClickBinding() {
         var wrapper = ReactDOM.findDOMNode(this);
