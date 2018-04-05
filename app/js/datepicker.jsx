@@ -40,7 +40,7 @@ class DatePicker extends React.Component {
         }
 
         if (!endDate) {
-            endDate = startDate.add(1, "months");
+            endDate = moment(startDate).add(1, "months");
         }
 
         this.state = {
@@ -48,6 +48,8 @@ class DatePicker extends React.Component {
             endDate: endDate,
             startDate: startDate
         };
+
+        console.log("setting state", endDate.format(), startDate.format());
 
         var toggleFunction = this.toggleDatepicker.bind(this, null);
 
@@ -77,7 +79,7 @@ class DatePicker extends React.Component {
             }
 
             if (!endDate) {
-                endDate = startDate.add(1, "months");
+                endDate = moment(startDate).add(1, "months");
             }
 
             this.setState({
