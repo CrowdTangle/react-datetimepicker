@@ -19,42 +19,76 @@
                 <p>Nothing special here...</p>
                 <div id="example-1"></div>
                 <pre><code>
-    var DatePicker = require("react-datetimepicker");         
+    var DatePicker = require("react-datetimepicker");
 
     ReactDOM.render(&lt;DatePicker  /&gt;, document.getElementById("content"));
-    </code></pre>    
+    </code></pre>
             </section>
             <section class="example">
                 <h3>Range Datepicker</h3>
                 <p>Setting isRange to true provides two connected pickers.</p>
                 <div id="example-2"></div>
                 <pre><code>
-    var DatePicker = require("react-datetimepicker");         
+    var DatePicker = require("react-datetimepicker");
 
     ReactDOM.render(&lt;DatePicker isRange={true}  /&gt;, document.getElementById("content"));
-    </code></pre>    
+    </code></pre>
             </section>
             <section class="example">
                 <h3>Timepicking</h3>
                 <p>Setting timeEnabled to true provides a timepicker at the bottom and reformats the output.</p>
                 <div id="example-3"></div>
                 <pre><code>
-    var DatePicker = require("react-datetimepicker");         
+    var DatePicker = require("react-datetimepicker");
 
     ReactDOM.render(&lt;DatePicker enableTime={true}  /&gt;, document.getElementById("content"));
-    </code></pre>    
+    </code></pre>
             </section>
             <section class="example">
                 <h3>minDate, maxDate and defaultDate</h3>
                 <p>minDate and maxDate provide selection boundaries for both single and range pickers. defaultDate allows you to specify the starting date. Otherwise the datepickers will begin on today.</p>
                 <div id="example-4"></div>
                 <pre><code>
-    var DatePicker = require("react-datetimepicker");         
+    var DatePicker = require("react-datetimepicker");
 
-    ReactDOM.render(&lt;DatePicker defaultDate={moment("10/31/2015", "MM/DD/YYYY")} 
-                        minDate={moment("10/21/2015", "MM/DD/YYYY")} 
-                        maxDate={moment("11/21/2015", "MM/DD/YYYY")}  /&gt;, document.getElementById("content"));
-    </code></pre>    
+    ReactDOM.render(&lt;DatePicker defaultDate={moment("10/31/2015", "MM/DD/YYYY")}
+        minDate={moment("10/21/2015", "MM/DD/YYYY")}
+        maxDate={moment("11/21/2015", "MM/DD/YYYY")}  /&gt;, document.getElementById("content"));
+    </code></pre>
+            </section>
+            <section class="example">
+                <h3>Controlled Component</h3>
+                <p>Controlling the date from a parent component.</p>
+                <div id="example-5"></div>
+                <pre><code>
+    class ControlledComponent extends Component {
+
+        constructor() {
+            super();
+            this.state = {
+                date: moment("10/31/2015", "MM/DD/YYYY")
+            }
+        }
+
+        render() {
+            return (
+                &lt;div&gt;
+                    &lt;input type="date" value={this.state.date.format("YYYY-MM-DD")} onChange={(e) => {
+                        this.setState({date: moment(e.target.value)});
+                    }} /&gt;
+                    &lt;DatePicker onChange={(e) => {
+                        this.setState({date: moment(e.date)});
+                    }} defaultDate={this.state.date} /&gt;
+                &lt;/div&gt;
+            );
+        }
+    }
+
+    ReactDOM.render(
+        &lt;ControlledComponent /&gt;, document.getElementById("content")
+    )
+
+    </code></pre>
             </section>
         </div>
         <div class="footer"></div>

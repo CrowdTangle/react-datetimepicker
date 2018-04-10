@@ -71,6 +71,27 @@ var DatePicker = function (_React$Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {}
     }, {
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(newProps) {
+            if (newProps.defaultEndDate !== this.props.defaultEndDate || newProps.defaultDate !== this.props.defaultDate) {
+                var endDate = newProps.defaultEndDate;
+                var startDate = newProps.defaultDate;
+
+                if (!startDate) {
+                    startDate = (0, _moment2.default)();
+                }
+
+                if (!endDate) {
+                    endDate = startDate.add(1, "months");
+                }
+
+                this.setState({
+                    endDate: endDate,
+                    startDate: startDate
+                });
+            }
+        }
+    }, {
         key: 'toggleGlobalClickBinding',
         value: function toggleGlobalClickBinding() {
             var wrapper = _reactDom2.default.findDOMNode(this);
