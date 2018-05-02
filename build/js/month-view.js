@@ -6,6 +6,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
@@ -80,11 +84,11 @@ var MonthView = function (_React$Component) {
 }(_react2.default.Component);
 
 MonthView.propTypes = {
-    date: _react2.default.PropTypes.instanceOf(_moment2.default).isRequired,
-    handleSelection: _react2.default.PropTypes.func.isRequired,
-    minDate: _react2.default.PropTypes.instanceOf(_moment2.default),
-    maxDate: _react2.default.PropTypes.instanceOf(_moment2.default),
-    selectedDate: _react2.default.PropTypes.instanceOf(_moment2.default)
+    date: _propTypes2.default.instanceOf(_moment2.default).isRequired,
+    handleSelection: _propTypes2.default.func.isRequired,
+    minDate: _propTypes2.default.instanceOf(_moment2.default),
+    maxDate: _propTypes2.default.instanceOf(_moment2.default),
+    selectedDate: _propTypes2.default.instanceOf(_moment2.default)
 };
 
 

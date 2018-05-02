@@ -10,6 +10,10 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
@@ -375,10 +379,10 @@ var DatePicker = function (_React$Component) {
 }(_react2.default.Component);
 
 DatePicker.propTypes = {
-    minDate: _react2.default.PropTypes.instanceOf(_moment2.default),
-    maxDate: _react2.default.PropTypes.instanceOf(_moment2.default),
-    selectedDate: _react2.default.PropTypes.instanceOf(_moment2.default), // todo validate that it's between min and max
-    enableTime: _react2.default.PropTypes.bool
+    minDate: _propTypes2.default.instanceOf(_moment2.default),
+    maxDate: _propTypes2.default.instanceOf(_moment2.default),
+    selectedDate: _propTypes2.default.instanceOf(_moment2.default), // todo validate that it's between min and max
+    enableTime: _propTypes2.default.bool
 };
 DatePicker.defaultProps = {};
 

@@ -10,6 +10,10 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _dateView = require('./date-view');
 
 var _dateView2 = _interopRequireDefault(_dateView);
@@ -256,16 +260,16 @@ var DatePicker = function (_React$Component) {
 }(_react2.default.Component);
 
 DatePicker.propTypes = {
-    isRange: _react2.default.PropTypes.bool,
-    minDate: _react2.default.PropTypes.instanceOf(_moment2.default),
-    maxDate: _react2.default.PropTypes.instanceOf(_moment2.default),
-    ignoreFontAwesome: _react2.default.PropTypes.bool,
-    enableTime: _react2.default.PropTypes.bool,
-    format: _react2.default.PropTypes.string,
-    inputWidth: _react2.default.PropTypes.number,
-    onChange: _react2.default.PropTypes.func,
-    defaultDate: _react2.default.PropTypes.instanceOf(_moment2.default),
-    defaultEndDate: _react2.default.PropTypes.instanceOf(_moment2.default) // TODO: validate that it's b/w dates
+    isRange: _propTypes2.default.bool,
+    minDate: _propTypes2.default.instanceOf(_moment2.default),
+    maxDate: _propTypes2.default.instanceOf(_moment2.default),
+    ignoreFontAwesome: _propTypes2.default.bool,
+    enableTime: _propTypes2.default.bool,
+    format: _propTypes2.default.string,
+    inputWidth: _propTypes2.default.number,
+    onChange: _propTypes2.default.func,
+    defaultDate: _propTypes2.default.instanceOf(_moment2.default),
+    defaultEndDate: _propTypes2.default.instanceOf(_moment2.default) // TODO: validate that it's b/w dates
 };
 DatePicker.defaultProps = {
     isRange: false,

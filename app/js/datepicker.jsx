@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import DateView from './date-view';
 import moment from 'moment';
 
@@ -7,16 +8,16 @@ import moment from 'moment';
 class DatePicker extends React.Component {
 
     static propTypes = {
-        isRange: React.PropTypes.bool,
-        minDate: React.PropTypes.instanceOf(moment),
-        maxDate: React.PropTypes.instanceOf(moment),
-        ignoreFontAwesome: React.PropTypes.bool,
-        enableTime: React.PropTypes.bool,
-        format: React.PropTypes.string,
-        inputWidth: React.PropTypes.number,
-        onChange: React.PropTypes.func,
-        defaultDate: React.PropTypes.instanceOf(moment),
-        defaultEndDate: React.PropTypes.instanceOf(moment) // TODO: validate that it's b/w dates
+        isRange: PropTypes.bool,
+        minDate: PropTypes.instanceOf(moment),
+        maxDate: PropTypes.instanceOf(moment),
+        ignoreFontAwesome: PropTypes.bool,
+        enableTime: PropTypes.bool,
+        format: PropTypes.string,
+        inputWidth: PropTypes.number,
+        onChange: PropTypes.func,
+        defaultDate: PropTypes.instanceOf(moment),
+        defaultEndDate: PropTypes.instanceOf(moment) // TODO: validate that it's b/w dates
     };
 
     static defaultProps = {
