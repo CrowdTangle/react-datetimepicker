@@ -1,17 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import WeekRow from './week-row';
 
 class MonthView extends React.Component {
-
-    static propTypes = { 
-        date: React.PropTypes.instanceOf(moment).isRequired,
-        handleSelection: React.PropTypes.func.isRequired,
-        minDate: React.PropTypes.instanceOf(moment),
-        maxDate: React.PropTypes.instanceOf(moment),
-        selectedDate: React.PropTypes.instanceOf(moment)
-    };
 
     constructor(props) {
         super(props);
@@ -39,14 +32,14 @@ class MonthView extends React.Component {
             if(dayOfWeek === 0 || i === 0) {
                  weeks.push(<WeekRow selectedDate={this.props.selectedDate} maxDate={this.props.maxDate} minDate={this.props.minDate} handleSelection={this.props.handleSelection} month={currentMonth} date={dateToPass} key={currentDate.date()} />);
             }
-           
+
 
             currentDate.add(1, "days");
             i++;
         }
 
         return weeks;
-        
+
     }
 
     render() {
@@ -57,5 +50,13 @@ class MonthView extends React.Component {
         );
     }
 }
+
+MonthView.propTypes = {
+    date: PropTypes.instanceOf(moment).isRequired,
+    handleSelection: PropTypes.func.isRequired,
+    minDate: PropTypes.instanceOf(moment),
+    maxDate: PropTypes.instanceOf(moment),
+    selectedDate: PropTypes.instanceOf(moment)
+};
 
 module.exports = MonthView;

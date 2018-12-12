@@ -1,32 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import DateView from './date-view';
 import moment from 'moment';
 
 
 class DatePicker extends React.Component {
-
-    static propTypes = {
-        isRange: React.PropTypes.bool,
-        minDate: React.PropTypes.instanceOf(moment),
-        maxDate: React.PropTypes.instanceOf(moment),
-        ignoreFontAwesome: React.PropTypes.bool,
-        enableTime: React.PropTypes.bool,
-        format: React.PropTypes.string,
-        inputWidth: React.PropTypes.number,
-        onChange: React.PropTypes.func,
-        defaultDate: React.PropTypes.instanceOf(moment),
-        defaultEndDate: React.PropTypes.instanceOf(moment) // TODO: validate that it's b/w dates
-    };
-
-    static defaultProps = {
-        isRange: false,
-        minDate: moment(new Date(0)),
-        maxDate: moment().add(20, "years"),
-        ignoreFontAwesome: false,
-        enableTime: false,
-        onChange: noop
-    };
 
     constructor(props) {
         super(props);
@@ -233,6 +212,28 @@ class DatePicker extends React.Component {
         return content;
     }
 }
+
+DatePicker.propTypes = {
+    isRange: PropTypes.bool,
+    minDate: PropTypes.instanceOf(moment),
+    maxDate: PropTypes.instanceOf(moment),
+    ignoreFontAwesome: PropTypes.bool,
+    enableTime: PropTypes.bool,
+    format: PropTypes.string,
+    inputWidth: PropTypes.number,
+    onChange: PropTypes.func,
+    defaultDate: PropTypes.instanceOf(moment),
+    defaultEndDate: PropTypes.instanceOf(moment) // TODO: validate that it's b/w dates
+};
+
+DatePicker.defaultProps = {
+    isRange: false,
+    minDate: moment(new Date(0)),
+    maxDate: moment().add(20, "years"),
+    ignoreFontAwesome: false,
+    enableTime: false,
+    onChange: noop
+};
 
 function stopBubble(e) {
     e.nativeEvent.stopImmediatePropagation();

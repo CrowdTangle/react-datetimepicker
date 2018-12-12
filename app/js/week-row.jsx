@@ -1,21 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import moment from 'moment';
-import classnames from 'classnames'; 
+import classnames from 'classnames';
 
 class WeekRow extends React.Component {
 
-    static propTypes = {  
-        date: React.PropTypes.instanceOf(moment).isRequired,
-        month: React.PropTypes.number.isRequired,
-        handleSelection: React.PropTypes.func.isRequired,
-        minDate: React.PropTypes.instanceOf(moment),
-        maxDate: React.PropTypes.instanceOf(moment),
-        selectedDate: React.PropTypes.instanceOf(moment)
-    };
-
-    static defaultProps = {};
-    
     constructor(props) {
         super(props);
     }
@@ -52,5 +42,14 @@ class WeekRow extends React.Component {
         );
     }
 }
+
+WeekRow.propTypes = {
+    date: PropTypes.instanceOf(moment).isRequired,
+    month: PropTypes.number.isRequired,
+    handleSelection: PropTypes.func.isRequired,
+    minDate: PropTypes.instanceOf(moment),
+    maxDate: PropTypes.instanceOf(moment),
+    selectedDate: PropTypes.instanceOf(moment)
+};
 
 module.exports = WeekRow;
