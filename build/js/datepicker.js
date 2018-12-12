@@ -274,7 +274,7 @@ DatePicker.propTypes = {
 
 DatePicker.defaultProps = {
     isRange: false,
-    minDate: (0, _moment2.default)(new Date(0)),
+    minDate: (0, _moment2.default)().subtract(20, "years"),
     maxDate: (0, _moment2.default)().add(20, "years"),
     ignoreFontAwesome: false,
     enableTime: false,
