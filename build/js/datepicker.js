@@ -75,7 +75,18 @@ var DatePicker = function (_React$Component) {
 
     _createClass(DatePicker, [{
         key: 'componentDidMount',
-        value: function componentDidMount() {}
+        value: function componentDidMount() {
+            if (this.props.isRange) {
+                this.props.onChange({
+                    startDate: this.state.startDate.toDate(),
+                    endDate: this.state.endDate.toDate()
+                });
+            } else {
+                this.props.onChange({
+                    date: this.state.startDate.toDate()
+                });
+            }
+        }
     }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(newProps) {

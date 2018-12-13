@@ -45,7 +45,18 @@ class DatePicker extends React.Component {
         }
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        if(this.props.isRange) {
+            this.props.onChange({
+                startDate: this.state.startDate.toDate(),
+                endDate: this.state.endDate.toDate()
+            })
+        } else {
+            this.props.onChange({
+                date: this.state.startDate.toDate()
+            })
+        }
+    }
 
     componentWillReceiveProps(newProps) {
         if (newProps.defaultEndDate !== this.props.defaultEndDate ||
