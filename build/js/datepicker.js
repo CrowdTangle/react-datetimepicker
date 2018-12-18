@@ -36,7 +36,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var DEFAULT_DATE_FORMAT = "MM/DD/YYYY";
 var DEFAULT_DATE_TIME_FORMAT = "MM/DD/YYYY h:mm a";
-var CHAR_CODE_ENTER = 13;
+var ENTER_KEY = "Enter";
 
 var DatePicker = function (_React$Component) {
     _inherits(DatePicker, _React$Component);
@@ -80,6 +80,8 @@ var DatePicker = function (_React$Component) {
         var toggleFunction = _this.toggleDatepicker.bind(_this, null);
 
         _this.naturalBinders = getBinders(toggleFunction);
+
+        _this.dateView = _react2.default.createRef();
 
         return _this;
     }
@@ -184,6 +186,28 @@ var DatePicker = function (_React$Component) {
             }, this.toggleGlobalClickBinding.bind(this));
         }
     }, {
+        key: 'openDatepicker',
+        value: function openDatepicker(type, e) {
+            if (e) e.stopPropagation();
+
+            this.setState({
+                datepickerVisible: type
+            });
+        }
+    }, {
+        key: 'closeDatepicker',
+        value: function closeDatepicker(type, e) {
+            if (e) e.stopPropagation();
+
+            if (type === "startDate") {
+                this.handleStartDateSet();
+            } else if (type === "endDate") {
+                this.handleEndDateSet();
+            }
+
+            this.toggleGlobalClickBinding();
+        }
+    }, {
         key: 'handleDateSelection',
         value: function handleDateSelection(type, date, options) {
             var mutableDate = (0, _moment2.default)(date);
@@ -251,24 +275,31 @@ var DatePicker = function (_React$Component) {
     }, {
         key: 'handleStartDateKeyPress',
         value: function handleStartDateKeyPress(e) {
-            if (e.charCode === CHAR_CODE_ENTER) {
+            if (e.key === ENTER_KEY) {
                 this.handleStartDateSet();
             }
         }
     }, {
         key: 'handleEndDateKeyPress',
         value: function handleEndDateKeyPress(e) {
-            if (e.charCode === CHAR_CODE_ENTER) {
+            if (e.key === ENTER_KEY) {
                 this.handleEndDateSet();
             }
         }
     }, {
         key: 'handleStartDateSet',
         value: function handleStartDateSet() {
+            var _this2 = this;
+
             var dateString = this.validateDateString(this.state.startDateInputValue);
             if (dateString) {
                 this.setState({
-                    startDate: (0, _moment2.default)(dateString)
+                    startDate: (0, _moment2.default)(dateString),
+                    startDateInputValue: (0, _moment2.default)(dateString).format(this.state.format)
+                }, function () {
+                    if (_this2.dateView.current) {
+                        _this2.dateView.current.reset();
+                    }
                 });
             } else {
                 // If invalid date, set input value back to the last validated date
@@ -276,14 +307,23 @@ var DatePicker = function (_React$Component) {
                     startDateInputValue: this.state.startDate.format(this.state.format)
                 });
             }
+
+            this.forceUpdate();
         }
     }, {
         key: 'handleEndDateSet',
         value: function handleEndDateSet() {
-            var dateString = this.validateDateString(this.state.startDateInputValue);
+            var _this3 = this;
+
+            var dateString = this.validateDateString(this.state.endDateInputValue);
             if (dateString) {
                 this.setState({
-                    endDate: (0, _moment2.default)(dateString)
+                    endDate: (0, _moment2.default)(dateString),
+                    endDateInputValue: (0, _moment2.default)(dateString).format(this.state.format)
+                }, function () {
+                    if (_this3.dateView.current) {
+                        _this3.dateView.current.reset();
+                    }
                 });
             } else {
                 // If invalid date, set input value back to the last validated date
@@ -299,7 +339,13 @@ var DatePicker = function (_React$Component) {
         key: 'renderDatepicker',
         value: function renderDatepicker(type) {
             if (this.state.datepickerVisible === type) {
-                return _react2.default.createElement(_dateView2.default, { enableTime: this.props.enableTime, selectedDate: this.state[type], maxDate: this.getMaxDateForType(type), minDate: this.getMinDateForType(type), handleSelection: this.handleDateSelection.bind(this, type) });
+                return _react2.default.createElement(_dateView2.default, {
+                    ref: this.dateView,
+                    enableTime: this.props.enableTime,
+                    selectedDate: this.state[type],
+                    maxDate: this.getMaxDateForType(type),
+                    minDate: this.getMinDateForType(type),
+                    handleSelection: this.handleDateSelection.bind(this, type) });
             }
         }
     }, {
@@ -328,9 +374,10 @@ var DatePicker = function (_React$Component) {
                         readOnly: !this.props.inputEditable,
                         value: endDateValue,
                         type: 'text',
-                        onClick: this.toggleDatepicker.bind(this, "endDate"),
+
                         onChange: this.handleEndDateInputChange.bind(this),
-                        onBlur: this.handleEndDateSet.bind(this),
+                        onBlur: this.closeDatepicker.bind(this, "endDate"),
+                        onFocus: this.openDatepicker.bind(this, "endDate"),
                         onKeyPress: this.handleEndDateKeyPress.bind(this) }),
                     this.renderDatepicker("endDate")
                 );
@@ -354,9 +401,9 @@ var DatePicker = function (_React$Component) {
                         readOnly: !this.props.inputEditable,
                         value: startDateValue,
                         type: 'text',
-                        onBlur: this.handleStartDateSet.bind(this),
+                        onBlur: this.closeDatepicker.bind(this, "startDate"),
+                        onFocus: this.openDatepicker.bind(this, "startDate"),
                         onChange: this.handleStartDateInputChange.bind(this),
-                        onClick: this.toggleDatepicker.bind(this, "startDate"),
                         onKeyPress: this.handleStartDateKeyPress.bind(this) }),
                     this.renderDatepicker("startDate")
                 ),

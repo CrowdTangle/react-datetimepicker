@@ -7,7 +7,7 @@ import chrono from 'chrono-node';
 
 const DEFAULT_DATE_FORMAT = "MM/DD/YYYY";
 const DEFAULT_DATE_TIME_FORMAT = "MM/DD/YYYY h:mm a";
-const CHAR_CODE_ENTER = 13;
+const ENTER_KEY = "Enter";
 
 class DatePicker extends React.Component {
 
@@ -170,6 +170,27 @@ class DatePicker extends React.Component {
         }, this.toggleGlobalClickBinding.bind(this));
     }
 
+    openDatepicker(type, e) {
+        if(e) e.stopPropagation();
+
+        this.setState({
+            datepickerVisible: type
+        });
+    }
+
+
+    closeDatepicker(type, e) {
+        if(e) e.stopPropagation();
+
+        if (type === "startDate") {
+            this.handleStartDateSet();
+        } else if (type === "endDate") {
+            this.handleEndDateSet();
+        }
+
+        this.toggleGlobalClickBinding();
+    }
+
     handleDateSelection(type, date, options) {
         var mutableDate = moment(date);
 
@@ -236,22 +257,24 @@ class DatePicker extends React.Component {
     }
 
     handleStartDateKeyPress(e) {
-        if (e.charCode === CHAR_CODE_ENTER) {
+        if (e.key === ENTER_KEY) {
             this.handleStartDateSet();
         }
     }
 
     handleEndDateKeyPress(e) {
-        if (e.charCode === CHAR_CODE_ENTER) {
+        if (e.key === ENTER_KEY) {
             this.handleEndDateSet();
         }
     }
+
 
     handleStartDateSet() {
         const dateString = this.validateDateString(this.state.startDateInputValue);
         if (dateString) {
             this.setState({
-                startDate: moment(dateString)
+                startDate: moment(dateString),
+                startDateInputValue: moment(dateString).format(this.state.format)
             }, () => {
               if (this.dateView.current) {
                   this.dateView.current.reset();
@@ -269,10 +292,11 @@ class DatePicker extends React.Component {
     }
 
     handleEndDateSet() {
-        const dateString = this.validateDateString(this.state.startDateInputValue);
+        const dateString = this.validateDateString(this.state.endDateInputValue);
         if (dateString) {
             this.setState({
-                endDate: moment(dateString)
+                endDate: moment(dateString),
+                endDateInputValue: moment(dateString).format(this.state.format)
             }, () => {
                 if (this.dateView.current) {
                     this.dateView.current.reset();
@@ -323,9 +347,10 @@ class DatePicker extends React.Component {
                             readOnly={!this.props.inputEditable}
                             value={endDateValue}
                             type="text"
-                            onClick={this.toggleDatepicker.bind(this, "endDate")}
+
                             onChange={this.handleEndDateInputChange.bind(this)}
-                            onBlur={this.handleEndDateSet.bind(this)}
+                            onBlur={this.closeDatepicker.bind(this, "endDate")}
+                            onFocus={this.openDatepicker.bind(this, "endDate")}
                             onKeyPress={this.handleEndDateKeyPress.bind(this)} />
                     {this.renderDatepicker("endDate")}
                 </div>
@@ -343,9 +368,9 @@ class DatePicker extends React.Component {
                             readOnly={!this.props.inputEditable}
                             value={startDateValue}
                             type="text"
-                            onBlur={this.handleStartDateSet.bind(this)}
+                            onBlur={this.closeDatepicker.bind(this, "startDate")}
+                            onFocus={this.openDatepicker.bind(this, "startDate")}
                             onChange={this.handleStartDateInputChange.bind(this)}
-                            onClick={this.toggleDatepicker.bind(this, "startDate")}
                             onKeyPress={this.handleStartDateKeyPress.bind(this)} />
                     {this.renderDatepicker("startDate")}
                 </div>

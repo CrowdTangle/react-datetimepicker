@@ -53,6 +53,14 @@ var DatePicker = function (_React$Component) {
     }
 
     _createClass(DatePicker, [{
+        key: 'reset',
+        value: function reset() {
+            console.log("resetting to ", this.props.selectedDate);
+            this.setState({
+                date: (0, _moment2.default)(this.props.selectedDate)
+            });
+        }
+    }, {
         key: 'shiftDate',
         value: function shiftDate(direction) {
             var date = this.state.date;
