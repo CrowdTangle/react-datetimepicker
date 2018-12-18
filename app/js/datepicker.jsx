@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import DateView from './date-view';
 import moment from 'moment';
+import chrono from 'chrono-node';
 
 const DEFAULT_DATE_FORMAT = "MM/DD/YYYY";
-const DEFAULT_DATE_FORMAT_REGEX = /^(((0?)[0-9])|((1)[0-2]))(\/)([0-2]?[0-9]|(3)[0-1])(\/)\d{4}$/; // Accepts date formats with or without preceding 0 before single digit month or day values.
 const DEFAULT_DATE_TIME_FORMAT = "MM/DD/YYYY h:mm a";
-const DEFAULT_DATE_TIME_FORMAT_REGEX = /^(((0?)[0-9])|((1)[0-2]))(\/)([0-2]?[0-9]|(3)[0-1])(\/)\d{4}$/; // Same as date pattern + time validation at the end
 
 class DatePicker extends React.Component {
 
@@ -130,17 +129,8 @@ class DatePicker extends React.Component {
     }
 
     validateDateString(string) {
-        let datePattern;
-        if (this.state.format === DEFAULT_DATE_FORMAT) {
-            datePattern = DEFAULT_DATE_FORMAT_REGEX;
-        } else if (this.state.format === DEFAULT_DATE_TIME_FORMAT) {
-            datePattern = DEFAULT_DATE_TIME_FORMAT_REGEX;
-        } else {
-            // For custom date patterns, we should figure out how to validate them with regex. For now, let the value default to valid.
-            return true;
-        }
-
-        return string.match(datePattern);
+        // Chrono returns a datetime stamp for valid dates, and for invalid dates, returns null
+        return chrono.parseDate(string);
     }
 
     /**** handlers ****/
@@ -219,9 +209,10 @@ class DatePicker extends React.Component {
     }
 
     handleStartDateSet() {
-        if (this.validateDateString(this.state.startDateInputValue)) {
+        const dateString = this.validateDateString(this.state.startDateInputValue);
+        if (dateString) {
             this.setState({
-                startDate: moment(this.state.startDateInputValue)
+                startDate: moment(dateString)
             })
         } else {
             // If invalid date, set input value back to the last validated date
@@ -232,9 +223,10 @@ class DatePicker extends React.Component {
     }
 
     handleEndDateSet() {
-        if (this.validateDateString(this.state.endDateInputValue)) {
+        const dateString = this.validateDateString(this.state.startDateInputValue);
+        if (dateString) {
             this.setState({
-                endDate: moment(this.state.endDateInputValue)
+                endDate: moment(dateString)
             })
         } else {
             // If invalid date, set input value back to the last validated date
@@ -282,8 +274,7 @@ class DatePicker extends React.Component {
             divider =  <span className="datepicker-divider">-</span>;
         }
         const startDateValue = this.props.inputEditable ? this.state.startDateInputValue : this.state.startDate.format(this.state.format);
-        console.log("startDateValue");
-        console.log(startDateValue);
+
         var content = (
             <div onClick={stopBubble} className="datepicker-wrapper">
                 <div className="datepicker-container">

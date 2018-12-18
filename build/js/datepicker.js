@@ -22,6 +22,10 @@ var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
 
+var _chronoNode = require('chrono-node');
+
+var _chronoNode2 = _interopRequireDefault(_chronoNode);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31,9 +35,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var DEFAULT_DATE_FORMAT = "MM/DD/YYYY";
-var DEFAULT_DATE_FORMAT_REGEX = /^(((0?)[0-9])|((1)[0-2]))(\/)([0-2]?[0-9]|(3)[0-1])(\/)\d{4}$/; // Accepts date formats with or without preceding 0 before single digit month or day values.
 var DEFAULT_DATE_TIME_FORMAT = "MM/DD/YYYY h:mm a";
-var DEFAULT_DATE_TIME_FORMAT_REGEX = /^(((0?)[0-9])|((1)[0-2]))(\/)([0-2]?[0-9]|(3)[0-1])(\/)\d{4}$/; // Same as date pattern + time validation at the end
 
 var DatePicker = function (_React$Component) {
     _inherits(DatePicker, _React$Component);
@@ -165,17 +167,8 @@ var DatePicker = function (_React$Component) {
     }, {
         key: 'validateDateString',
         value: function validateDateString(string) {
-            var datePattern = void 0;
-            if (this.state.format === DEFAULT_DATE_FORMAT) {
-                datePattern = DEFAULT_DATE_FORMAT_REGEX;
-            } else if (this.state.format === DEFAULT_DATE_TIME_FORMAT) {
-                datePattern = DEFAULT_DATE_TIME_FORMAT_REGEX;
-            } else {
-                // For custom date patterns, we should figure out how to validate them with regex. For now, let the value default to valid.
-                return true;
-            }
-
-            return string.match(datePattern);
+            // Chrono returns a datetime stamp for valid dates, and for invalid dates, returns null
+            return _chronoNode2.default.parseDate(string);
         }
 
         /**** handlers ****/
@@ -257,9 +250,10 @@ var DatePicker = function (_React$Component) {
     }, {
         key: 'handleStartDateSet',
         value: function handleStartDateSet() {
-            if (this.validateDateString(this.state.startDateInputValue)) {
+            var dateString = this.validateDateString(this.state.startDateInputValue);
+            if (dateString) {
                 this.setState({
-                    startDate: (0, _moment2.default)(this.state.startDateInputValue)
+                    startDate: (0, _moment2.default)(dateString)
                 });
             } else {
                 // If invalid date, set input value back to the last validated date
@@ -271,9 +265,10 @@ var DatePicker = function (_React$Component) {
     }, {
         key: 'handleEndDateSet',
         value: function handleEndDateSet() {
-            if (this.validateDateString(this.state.endDateInputValue)) {
+            var dateString = this.validateDateString(this.state.startDateInputValue);
+            if (dateString) {
                 this.setState({
-                    endDate: (0, _moment2.default)(this.state.endDateInputValue)
+                    endDate: (0, _moment2.default)(dateString)
                 });
             } else {
                 // If invalid date, set input value back to the last validated date
@@ -330,8 +325,7 @@ var DatePicker = function (_React$Component) {
                 );
             }
             var startDateValue = this.props.inputEditable ? this.state.startDateInputValue : this.state.startDate.format(this.state.format);
-            console.log("startDateValue");
-            console.log(startDateValue);
+
             var content = _react2.default.createElement(
                 'div',
                 { onClick: stopBubble, className: 'datepicker-wrapper' },

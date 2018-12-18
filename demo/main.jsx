@@ -39,7 +39,7 @@ ReactDOM.render(
 )
 
 ReactDOM.render(
-    <DatePicker inputEditable={true}/>, document.getElementById("example-6")
+    <DatePicker inputEditable={true} enableTime={true} />, document.getElementById("example-6")
 )
 
 ReactDOM.render(
