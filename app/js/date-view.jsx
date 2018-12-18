@@ -25,6 +25,13 @@ class DatePicker extends React.Component {
         };
     }
 
+    reset() {
+      console.log("resetting to ", this.props.selectedDate);
+      this.setState({
+        date: moment(this.props.selectedDate)
+      });
+    }
+
     shiftDate(direction) {
         var date = this.state.date;
         if(direction === "back") {

@@ -74,6 +74,8 @@ class DatePicker extends React.Component {
 
         this.naturalBinders = getBinders(toggleFunction);
 
+        this.dateView = React.createRef();
+
     }
 
     componentDidMount() {
@@ -250,7 +252,12 @@ class DatePicker extends React.Component {
         if (dateString) {
             this.setState({
                 startDate: moment(dateString)
-            })
+            }, () => {
+              if (this.dateView.current) {
+                  this.dateView.current.reset();
+              }
+
+            });
         } else {
             // If invalid date, set input value back to the last validated date
             this.setState({
@@ -266,6 +273,10 @@ class DatePicker extends React.Component {
         if (dateString) {
             this.setState({
                 endDate: moment(dateString)
+            }, () => {
+                if (this.dateView.current) {
+                    this.dateView.current.reset();
+                }
             })
         } else {
             // If invalid date, set input value back to the last validated date
@@ -274,14 +285,20 @@ class DatePicker extends React.Component {
             })
         }
 
-        this.forceUpdate();
+
     }
 
     /**** render methods ****/
 
     renderDatepicker(type) {
         if(this.state.datepickerVisible === type) {
-            return <DateView enableTime={this.props.enableTime} selectedDate={this.state[type]} maxDate={this.getMaxDateForType(type)} minDate={this.getMinDateForType(type)} handleSelection={this.handleDateSelection.bind(this, type)} />;
+            return <DateView
+                ref={this.dateView}
+                enableTime={this.props.enableTime}
+                selectedDate={this.state[type]}
+                maxDate={this.getMaxDateForType(type)}
+                minDate={this.getMinDateForType(type)}
+                handleSelection={this.handleDateSelection.bind(this, type)} />;
         }
     }
 
