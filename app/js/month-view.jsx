@@ -6,6 +6,14 @@ import WeekRow from './week-row';
 
 class MonthView extends React.Component {
 
+    static propTypes = {
+        date: PropTypes.instanceOf(moment).isRequired,
+        handleSelection: PropTypes.func.isRequired,
+        minDate: PropTypes.instanceOf(moment),
+        maxDate: PropTypes.instanceOf(moment),
+        selectedDate: PropTypes.instanceOf(moment)
+    };
+
     constructor(props) {
         super(props);
     }
@@ -51,12 +59,5 @@ class MonthView extends React.Component {
     }
 }
 
-MonthView.propTypes = {
-    date: PropTypes.instanceOf(moment).isRequired,
-    handleSelection: PropTypes.func.isRequired,
-    minDate: PropTypes.instanceOf(moment),
-    maxDate: PropTypes.instanceOf(moment),
-    selectedDate: PropTypes.instanceOf(moment)
-};
 
 module.exports = MonthView;

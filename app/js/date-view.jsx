@@ -10,6 +10,13 @@ const DEFAULT_MINUTE_VAL = 0;
 
 class DatePicker extends React.Component {
 
+    static propTypes = {
+        minDate: PropTypes.instanceOf(moment),
+        maxDate: PropTypes.instanceOf(moment),
+        selectedDate: PropTypes.instanceOf(moment), // todo validate that it's between min and max
+        enableTime: PropTypes.bool
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -251,11 +258,5 @@ class DatePicker extends React.Component {
     }
 }
 
-DatePicker.propTypes = {
-    minDate: PropTypes.instanceOf(moment),
-    maxDate: PropTypes.instanceOf(moment),
-    selectedDate: PropTypes.instanceOf(moment), // todo validate that it's between min and max
-    enableTime: PropTypes.bool
-};
 
 module.exports = DatePicker;

@@ -95,4 +95,5 @@ WeekRow.propTypes = {
     selectedDate: _propTypes2.default.instanceOf(_moment2.default)
 };
 
+
 module.exports = WeekRow;

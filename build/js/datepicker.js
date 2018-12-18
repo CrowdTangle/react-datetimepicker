@@ -383,7 +383,6 @@ DatePicker.propTypes = {
     defaultDate: _propTypes2.default.instanceOf(_moment2.default),
     defaultEndDate: _propTypes2.default.instanceOf(_moment2.default) // TODO: validate that it's b/w dates
 };
-
 DatePicker.defaultProps = {
     isRange: false,
     inputEditable: false,
@@ -393,6 +392,7 @@ DatePicker.defaultProps = {
     enableTime: false,
     onChange: noop
 };
+
 
 function stopBubble(e) {
     e.nativeEvent.stopImmediatePropagation();

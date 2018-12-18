@@ -11,6 +11,30 @@ const CHAR_CODE_ENTER = 13;
 
 class DatePicker extends React.Component {
 
+    static propTypes = {
+        isRange: PropTypes.bool,
+        minDate: PropTypes.instanceOf(moment),
+        maxDate: PropTypes.instanceOf(moment),
+        ignoreFontAwesome: PropTypes.bool,
+        enableTime: PropTypes.bool,
+        format: PropTypes.string,
+        inputWidth: PropTypes.number,
+        inputEditable: PropTypes.bool,
+        onChange: PropTypes.func,
+        defaultDate: PropTypes.instanceOf(moment),
+        defaultEndDate: PropTypes.instanceOf(moment) // TODO: validate that it's b/w dates
+    };
+
+    static defaultProps = {
+        isRange: false,
+        inputEditable: false,
+        minDate: moment().subtract(20, "years"),
+        maxDate: moment().add(20, "years"),
+        ignoreFontAwesome: false,
+        enableTime: false,
+        onChange: noop
+    };
+
     constructor(props) {
         super(props);
 
@@ -233,6 +257,8 @@ class DatePicker extends React.Component {
                 startDateInputValue: this.state.startDate.format(this.state.format)
             })
         }
+
+        this.forceUpdate();
     }
 
     handleEndDateSet() {
@@ -247,6 +273,8 @@ class DatePicker extends React.Component {
                 endDateInputValue: this.state.endDate.format(this.state.format)
             })
         }
+
+        this.forceUpdate();
     }
 
     /**** render methods ****/
@@ -312,33 +340,8 @@ class DatePicker extends React.Component {
     }
 }
 
-DatePicker.propTypes = {
-    isRange: PropTypes.bool,
-    minDate: PropTypes.instanceOf(moment),
-    maxDate: PropTypes.instanceOf(moment),
-    ignoreFontAwesome: PropTypes.bool,
-    enableTime: PropTypes.bool,
-    format: PropTypes.string,
-    inputWidth: PropTypes.number,
-    inputEditable: PropTypes.bool,
-    onChange: PropTypes.func,
-    defaultDate: PropTypes.instanceOf(moment),
-    defaultEndDate: PropTypes.instanceOf(moment) // TODO: validate that it's b/w dates
-};
-
-DatePicker.defaultProps = {
-    isRange: false,
-    inputEditable: false,
-    minDate: moment().subtract(20, "years"),
-    maxDate: moment().add(20, "years"),
-    ignoreFontAwesome: false,
-    enableTime: false,
-    onChange: noop
-};
-
 function stopBubble(e) {
     e.nativeEvent.stopImmediatePropagation();
-
 }
 
 function getBinders(callback) {
