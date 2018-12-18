@@ -7,6 +7,7 @@ import chrono from 'chrono-node';
 
 const DEFAULT_DATE_FORMAT = "MM/DD/YYYY";
 const DEFAULT_DATE_TIME_FORMAT = "MM/DD/YYYY h:mm a";
+const CHAR_CODE_ENTER = 13;
 
 class DatePicker extends React.Component {
 
@@ -208,6 +209,18 @@ class DatePicker extends React.Component {
         });
     }
 
+    handleStartDateKeyPress(e) {
+        if (e.charCode === CHAR_CODE_ENTER) {
+            this.handleStartDateSet();
+        }
+    }
+
+    handleEndDateKeyPress(e) {
+        if (e.charCode === CHAR_CODE_ENTER) {
+            this.handleEndDateSet();
+        }
+    }
+
     handleStartDateSet() {
         const dateString = this.validateDateString(this.state.startDateInputValue);
         if (dateString) {
@@ -267,7 +280,8 @@ class DatePicker extends React.Component {
                             type="text"
                             onClick={this.toggleDatepicker.bind(this, "endDate")}
                             onChange={this.handleEndDateInputChange.bind(this)}
-                            onBlur={this.handleEndDateSet.bind(this)} />
+                            onBlur={this.handleEndDateSet.bind(this)}
+                            onKeyPress={this.handleEndDateKeyPress.bind(this)} />
                     {this.renderDatepicker("endDate")}
                 </div>
             );
@@ -282,10 +296,12 @@ class DatePicker extends React.Component {
                     <input  style={styles}
                             className="datepicker-input"
                             readOnly={!this.props.inputEditable}
-                            onChange={this.handleStartDateInputChange.bind(this)}
-                            onBlur={this.handleStartDateSet.bind(this)}
                             value={startDateValue}
-                            type="text" onClick={this.toggleDatepicker.bind(this, "startDate")} />
+                            type="text"
+                            onBlur={this.handleStartDateSet.bind(this)}
+                            onChange={this.handleStartDateInputChange.bind(this)}
+                            onClick={this.toggleDatepicker.bind(this, "startDate")}
+                            onKeyPress={this.handleStartDateKeyPress.bind(this)} />
                     {this.renderDatepicker("startDate")}
                 </div>
                 {divider}

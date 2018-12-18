@@ -36,6 +36,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var DEFAULT_DATE_FORMAT = "MM/DD/YYYY";
 var DEFAULT_DATE_TIME_FORMAT = "MM/DD/YYYY h:mm a";
+var CHAR_CODE_ENTER = 13;
 
 var DatePicker = function (_React$Component) {
     _inherits(DatePicker, _React$Component);
@@ -248,6 +249,20 @@ var DatePicker = function (_React$Component) {
             });
         }
     }, {
+        key: 'handleStartDateKeyPress',
+        value: function handleStartDateKeyPress(e) {
+            if (e.charCode === CHAR_CODE_ENTER) {
+                this.handleStartDateSet();
+            }
+        }
+    }, {
+        key: 'handleEndDateKeyPress',
+        value: function handleEndDateKeyPress(e) {
+            if (e.charCode === CHAR_CODE_ENTER) {
+                this.handleEndDateSet();
+            }
+        }
+    }, {
         key: 'handleStartDateSet',
         value: function handleStartDateSet() {
             var dateString = this.validateDateString(this.state.startDateInputValue);
@@ -315,7 +330,8 @@ var DatePicker = function (_React$Component) {
                         type: 'text',
                         onClick: this.toggleDatepicker.bind(this, "endDate"),
                         onChange: this.handleEndDateInputChange.bind(this),
-                        onBlur: this.handleEndDateSet.bind(this) }),
+                        onBlur: this.handleEndDateSet.bind(this),
+                        onKeyPress: this.handleEndDateKeyPress.bind(this) }),
                     this.renderDatepicker("endDate")
                 );
                 divider = _react2.default.createElement(
@@ -336,10 +352,12 @@ var DatePicker = function (_React$Component) {
                     _react2.default.createElement('input', { style: styles,
                         className: 'datepicker-input',
                         readOnly: !this.props.inputEditable,
-                        onChange: this.handleStartDateInputChange.bind(this),
-                        onBlur: this.handleStartDateSet.bind(this),
                         value: startDateValue,
-                        type: 'text', onClick: this.toggleDatepicker.bind(this, "startDate") }),
+                        type: 'text',
+                        onBlur: this.handleStartDateSet.bind(this),
+                        onChange: this.handleStartDateInputChange.bind(this),
+                        onClick: this.toggleDatepicker.bind(this, "startDate"),
+                        onKeyPress: this.handleStartDateKeyPress.bind(this) }),
                     this.renderDatepicker("startDate")
                 ),
                 divider,
