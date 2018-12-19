@@ -10,6 +10,10 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
@@ -49,6 +53,14 @@ var DatePicker = function (_React$Component) {
     }
 
     _createClass(DatePicker, [{
+        key: 'reset',
+        value: function reset() {
+            console.log("resetting to ", this.props.selectedDate);
+            this.setState({
+                date: (0, _moment2.default)(this.props.selectedDate)
+            });
+        }
+    }, {
         key: 'shiftDate',
         value: function shiftDate(direction) {
             var date = this.state.date;
@@ -109,7 +121,7 @@ var DatePicker = function (_React$Component) {
         key: 'handleHourChange',
         value: function handleHourChange() {
             var date = this.state.date;
-            var hourVal = parseInt(this.refs.hour.value);
+            var hourVal = parseInt(this.hour.value);
             var value = DEFAULT_HOUR_VAL;
 
             if (!isNaN(hourVal)) {
@@ -132,7 +144,7 @@ var DatePicker = function (_React$Component) {
         key: 'handleMinuteChange',
         value: function handleMinuteChange() {
             var date = this.state.date;
-            var minuteVal = parseInt(this.refs.minute.value);
+            var minuteVal = parseInt(this.minute.value);
             var value = DEFAULT_MINUTE_VAL;
 
             if (!isNaN(minuteVal)) {
@@ -149,7 +161,7 @@ var DatePicker = function (_React$Component) {
         key: 'handleAmPmChange',
         value: function handleAmPmChange() {
             var currentValue = this.getAmPm(),
-                changedValue = this.refs.ampm.value,
+                changedValue = this.ampm.value,
                 hour = this.state.date.hour();
 
             if (currentValue != changedValue) {
@@ -300,6 +312,8 @@ var DatePicker = function (_React$Component) {
     }, {
         key: 'renderTimePicker',
         value: function renderTimePicker() {
+            var _this2 = this;
+
             if (!this.props.enableTime) {
                 return;
             }
@@ -322,12 +336,18 @@ var DatePicker = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'input-row' },
-                        _react2.default.createElement('input', { className: 'input-hours', ref: 'hour', value: this.getHour(), type: 'number', min: 1, max: 12, maxLength: 2, onChange: this.handleHourChange.bind(this), onKeyDown: this.handleKeyDown.bind(this) }),
+                        _react2.default.createElement('input', { className: 'input-hours', ref: function ref(h) {
+                                _this2.hour = h;
+                            }, value: this.getHour(), type: 'number', min: 1, max: 12, maxLength: 2, onChange: this.handleHourChange.bind(this), onKeyDown: this.handleKeyDown.bind(this) }),
                         ':',
-                        _react2.default.createElement('input', { className: 'input-minutes', ref: 'minute', value: this.getMinute(), type: 'number', min: 0, max: 59, maxLength: 2, onChange: this.handleMinuteChange.bind(this), onKeyDown: this.handleKeyDown.bind(this) }),
+                        _react2.default.createElement('input', { className: 'input-minutes', ref: function ref(m) {
+                                _this2.minute = m;
+                            }, value: this.getMinute(), type: 'number', min: 0, max: 59, maxLength: 2, onChange: this.handleMinuteChange.bind(this), onKeyDown: this.handleKeyDown.bind(this) }),
                         _react2.default.createElement(
                             'select',
-                            { className: 'ampm-picker ignore-chosen', ref: 'ampm', value: this.getAmPm(), onChange: this.handleAmPmChange.bind(this) },
+                            { className: 'ampm-picker ignore-chosen', ref: function ref(ampm) {
+                                    _this2.ampm = ampm;
+                                }, value: this.getAmPm(), onChange: this.handleAmPmChange.bind(this) },
                             _react2.default.createElement(
                                 'option',
                                 { value: 'am' },
@@ -375,12 +395,11 @@ var DatePicker = function (_React$Component) {
 }(_react2.default.Component);
 
 DatePicker.propTypes = {
-    minDate: _react2.default.PropTypes.instanceOf(_moment2.default),
-    maxDate: _react2.default.PropTypes.instanceOf(_moment2.default),
-    selectedDate: _react2.default.PropTypes.instanceOf(_moment2.default), // todo validate that it's between min and max
-    enableTime: _react2.default.PropTypes.bool
+    minDate: _propTypes2.default.instanceOf(_moment2.default),
+    maxDate: _propTypes2.default.instanceOf(_moment2.default),
+    selectedDate: _propTypes2.default.instanceOf(_moment2.default), // todo validate that it's between min and max
+    enableTime: _propTypes2.default.bool
 };
-DatePicker.defaultProps = {};
 
 
 module.exports = DatePicker;

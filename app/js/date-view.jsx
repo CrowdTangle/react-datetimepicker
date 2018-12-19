@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import MonthView from './month-view';
 import classnames from 'classnames';
@@ -10,13 +11,11 @@ const DEFAULT_MINUTE_VAL = 0;
 class DatePicker extends React.Component {
 
     static propTypes = {
-        minDate: React.PropTypes.instanceOf(moment),
-        maxDate: React.PropTypes.instanceOf(moment),
-        selectedDate: React.PropTypes.instanceOf(moment), // todo validate that it's between min and max
-        enableTime: React.PropTypes.bool
+        minDate: PropTypes.instanceOf(moment),
+        maxDate: PropTypes.instanceOf(moment),
+        selectedDate: PropTypes.instanceOf(moment), // todo validate that it's between min and max
+        enableTime: PropTypes.bool
     };
-
-    static defaultProps = {};
 
     constructor(props) {
         super(props);
@@ -24,6 +23,13 @@ class DatePicker extends React.Component {
             date: moment(this.props.selectedDate),
             timepickerVisible: false
         };
+    }
+
+    reset() {
+      console.log("resetting to ", this.props.selectedDate);
+      this.setState({
+        date: moment(this.props.selectedDate)
+      });
     }
 
     shiftDate(direction) {
@@ -80,7 +86,7 @@ class DatePicker extends React.Component {
 
     handleHourChange() {
         let date = this.state.date;
-        const hourVal = parseInt(this.refs.hour.value);
+        const hourVal = parseInt(this.hour.value);
         let value = DEFAULT_HOUR_VAL;
 
         if (!isNaN(hourVal)) {
@@ -102,7 +108,7 @@ class DatePicker extends React.Component {
 
     handleMinuteChange() {
         let date = this.state.date;
-        const minuteVal = parseInt(this.refs.minute.value);
+        const minuteVal = parseInt(this.minute.value);
         let value = DEFAULT_MINUTE_VAL;
 
         if (!isNaN(minuteVal)) {
@@ -118,7 +124,7 @@ class DatePicker extends React.Component {
 
     handleAmPmChange() {
         var currentValue = this.getAmPm(),
-            changedValue = this.refs.ampm.value,
+            changedValue = this.ampm.value,
             hour = this.state.date.hour();
 
         if(currentValue != changedValue) {
@@ -227,9 +233,9 @@ class DatePicker extends React.Component {
                 </div>
                 <div className="timepicker-inputs">
                     <div className="input-row">
-                        <input className="input-hours" ref="hour" value={this.getHour()} type="number" min={1} max={12} maxLength={2} onChange={this.handleHourChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)}/>:
-                        <input className="input-minutes" ref="minute" value={this.getMinute()} type="number" min={0} max={59} maxLength={2} onChange={this.handleMinuteChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)}/>
-                        <select className="ampm-picker ignore-chosen" ref="ampm" value={this.getAmPm()} onChange={this.handleAmPmChange.bind(this)}>
+                        <input className="input-hours" ref={(h) => { this.hour = h; }} value={this.getHour()} type="number" min={1} max={12} maxLength={2} onChange={this.handleHourChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)}/>:
+                        <input className="input-minutes" ref={(m) => { this.minute = m; }} value={this.getMinute()} type="number" min={0} max={59} maxLength={2} onChange={this.handleMinuteChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)}/>
+                        <select className="ampm-picker ignore-chosen" ref={(ampm) => { this.ampm = ampm; }} value={this.getAmPm()} onChange={this.handleAmPmChange.bind(this)}>
                             <option value="am">AM</option>
                             <option value="pm">PM</option>
                         </select>
@@ -258,5 +264,6 @@ class DatePicker extends React.Component {
         );
     }
 }
+
 
 module.exports = DatePicker;

@@ -1,4 +1,4 @@
-$font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+$font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $width: 250px;
 $light-gray: #f7f7f7;
 
@@ -41,6 +41,9 @@ $light-gray: #f7f7f7;
     input {
         border: 0px;
         margin-left: 5px;
+        &:read-only {
+            outline: none;
+        }
     }
 
     i.fa-calendar {
@@ -213,7 +216,7 @@ $light-gray: #f7f7f7;
     }
 
     &.today {
-        font-weight: bold; 
+        font-weight: bold;
     }
 
     &.selected {
@@ -221,7 +224,7 @@ $light-gray: #f7f7f7;
         border-radius: 50%;
         background: lighten(steelblue, 50%);
         color: black;
-        border: 1px solid steelblue;  
+        border: 1px solid steelblue;
     }
 
     &.disabled {

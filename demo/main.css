@@ -30,6 +30,9 @@
   border: 0px;
   margin-left: 5px; }
 
+.datepicker-container input:read-only {
+  outline: none; }
+
 .datepicker-container i.fa-calendar {
   color: #666;
   font-size: 12px; }
