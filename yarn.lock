@@ -3756,13 +3756,13 @@ jest-worker@^23.2.0:
   dependencies:
     merge-stream "^1.0.1"
 
-jest@^0.1.40:
-  version "0.1.40"
-  resolved "https://registry.yarnpkg.com/jest/-/jest-0.1.40.tgz#c9479e7ea19a73b8141a30853c846c336e64d58f"
-  integrity sha1-yUeefqGac7gUGjCFPIRsM25k1Y8=
+jest@^23.6.0:
+  version "23.6.0"
+  resolved "https://registry.yarnpkg.com/jest/-/jest-23.6.0.tgz#ad5835e923ebf6e19e7a1d7529a432edfee7813d"
+  integrity sha512-lWzcd+HSiqeuxyhG+EnZds6iO3Y3ZEnMrfZq/OTGvF/C+Z4fPMCdhWTGSAiO2Oym9rbEXfwddHhh6jqrTF3+Lw==
   dependencies:
-    sji ""
-    underscore ""
+    import-local "^1.0.0"
+    jest-cli "^23.6.0"
 
 js-base64@^2.1.8:
   version "2.4.9"
@@ -5667,11 +5667,6 @@ sisteransi@^0.1.1:
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-0.1.1.tgz#5431447d5f7d1675aac667ccd0b865a4994cb3ce"
   integrity sha512-PmGOd02bM9YO5ifxpw36nrNMBTptEtfRl4qUYl9SndkolplkrZZOW7PGHjrZL53QvMVj9nQ+TKqUnRsw4tJa4g==
 
-sji@:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/sji/-/sji-0.0.1.tgz#46d56122f8665392c2c196f8e42c26f254f9c346"
-  integrity sha1-RtVhIvhmU5LCwZb45Cwm8lT5w0Y=
-
 slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
@@ -6201,11 +6196,6 @@ undefsafe@^2.0.2:
   integrity sha1-Il9rngM3Zj4Njnz9aG/Cg2zKznY=
   dependencies:
     debug "^2.2.0"
-
-underscore@:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.9.1.tgz#06dce34a0e68a7babc29b365b8e74b8925203961"
-  integrity sha512-5/4etnCkd9c8gwgowi5/om/mYO5ajCaOgdzj/oW+0eQV9WxKBDZw5+ycmKmeaTXjInS/W0BzpGLo2xR2aBwZdg==
 
 union-value@^1.0.0:
   version "1.0.0"

@@ -1,6 +1,6 @@
 var React     = require("react");
 var ReactDOM  = require("react-dom");
-var TestUtils = require("react-addons-test-utils");
+import ReactTestUtils from "react-dom/test-utils";
 
 jest.dontMock("../app/js/datepicker.jsx");
 jest.dontMock("moment");
@@ -16,12 +16,12 @@ describe('datepicker', function() {
 
     describe('single view', function() {
         it('only renders one input box with the defaultValue', function() {
-                
-            var datepicker = TestUtils.renderIntoDocument(
+
+            var datepicker = ReactTestUtils.renderIntoDocument(
                 <DatePicker defaultDate={date} />
             );
 
-            var inputs = TestUtils.scryRenderedDOMComponentsWithClass(datepicker, "datepicker-input");
+            var inputs = ReactTestUtils.scryRenderedDOMComponentsWithClass(datepicker, "datepicker-input");
 
             expect(inputs.length).toEqual(1);
             expect(inputs[0].value).toEqual("10/21/1988");
@@ -29,36 +29,36 @@ describe('datepicker', function() {
         });
 
         it('respects min- and max- dates', function() {
-                
-            var datepicker = TestUtils.renderIntoDocument(
+
+            var datepicker = ReactTestUtils.renderIntoDocument(
                 <DatePicker maxDate={maxDate} minDate={minDate} defaultDate={date} />
             );
 
             // select something below the minimum
             datepicker.handleDateSelection("startDate", moment("10/14/1988", 'MM/DD/YYYY'));
 
-            var input = TestUtils.findRenderedDOMComponentWithClass(datepicker, "datepicker-input");
+            var input = ReactTestUtils.findRenderedDOMComponentWithClass(datepicker, "datepicker-input");
             // check to ensure it hasn't changed
             expect(input.value).toEqual("10/21/1988");
 
             // select something above the minimum
             datepicker.handleDateSelection("startDate", moment("10/16/1988", 'MM/DD/YYYY'));
-            
-            var input = TestUtils.findRenderedDOMComponentWithClass(datepicker, "datepicker-input");
+
+            var input = ReactTestUtils.findRenderedDOMComponentWithClass(datepicker, "datepicker-input");
             // check to ensure it has changed
             expect(input.value).toEqual("10/16/1988");
 
             // select something above the max
             datepicker.handleDateSelection("startDate", moment("11/01/1988", 'MM/DD/YYYY'));
 
-            var input = TestUtils.findRenderedDOMComponentWithClass(datepicker, "datepicker-input");
+            var input = ReactTestUtils.findRenderedDOMComponentWithClass(datepicker, "datepicker-input");
             // check to ensure it hasn't changed
             expect(input.value).toEqual("10/16/1988");
 
             // select something below the max
             datepicker.handleDateSelection("startDate", moment("10/27/1988", 'MM/DD/YYYY'));
-            
-            var input = TestUtils.findRenderedDOMComponentWithClass(datepicker, "datepicker-input");
+
+            var input = ReactTestUtils.findRenderedDOMComponentWithClass(datepicker, "datepicker-input");
             // check to ensure it has changed
             expect(input.value).toEqual("10/27/1988");
 
@@ -66,10 +66,9 @@ describe('datepicker', function() {
         });
 
         it('trigger a change event passing the date in the event object', function() {
+            const callback = jest.fn();
 
-            var callback = jasmine.createSpy();
-
-            var datepicker = TestUtils.renderIntoDocument(
+            const datepicker = ReactTestUtils.renderIntoDocument(
                 <DatePicker onChange={callback} defaultDate={date} />
             );
 
@@ -81,6 +80,6 @@ describe('datepicker', function() {
             });
         });
     });
-   
+
 
 });

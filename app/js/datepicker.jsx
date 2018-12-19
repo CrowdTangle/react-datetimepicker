@@ -28,8 +28,8 @@ class DatePicker extends React.Component {
     static defaultProps = {
         isRange: false,
         inputEditable: false,
-        minDate: moment().subtract(20, "years"),
-        maxDate: moment().add(20, "years"),
+        minDate: moment().subtract(50, "years"),
+        maxDate: moment().add(50, "years"),
         ignoreFontAwesome: false,
         enableTime: false,
         onChange: noop
@@ -226,7 +226,6 @@ class DatePicker extends React.Component {
         }
 
         this.setState(newState, function() {
-
             if(this.props.isRange) {
                 this.props.onChange({
                     startDate: this.state.startDate.toDate(),
