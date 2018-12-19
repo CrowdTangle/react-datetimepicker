@@ -336,18 +336,40 @@ var DatePicker = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'input-row' },
-                        _react2.default.createElement('input', { className: 'input-hours', ref: function ref(h) {
+                        _react2.default.createElement('input', { className: 'input-hours',
+                            ref: function ref(h) {
                                 _this2.hour = h;
-                            }, value: this.getHour(), type: 'number', min: 1, max: 12, maxLength: 2, onChange: this.handleHourChange.bind(this), onKeyDown: this.handleKeyDown.bind(this) }),
+                            },
+                            value: this.getHour(),
+                            type: 'number',
+                            min: 1,
+                            max: 12,
+                            maxLength: 2,
+                            onChange: this.handleHourChange.bind(this),
+                            onKeyDown: this.handleKeyDown.bind(this),
+                            tabindex: '-1' }),
                         ':',
-                        _react2.default.createElement('input', { className: 'input-minutes', ref: function ref(m) {
+                        _react2.default.createElement('input', { className: 'input-minutes',
+                            ref: function ref(m) {
                                 _this2.minute = m;
-                            }, value: this.getMinute(), type: 'number', min: 0, max: 59, maxLength: 2, onChange: this.handleMinuteChange.bind(this), onKeyDown: this.handleKeyDown.bind(this) }),
+                            },
+                            value: this.getMinute(),
+                            type: 'number',
+                            min: 0,
+                            max: 59,
+                            maxLength: 2,
+                            onChange: this.handleMinuteChange.bind(this),
+                            onKeyDown: this.handleKeyDown.bind(this),
+                            tabindex: '-1' }),
                         _react2.default.createElement(
                             'select',
-                            { className: 'ampm-picker ignore-chosen', ref: function ref(ampm) {
+                            { className: 'ampm-picker ignore-chosen',
+                                ref: function ref(ampm) {
                                     _this2.ampm = ampm;
-                                }, value: this.getAmPm(), onChange: this.handleAmPmChange.bind(this) },
+                                },
+                                value: this.getAmPm(),
+                                onChange: this.handleAmPmChange.bind(this),
+                                tabindex: '-1' },
                             _react2.default.createElement(
                                 'option',
                                 { value: 'am' },
