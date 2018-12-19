@@ -233,9 +233,31 @@ class DatePicker extends React.Component {
                 </div>
                 <div className="timepicker-inputs">
                     <div className="input-row">
-                        <input className="input-hours" ref={(h) => { this.hour = h; }} value={this.getHour()} type="number" min={1} max={12} maxLength={2} onChange={this.handleHourChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)}/>:
-                        <input className="input-minutes" ref={(m) => { this.minute = m; }} value={this.getMinute()} type="number" min={0} max={59} maxLength={2} onChange={this.handleMinuteChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)}/>
-                        <select className="ampm-picker ignore-chosen" ref={(ampm) => { this.ampm = ampm; }} value={this.getAmPm()} onChange={this.handleAmPmChange.bind(this)}>
+                        <input className="input-hours"
+                               ref={(h) => { this.hour = h; }}
+                               value={this.getHour()}
+                               type="number"
+                               min={1}
+                               max={12}
+                               maxLength={2}
+                               onChange={this.handleHourChange.bind(this)}
+                               onKeyDown={this.handleKeyDown.bind(this)}
+                               tabindex="-1" />:
+                        <input className="input-minutes"
+                               ref={(m) => { this.minute = m; }}
+                               value={this.getMinute()}
+                               type="number"
+                               min={0}
+                               max={59}
+                               maxLength={2}
+                               onChange={this.handleMinuteChange.bind(this)}
+                               onKeyDown={this.handleKeyDown.bind(this)}
+                               tabindex="-1" />
+                        <select className="ampm-picker ignore-chosen"
+                                ref={(ampm) => { this.ampm = ampm; }}
+                                value={this.getAmPm()}
+                                onChange={this.handleAmPmChange.bind(this)}
+                                tabindex="-1" >
                             <option value="am">AM</option>
                             <option value="pm">PM</option>
                         </select>
