@@ -291,9 +291,14 @@ var DatePicker = function (_React$Component) {
             var _this2 = this;
 
             var dateString = this.validateDateString(this.state.startDateInputValue);
-            if (dateString) {
+            var startDate = (0, _moment2.default)(dateString);
+            var minDate = this.getMinDateForType("startDate");
+            var maxDate = this.getMaxDateForType("startDate");
+
+            // If it's a valid date string and the date is within range, set the start date to be the input value
+            if (dateString && startDate.isSameOrAfter(minDate) && startDate.isSameOrBefore(maxDate)) {
                 this.setState({
-                    startDate: (0, _moment2.default)(dateString),
+                    startDate: startDate,
                     startDateInputValue: (0, _moment2.default)(dateString).format(this.state.format)
                 }, function () {
                     if (_this2.dateView.current) {
@@ -315,9 +320,14 @@ var DatePicker = function (_React$Component) {
             var _this3 = this;
 
             var dateString = this.validateDateString(this.state.endDateInputValue);
-            if (dateString) {
+            var endDate = (0, _moment2.default)(dateString);
+            var minDate = this.getMinDateForType("endDate");
+            var maxDate = this.getMaxDateForType("endDate");
+
+            // If it's a valid date string and the date is within range, set the start date to be the input value
+            if (dateString && endDate.isSameOrAfter(minDate) && endDate.isSameOrBefore(maxDate)) {
                 this.setState({
-                    endDate: (0, _moment2.default)(dateString),
+                    endDate: endDate,
                     endDateInputValue: (0, _moment2.default)(dateString).format(this.state.format)
                 }, function () {
                     if (_this3.dateView.current) {
@@ -431,7 +441,7 @@ DatePicker.propTypes = {
 };
 DatePicker.defaultProps = {
     isRange: false,
-    inputEditable: false,
+    inputEditable: true,
     minDate: (0, _moment2.default)().subtract(50, "years"),
     maxDate: (0, _moment2.default)().add(50, "years"),
     ignoreFontAwesome: false,

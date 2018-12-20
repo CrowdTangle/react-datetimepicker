@@ -347,7 +347,7 @@ var DatePicker = function (_React$Component) {
                             maxLength: 2,
                             onChange: this.handleHourChange.bind(this),
                             onKeyDown: this.handleKeyDown.bind(this),
-                            tabindex: '-1' }),
+                            tabIndex: '-1' }),
                         ':',
                         _react2.default.createElement('input', { className: 'input-minutes',
                             ref: function ref(m) {
@@ -360,7 +360,7 @@ var DatePicker = function (_React$Component) {
                             maxLength: 2,
                             onChange: this.handleMinuteChange.bind(this),
                             onKeyDown: this.handleKeyDown.bind(this),
-                            tabindex: '-1' }),
+                            tabIndex: '-1' }),
                         _react2.default.createElement(
                             'select',
                             { className: 'ampm-picker ignore-chosen',
@@ -369,7 +369,7 @@ var DatePicker = function (_React$Component) {
                                 },
                                 value: this.getAmPm(),
                                 onChange: this.handleAmPmChange.bind(this),
-                                tabindex: '-1' },
+                                tabIndex: '-1' },
                             _react2.default.createElement(
                                 'option',
                                 { value: 'am' },

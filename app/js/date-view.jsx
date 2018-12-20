@@ -242,7 +242,7 @@ class DatePicker extends React.Component {
                                maxLength={2}
                                onChange={this.handleHourChange.bind(this)}
                                onKeyDown={this.handleKeyDown.bind(this)}
-                               tabindex="-1" />:
+                               tabIndex="-1" />:
                         <input className="input-minutes"
                                ref={(m) => { this.minute = m; }}
                                value={this.getMinute()}
@@ -252,12 +252,12 @@ class DatePicker extends React.Component {
                                maxLength={2}
                                onChange={this.handleMinuteChange.bind(this)}
                                onKeyDown={this.handleKeyDown.bind(this)}
-                               tabindex="-1" />
+                               tabIndex="-1" />
                         <select className="ampm-picker ignore-chosen"
                                 ref={(ampm) => { this.ampm = ampm; }}
                                 value={this.getAmPm()}
                                 onChange={this.handleAmPmChange.bind(this)}
-                                tabindex="-1" >
+                                tabIndex="-1" >
                             <option value="am">AM</option>
                             <option value="pm">PM</option>
                         </select>
