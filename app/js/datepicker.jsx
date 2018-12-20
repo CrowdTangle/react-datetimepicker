@@ -225,22 +225,7 @@ class DatePicker extends React.Component {
             newState[`${type}InputValue`] = date.format(this.state.format);
         }
 
-        this.setState(newState, function() {
-            if(this.props.isRange) {
-                this.props.onChange({
-                    startDate: this.state.startDate.toDate(),
-                    endDate: this.state.endDate.toDate()
-                })
-            } else {
-                this.props.onChange({
-                    date: this.state.startDate.toDate()
-                })
-            }
-
-            this.toggleGlobalClickBinding();
-        }.bind(this));
-
-
+        this.setState(newState, this.handleOnChange.bind(this));
     }
 
     handleStartDateInputChange(e) {
@@ -280,9 +265,10 @@ class DatePicker extends React.Component {
                 startDate: startDate,
                 startDateInputValue: moment(dateString).format(this.state.format)
             }, () => {
-              if (this.dateView.current) {
-                  this.dateView.current.reset();
-              }
+                this.handleOnChange();
+                if (this.dateView.current) {
+                    this.dateView.current.reset();
+                }
             });
         } else {
             // If invalid date, set input value back to the last validated date
@@ -306,6 +292,7 @@ class DatePicker extends React.Component {
                 endDate: endDate,
                 endDateInputValue: moment(dateString).format(this.state.format)
             }, () => {
+                this.handleOnChange();
                 if (this.dateView.current) {
                     this.dateView.current.reset();
                 }
@@ -316,6 +303,22 @@ class DatePicker extends React.Component {
                 endDateInputValue: this.state.endDate.format(this.state.format)
             })
         }
+    }
+
+    handleOnChange() {
+        if (this.props.isRange) {
+            this.props.onChange({
+                startDate: this.state.startDate.toDate(),
+                endDate: this.state.endDate.toDate()
+            })
+        } else {
+            this.props.onChange({
+                date: this.state.startDate.toDate()
+            })
+        }
+
+        this.toggleGlobalClickBinding();
+
     }
 
     /**** render methods ****/

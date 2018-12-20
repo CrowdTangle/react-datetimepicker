@@ -242,20 +242,7 @@ var DatePicker = function (_React$Component) {
                 newState[type + 'InputValue'] = date.format(this.state.format);
             }
 
-            this.setState(newState, function () {
-                if (this.props.isRange) {
-                    this.props.onChange({
-                        startDate: this.state.startDate.toDate(),
-                        endDate: this.state.endDate.toDate()
-                    });
-                } else {
-                    this.props.onChange({
-                        date: this.state.startDate.toDate()
-                    });
-                }
-
-                this.toggleGlobalClickBinding();
-            }.bind(this));
+            this.setState(newState, this.handleOnChange.bind(this));
         }
     }, {
         key: 'handleStartDateInputChange',
@@ -301,6 +288,7 @@ var DatePicker = function (_React$Component) {
                     startDate: startDate,
                     startDateInputValue: (0, _moment2.default)(dateString).format(this.state.format)
                 }, function () {
+                    _this2.handleOnChange();
                     if (_this2.dateView.current) {
                         _this2.dateView.current.reset();
                     }
@@ -330,6 +318,7 @@ var DatePicker = function (_React$Component) {
                     endDate: endDate,
                     endDateInputValue: (0, _moment2.default)(dateString).format(this.state.format)
                 }, function () {
+                    _this3.handleOnChange();
                     if (_this3.dateView.current) {
                         _this3.dateView.current.reset();
                     }
@@ -340,6 +329,22 @@ var DatePicker = function (_React$Component) {
                     endDateInputValue: this.state.endDate.format(this.state.format)
                 });
             }
+        }
+    }, {
+        key: 'handleOnChange',
+        value: function handleOnChange() {
+            if (this.props.isRange) {
+                this.props.onChange({
+                    startDate: this.state.startDate.toDate(),
+                    endDate: this.state.endDate.toDate()
+                });
+            } else {
+                this.props.onChange({
+                    date: this.state.startDate.toDate()
+                });
+            }
+
+            this.toggleGlobalClickBinding();
         }
 
         /**** render methods ****/
