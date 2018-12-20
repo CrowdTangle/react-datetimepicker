@@ -27,7 +27,7 @@ class DatePicker extends React.Component {
 
     static defaultProps = {
         isRange: false,
-        inputEditable: false,
+        inputEditable: true,
         minDate: moment().subtract(50, "years"),
         maxDate: moment().add(50, "years"),
         ignoreFontAwesome: false,
@@ -270,15 +270,19 @@ class DatePicker extends React.Component {
 
     handleStartDateSet() {
         const dateString = this.validateDateString(this.state.startDateInputValue);
-        if (dateString) {
+        const startDate = moment(dateString);
+        const minDate = this.getMinDateForType("startDate");
+        const maxDate = this.getMaxDateForType("startDate");
+
+        // If it's a valid date string and the date is within range, set the start date to be the input value
+        if (dateString && startDate.isSameOrAfter(minDate) && startDate.isSameOrBefore(maxDate)) {
             this.setState({
-                startDate: moment(dateString),
+                startDate: startDate,
                 startDateInputValue: moment(dateString).format(this.state.format)
             }, () => {
               if (this.dateView.current) {
                   this.dateView.current.reset();
               }
-
             });
         } else {
             // If invalid date, set input value back to the last validated date
@@ -292,9 +296,14 @@ class DatePicker extends React.Component {
 
     handleEndDateSet() {
         const dateString = this.validateDateString(this.state.endDateInputValue);
-        if (dateString) {
+        const endDate = moment(dateString);
+        const minDate = this.getMinDateForType("endDate");
+        const maxDate = this.getMaxDateForType("endDate");
+
+        // If it's a valid date string and the date is within range, set the start date to be the input value
+        if (dateString && endDate.isSameOrAfter(minDate) && endDate.isSameOrBefore(maxDate)) {
             this.setState({
-                endDate: moment(dateString),
+                endDate: endDate,
                 endDateInputValue: moment(dateString).format(this.state.format)
             }, () => {
                 if (this.dateView.current) {
@@ -307,8 +316,6 @@ class DatePicker extends React.Component {
                 endDateInputValue: this.state.endDate.format(this.state.format)
             })
         }
-
-
     }
 
     /**** render methods ****/

@@ -31,17 +31,17 @@
                 <pre><code>
     var DatePicker = require("react-datetimepicker");
 
-    ReactDOM.render(&lt;DatePicker  /&gt;, document.getElementById("content"));
+    ReactDOM.render(&lt;DatePicker inputEditable={false} /&gt;, document.getElementById("content"));
     </code></pre>
             </section>
             <section class="example">
                 <h3>Input Editable Datepicker</h3>
-                <p>Setting inputEditable to true allows you to type in a date directly into the field.</p>
+                <p>Setting inputEditable to true allows you to type in a date directly into the field. By default, inputEditable is true.</p>
                 <div id="example-6"></div>
                 <pre><code>
     var DatePicker = require("react-datetimepicker");
 
-    ReactDOM.render(&lt;DatePicker inputEditable={true} enableTime={true}  /&gt;, document.getElementById("content"));
+    ReactDOM.render(&lt;DatePicker enableTime={true}  /&gt;, document.getElementById("content"));
     </code></pre>
             </section>
             <section class="example">
