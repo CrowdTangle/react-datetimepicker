@@ -1,6 +1,6 @@
 {
   "name": "react-datetimepicker",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A simple datepicker for react.",
   "main": "build/js/datepicker.js",
   "scripts": {
@@ -38,7 +38,9 @@
     "roots": [
       "./__tests__"
     ],
-    "transform": {".*": "./node_modules/babel-jest"},
+    "transform": {
+      ".*": "./node_modules/babel-jest"
+    },
     "moduleFileExtensions": [
       "jsx",
       "js"
@@ -66,7 +68,7 @@
     "extensify": "^1.0.2",
     "jest": "^23.6.0",
     "node-sass": "^3.4.2",
-    "nodemon": "^1.8.1",
+    "nodemon": "^1.18.9",
     "postcss-cli": "^4.1.0",
     "react-addons-test-utils": "^15.6.2",
     "reactify": "^1.1.1",
