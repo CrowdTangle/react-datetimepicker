@@ -1,6 +1,6 @@
 {
   "name": "react-datetimepicker",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A simple datepicker for react.",
   "main": "build/js/datepicker.js",
   "scripts": {
