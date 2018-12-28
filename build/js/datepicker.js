@@ -282,11 +282,15 @@ var DatePicker = function (_React$Component) {
             var minDate = this.getMinDateForType("startDate");
             var maxDate = this.getMaxDateForType("startDate");
 
+            if (!this.props.enableTime) {
+                // round to make sure it's simply the same date;
+                startDate.hour(0).minute(0).second(0).millisecond(0);
+            }
             // If it's a valid date string and the date is within range, set the start date to be the input value
             if (dateString && startDate.isSameOrAfter(minDate) && startDate.isSameOrBefore(maxDate)) {
                 this.setState({
                     startDate: startDate,
-                    startDateInputValue: (0, _moment2.default)(dateString).format(this.state.format)
+                    startDateInputValue: startDate.format(this.state.format)
                 }, function () {
                     _this2.handleOnChange();
                     if (_this2.dateView.current) {
@@ -299,8 +303,6 @@ var DatePicker = function (_React$Component) {
                     startDateInputValue: this.state.startDate.format(this.state.format)
                 });
             }
-
-            this.forceUpdate();
         }
     }, {
         key: 'handleEndDateSet',
@@ -312,11 +314,15 @@ var DatePicker = function (_React$Component) {
             var minDate = this.getMinDateForType("endDate");
             var maxDate = this.getMaxDateForType("endDate");
 
+            if (!this.props.enableTime) {
+                // round to make sure it's simply the same date;
+                endDate.hour(0).minute(0).second(0).millisecond(0);
+            }
             // If it's a valid date string and the date is within range, set the start date to be the input value
             if (dateString && endDate.isSameOrAfter(minDate) && endDate.isSameOrBefore(maxDate)) {
                 this.setState({
                     endDate: endDate,
-                    endDateInputValue: (0, _moment2.default)(dateString).format(this.state.format)
+                    endDateInputValue: endDate.format(this.state.format)
                 }, function () {
                     _this3.handleOnChange();
                     if (_this3.dateView.current) {

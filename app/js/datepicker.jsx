@@ -252,18 +252,21 @@ class DatePicker extends React.Component {
         }
     }
 
-
     handleStartDateSet() {
         const dateString = this.validateDateString(this.state.startDateInputValue);
         const startDate = moment(dateString);
         const minDate = this.getMinDateForType("startDate");
         const maxDate = this.getMaxDateForType("startDate");
 
+        if (!this.props.enableTime) {
+            // round to make sure it's simply the same date;
+            startDate.hour(0).minute(0).second(0).millisecond(0);
+        }
         // If it's a valid date string and the date is within range, set the start date to be the input value
         if (dateString && startDate.isSameOrAfter(minDate) && startDate.isSameOrBefore(maxDate)) {
             this.setState({
                 startDate: startDate,
-                startDateInputValue: moment(dateString).format(this.state.format)
+                startDateInputValue: startDate.format(this.state.format)
             }, () => {
                 this.handleOnChange();
                 if (this.dateView.current) {
@@ -274,10 +277,8 @@ class DatePicker extends React.Component {
             // If invalid date, set input value back to the last validated date
             this.setState({
                 startDateInputValue: this.state.startDate.format(this.state.format)
-            })
+            });
         }
-
-        this.forceUpdate();
     }
 
     handleEndDateSet() {
@@ -286,22 +287,26 @@ class DatePicker extends React.Component {
         const minDate = this.getMinDateForType("endDate");
         const maxDate = this.getMaxDateForType("endDate");
 
+        if (!this.props.enableTime) {
+            // round to make sure it's simply the same date;
+            endDate.hour(0).minute(0).second(0).millisecond(0);
+        }
         // If it's a valid date string and the date is within range, set the start date to be the input value
         if (dateString && endDate.isSameOrAfter(minDate) && endDate.isSameOrBefore(maxDate)) {
             this.setState({
                 endDate: endDate,
-                endDateInputValue: moment(dateString).format(this.state.format)
+                endDateInputValue: endDate.format(this.state.format)
             }, () => {
                 this.handleOnChange();
                 if (this.dateView.current) {
                     this.dateView.current.reset();
                 }
-            })
+            });
         } else {
             // If invalid date, set input value back to the last validated date
             this.setState({
                 endDateInputValue: this.state.endDate.format(this.state.format)
-            })
+            });
         }
     }
 
