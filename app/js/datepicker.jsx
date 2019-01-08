@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import DateView from './date-view';
-import moment from 'moment';
-import chrono from 'chrono-node';
+import React from "react";
+import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
+import DateView from "./date-view";
+import moment from "moment";
+import chrono from "chrono-node";
 
 const DEFAULT_DATE_FORMAT = "MM/DD/YYYY";
 const DEFAULT_DATE_TIME_FORMAT = "MM/DD/YYYY h:mm a";
@@ -42,7 +42,7 @@ class DatePicker extends React.Component {
         let startDate = this.props.defaultDate;
 
 
-        if(!startDate) {
+        if (!startDate) {
             startDate = moment();
         }
 
@@ -79,15 +79,15 @@ class DatePicker extends React.Component {
     }
 
     componentDidMount() {
-        if(this.props.isRange) {
+        if (this.props.isRange) {
             this.props.onChange({
                 startDate: this.state.startDate.toDate(),
                 endDate: this.state.endDate.toDate()
-            })
+            });
         } else {
             this.props.onChange({
                 date: this.state.startDate.toDate()
-            })
+            });
         }
     }
 
@@ -97,7 +97,7 @@ class DatePicker extends React.Component {
             let endDate = newProps.defaultEndDate;
             let startDate = newProps.defaultDate;
 
-            if(!startDate) {
+            if (!startDate) {
                 startDate = moment();
             }
 
@@ -116,9 +116,7 @@ class DatePicker extends React.Component {
 
 
     toggleGlobalClickBinding() {
-        var wrapper = ReactDOM.findDOMNode(this);
-
-        if(this.state.datepickerVisible) {
+        if (this.state.datepickerVisible) {
             this.naturalBinders.bind();
         } else {
             this.naturalBinders.unbind();
@@ -128,10 +126,10 @@ class DatePicker extends React.Component {
     /**** helpers ****/
 
     getMinDateForType(type) {
-        if(type === "startDate") {
+        if (type === "startDate") {
             return this.props.minDate;
-        } else if(type === "endDate") {
-            if(this.state.startDate.isAfter(this.props.minDate)) {
+        } else if (type === "endDate") {
+            if (this.state.startDate.isAfter(this.props.minDate)) {
                 return this.state.startDate;
             } else {
                 return this.props.minDate;
@@ -142,10 +140,10 @@ class DatePicker extends React.Component {
     }
 
     getMaxDateForType(type) {
-        if(type === "endDate") {
+        if (type === "endDate") {
             return this.props.maxDate;
-        } else if(type === "startDate") {
-            if(this.state.endDate.isBefore(this.props.maxDate) && this.props.isRange) {
+        } else if (type === "startDate") {
+            if (this.state.endDate.isBefore(this.props.maxDate) && this.props.isRange) {
                 return this.state.endDate;
             } else {
                 return this.props.maxDate;
@@ -163,7 +161,9 @@ class DatePicker extends React.Component {
     /**** handlers ****/
 
     toggleDatepicker(type, e) {
-        if(e) e.stopPropagation();
+        if (e) {
+            e.stopPropagation();
+        }
 
         this.setState({
             datepickerVisible: type
@@ -171,7 +171,9 @@ class DatePicker extends React.Component {
     }
 
     openDatepicker(type, e) {
-        if(e) e.stopPropagation();
+        if (e) {
+            e.stopPropagation();
+        }
 
         this.setState({
             datepickerVisible: type
@@ -180,7 +182,9 @@ class DatePicker extends React.Component {
 
 
     closeDatepicker(type, e) {
-        if(e) e.stopPropagation();
+        if (e) {
+            e.stopPropagation();
+        }
 
         if (type === "startDate") {
             this.handleStartDateSet();
@@ -196,16 +200,16 @@ class DatePicker extends React.Component {
 
         // round to make sure it's simply the same date;
         mutableDate.hour(0).minute(0).second(0).millisecond(0);
-        if(mutableDate.isBefore(this.props.minDate) || mutableDate.isAfter(this.props.maxDate)) {
+        if (mutableDate.isBefore(this.props.minDate) || mutableDate.isAfter(this.props.maxDate)) {
             return false;
         }
 
-        if(type === "endDate") {
-            if(date.isSameOrBefore(this.state.startDate)) {
+        if (type === "endDate") {
+            if (date.isSameOrBefore(this.state.startDate)) {
                 return false;
             }
-        } else if(type === "startDate") {
-            if(date.isSameOrAfter(this.state.endDate) && this.props.isRange) {
+        } else if (type === "startDate") {
+            if (date.isSameOrAfter(this.state.endDate) && this.props.isRange) {
                 return false;
             }
         }
@@ -213,8 +217,8 @@ class DatePicker extends React.Component {
         var newState = {};
         newState.datepickerVisible = null;
 
-        if(options && typeof options.collapse === "boolean") {
-            if(!options.collapse) {
+        if (options && typeof options.collapse === "boolean") {
+            if (!options.collapse) {
                 newState.datepickerVisible = type;
             }
         }
@@ -259,11 +263,15 @@ class DatePicker extends React.Component {
         const minDate = this.getMinDateForType("startDate");
         const maxDate = this.getMaxDateForType("startDate");
 
+        if (!this.props.enableTime) {
+            // round to make sure it's simply the same date;
+            startDate.hour(0).minute(0).second(0).millisecond(0);
+        }
         // If it's a valid date string and the date is within range, set the start date to be the input value
         if (dateString && startDate.isSameOrAfter(minDate) && startDate.isSameOrBefore(maxDate)) {
             this.setState({
                 startDate: startDate,
-                startDateInputValue: moment(dateString).format(this.state.format)
+                startDateInputValue: startDate.format(this.state.format)
             }, () => {
                 this.handleOnChange();
                 if (this.dateView.current) {
@@ -274,10 +282,8 @@ class DatePicker extends React.Component {
             // If invalid date, set input value back to the last validated date
             this.setState({
                 startDateInputValue: this.state.startDate.format(this.state.format)
-            })
+            });
         }
-
-        this.forceUpdate();
     }
 
     handleEndDateSet() {
@@ -286,22 +292,26 @@ class DatePicker extends React.Component {
         const minDate = this.getMinDateForType("endDate");
         const maxDate = this.getMaxDateForType("endDate");
 
+        if (!this.props.enableTime) {
+            // round to make sure it's simply the same date;
+            endDate.hour(0).minute(0).second(0).millisecond(0);
+        }
         // If it's a valid date string and the date is within range, set the start date to be the input value
         if (dateString && endDate.isSameOrAfter(minDate) && endDate.isSameOrBefore(maxDate)) {
             this.setState({
                 endDate: endDate,
-                endDateInputValue: moment(dateString).format(this.state.format)
+                endDateInputValue: endDate.format(this.state.format)
             }, () => {
                 this.handleOnChange();
                 if (this.dateView.current) {
                     this.dateView.current.reset();
                 }
-            })
+            });
         } else {
             // If invalid date, set input value back to the last validated date
             this.setState({
                 endDateInputValue: this.state.endDate.format(this.state.format)
-            })
+            });
         }
     }
 
@@ -310,11 +320,11 @@ class DatePicker extends React.Component {
             this.props.onChange({
                 startDate: this.state.startDate.toDate(),
                 endDate: this.state.endDate.toDate()
-            })
+            });
         } else {
             this.props.onChange({
                 date: this.state.startDate.toDate()
-            })
+            });
         }
 
         this.toggleGlobalClickBinding();
@@ -324,7 +334,7 @@ class DatePicker extends React.Component {
     /**** render methods ****/
 
     renderDatepicker(type) {
-        if(this.state.datepickerVisible === type) {
+        if (this.state.datepickerVisible === type) {
             return <DateView
                 ref={this.dateView}
                 enableTime={this.props.enableTime}
@@ -338,33 +348,33 @@ class DatePicker extends React.Component {
     render() {
         var endDateDatepicker = null, divider = null, styles = {};
 
-        if(this.props.inputWidth) {
+        if (this.props.inputWidth) {
             styles.width = this.props.inputWidth + "px";
-        } else if(this.props.enableTime) {
+        } else if (this.props.enableTime) {
             styles.width = "120px";
         } else {
             styles.width = "70px";
         }
 
-        if(this.props.isRange) {
+        if (this.props.isRange) {
             const endDateValue = this.props.inputEditable ? this.state.endDateInputValue : this.state.endDate.format(this.state.format);
             endDateDatepicker = (
                 <div className="datepicker-container">
                     <i className="fa fa-calendar"></i>
-                    <input  style={styles}
-                            className="datepicker-input"
-                            readOnly={!this.props.inputEditable}
-                            value={endDateValue}
-                            type="text"
+                    <input style={styles}
+                        className="datepicker-input"
+                        readOnly={!this.props.inputEditable}
+                        value={endDateValue}
+                        type="text"
 
-                            onChange={this.handleEndDateInputChange.bind(this)}
-                            onBlur={this.closeDatepicker.bind(this, "endDate")}
-                            onFocus={this.openDatepicker.bind(this, "endDate")}
-                            onKeyPress={this.handleEndDateKeyPress.bind(this)} />
+                        onChange={this.handleEndDateInputChange.bind(this)}
+                        onBlur={this.closeDatepicker.bind(this, "endDate")}
+                        onFocus={this.openDatepicker.bind(this, "endDate")}
+                        onKeyPress={this.handleEndDateKeyPress.bind(this)} />
                     {this.renderDatepicker("endDate")}
                 </div>
             );
-            divider =  <span className="datepicker-divider">-</span>;
+            divider = <span className="datepicker-divider">-</span>;
         }
         const startDateValue = this.props.inputEditable ? this.state.startDateInputValue : this.state.startDate.format(this.state.format);
 
@@ -372,21 +382,21 @@ class DatePicker extends React.Component {
             <div onClick={stopBubble} className="datepicker-wrapper">
                 <div className="datepicker-container">
                     <i className="fa fa-calendar"></i>
-                    <input  style={styles}
-                            className="datepicker-input"
-                            readOnly={!this.props.inputEditable}
-                            value={startDateValue}
-                            type="text"
-                            onBlur={this.closeDatepicker.bind(this, "startDate")}
-                            onFocus={this.openDatepicker.bind(this, "startDate")}
-                            onChange={this.handleStartDateInputChange.bind(this)}
-                            onKeyPress={this.handleStartDateKeyPress.bind(this)} />
+                    <input style={styles}
+                        className="datepicker-input"
+                        readOnly={!this.props.inputEditable}
+                        value={startDateValue}
+                        type="text"
+                        onBlur={this.closeDatepicker.bind(this, "startDate")}
+                        onFocus={this.openDatepicker.bind(this, "startDate")}
+                        onChange={this.handleStartDateInputChange.bind(this)}
+                        onKeyPress={this.handleStartDateKeyPress.bind(this)} />
                     {this.renderDatepicker("startDate")}
                 </div>
                 {divider}
                 {endDateDatepicker}
             </div>
-        )
+        );
         return content;
     }
 }
@@ -405,11 +415,11 @@ function getBinders(callback) {
         unbind: function() {
             document.removeEventListener("click", callback, false);
         }
-    }
+    };
 }
 
 function noop(data) {
-   console.log("changing", data);
+    console.log("changing", data);
 }
 
 
