@@ -14,9 +14,9 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _moment = require('moment');
+var _momentTimezone = require('moment-timezone');
 
-var _moment2 = _interopRequireDefault(_moment);
+var _momentTimezone2 = _interopRequireDefault(_momentTimezone);
 
 var _weekRow = require('./week-row');
 
@@ -43,7 +43,7 @@ var MonthView = function (_React$Component) {
         key: 'renderWeeks',
         value: function renderWeeks() {
             // start at the first of the month
-            var currentDate = (0, _moment2.default)(this.props.date).date(1).hour(0).minute(0).second(0).milliseconds(0),
+            var currentDate = (0, _momentTimezone2.default)(this.props.date).date(1).hour(0).minute(0).second(0).milliseconds(0),
                 currentMonth = currentDate.month();
 
             var weeks = [],
@@ -51,11 +51,11 @@ var MonthView = function (_React$Component) {
 
             while (currentDate.month() === currentMonth) {
                 var dayOfWeek = currentDate.day(),
-                    dateToPass = (0, _moment2.default)(currentDate);
+                    dateToPass = (0, _momentTimezone2.default)(currentDate);
 
                 if (i === 0) {
                     if (dayOfWeek !== 0) {
-                        dateToPass = (0, _moment2.default)(currentDate).subtract(currentDate.day(), "days");
+                        dateToPass = (0, _momentTimezone2.default)(currentDate).subtract(currentDate.day(), "days");
                     }
                 }
 
@@ -84,11 +84,11 @@ var MonthView = function (_React$Component) {
 }(_react2.default.Component);
 
 MonthView.propTypes = {
-    date: _propTypes2.default.instanceOf(_moment2.default).isRequired,
+    date: _propTypes2.default.instanceOf(_momentTimezone2.default).isRequired,
     handleSelection: _propTypes2.default.func.isRequired,
-    minDate: _propTypes2.default.instanceOf(_moment2.default),
-    maxDate: _propTypes2.default.instanceOf(_moment2.default),
-    selectedDate: _propTypes2.default.instanceOf(_moment2.default)
+    minDate: _propTypes2.default.instanceOf(_momentTimezone2.default),
+    maxDate: _propTypes2.default.instanceOf(_momentTimezone2.default),
+    selectedDate: _propTypes2.default.instanceOf(_momentTimezone2.default)
 };
 
 

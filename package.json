@@ -4,7 +4,7 @@
   "description": "A simple datepicker for react.",
   "main": "build/js/datepicker.js",
   "scripts": {
-    "prepublish": "build",
+    "prepublish": "yarn build",
     "test": "jest",
     "watch": "npm run watch:js && npm run watch:css",
     "watch:js": "watchify -t [ babelify --presets [ es2015 react stage-0 ] ] --extension=.jsx demo/main.jsx -o demo/bundle.js -dv",
@@ -70,7 +70,9 @@
     "node-sass": "^3.4.2",
     "nodemon": "^1.18.9",
     "postcss-cli": "^4.1.0",
+    "react": "^16.6.0",
     "react-addons-test-utils": "^15.6.2",
+    "react-dom": "^16.6.0",
     "reactify": "^1.1.1",
     "watchify": "^3.7.0"
   },
@@ -79,8 +81,12 @@
     "classnames": "^2.2.6",
     "jest-cli": "^23.6.0",
     "moment": "^2.11.0",
-    "prop-types": "^15.6.2",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0"
+    "moment-timezone": "^0.5.23",
+    "prop-types": "^15.6.2"
+  },
+  "peerDependencies": {
+    "moment-timezone": "0.5.x",
+    "react": "16.x",
+    "react-dom": "^16.x"
   }
 }
