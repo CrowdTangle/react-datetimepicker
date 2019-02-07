@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import classnames from 'classnames';
 
 class WeekRow extends React.Component {
@@ -24,7 +24,7 @@ class WeekRow extends React.Component {
     }
 
     renderDates() {
-        var currentDate = moment(this.props.date), dates = [], count = 0, now = moment();
+        var currentDate = this.props.date.clone(), dates = [], count = 0, now = moment();
 
         while(count < 7) {
             count++;
@@ -35,7 +35,17 @@ class WeekRow extends React.Component {
                 "disabled": currentDate.isBefore(this.props.minDate) || currentDate.isAfter(this.props.maxDate)
             });
 
-            dates.push(<span onClick={this.handleClick.bind(this, moment(currentDate))} className={classes} key={currentDate.date()}>{currentDate.date()}</span>);
+            const dateToSelect = currentDate.clone();
+
+            dates.push(
+              <span
+                onClick={() => {
+                  this.handleClick(dateToSelect);
+                }}
+                className={classes}
+                key={currentDate.date()}>{currentDate.date()}
+              </span>
+            );
 
             currentDate.add(1, "days");
         }

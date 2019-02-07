@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import MonthView from './month-view';
 import classnames from 'classnames';
 
@@ -20,15 +20,14 @@ class DatePicker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: moment(this.props.selectedDate),
+            date: this.props.selectedDate,
             timepickerVisible: false
         };
     }
 
     reset() {
-      console.log("resetting to ", this.props.selectedDate);
       this.setState({
-        date: moment(this.props.selectedDate)
+        date: this.props.selectedDate
       });
     }
 

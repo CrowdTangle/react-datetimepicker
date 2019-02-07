@@ -14,9 +14,9 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _moment = require('moment');
+var _momentTimezone = require('moment-timezone');
 
-var _moment2 = _interopRequireDefault(_moment);
+var _momentTimezone2 = _interopRequireDefault(_momentTimezone);
 
 var _monthView = require('./month-view');
 
@@ -46,7 +46,7 @@ var DatePicker = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (DatePicker.__proto__ || Object.getPrototypeOf(DatePicker)).call(this, props));
 
         _this.state = {
-            date: (0, _moment2.default)(_this.props.selectedDate),
+            date: _this.props.selectedDate,
             timepickerVisible: false
         };
         return _this;
@@ -55,9 +55,8 @@ var DatePicker = function (_React$Component) {
     _createClass(DatePicker, [{
         key: 'reset',
         value: function reset() {
-            console.log("resetting to ", this.props.selectedDate);
             this.setState({
-                date: (0, _moment2.default)(this.props.selectedDate)
+                date: this.props.selectedDate
             });
         }
     }, {
@@ -417,9 +416,9 @@ var DatePicker = function (_React$Component) {
 }(_react2.default.Component);
 
 DatePicker.propTypes = {
-    minDate: _propTypes2.default.instanceOf(_moment2.default),
-    maxDate: _propTypes2.default.instanceOf(_moment2.default),
-    selectedDate: _propTypes2.default.instanceOf(_moment2.default), // todo validate that it's between min and max
+    minDate: _propTypes2.default.instanceOf(_momentTimezone2.default),
+    maxDate: _propTypes2.default.instanceOf(_momentTimezone2.default),
+    selectedDate: _propTypes2.default.instanceOf(_momentTimezone2.default), // todo validate that it's between min and max
     enableTime: _propTypes2.default.bool
 };
 
