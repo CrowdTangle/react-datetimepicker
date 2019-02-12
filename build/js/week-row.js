@@ -14,9 +14,9 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _moment = require('moment');
+var _momentTimezone = require('moment-timezone');
 
-var _moment2 = _interopRequireDefault(_moment);
+var _momentTimezone2 = _interopRequireDefault(_momentTimezone);
 
 var _classnames = require('classnames');
 
@@ -47,27 +47,43 @@ var WeekRow = function (_React$Component) {
     }, {
         key: 'renderDates',
         value: function renderDates() {
-            var currentDate = (0, _moment2.default)(this.props.date),
+            var _this2 = this;
+
+            var currentDate = this.props.date.clone(),
                 dates = [],
                 count = 0,
-                now = (0, _moment2.default)();
+                now = (0, _momentTimezone2.default)();
 
-            while (count < 7) {
+            var _loop = function _loop() {
                 count++;
-                var classes = (0, _classnames2.default)("day-block", {
-                    "in-month": currentDate.month() === this.props.month,
+                classes = (0, _classnames2.default)("day-block", {
+                    "in-month": currentDate.month() === _this2.props.month,
                     "today": currentDate.format("MM/DD/YYYY") === now.format("MM/DD/YYYY"),
-                    "selected": this.props.selectedDate && currentDate.format("MM/DD/YYYY") === this.props.selectedDate.format("MM/DD/YYYY"),
-                    "disabled": currentDate.isBefore(this.props.minDate) || currentDate.isAfter(this.props.maxDate)
+                    "selected": _this2.props.selectedDate && currentDate.format("MM/DD/YYYY") === _this2.props.selectedDate.format("MM/DD/YYYY"),
+                    "disabled": currentDate.isBefore(_this2.props.minDate) || currentDate.isAfter(_this2.props.maxDate)
                 });
+
+
+                var dateToSelect = currentDate.clone();
 
                 dates.push(_react2.default.createElement(
                     'span',
-                    { onClick: this.handleClick.bind(this, (0, _moment2.default)(currentDate)), className: classes, key: currentDate.date() },
+                    {
+                        onClick: function onClick() {
+                            _this2.handleClick(dateToSelect);
+                        },
+                        className: classes,
+                        key: currentDate.date() },
                     currentDate.date()
                 ));
 
                 currentDate.add(1, "days");
+            };
+
+            while (count < 7) {
+                var classes;
+
+                _loop();
             }
 
             return dates;
@@ -87,12 +103,12 @@ var WeekRow = function (_React$Component) {
 }(_react2.default.Component);
 
 WeekRow.propTypes = {
-    date: _propTypes2.default.instanceOf(_moment2.default).isRequired,
+    date: _propTypes2.default.instanceOf(_momentTimezone2.default).isRequired,
     month: _propTypes2.default.number.isRequired,
     handleSelection: _propTypes2.default.func.isRequired,
-    minDate: _propTypes2.default.instanceOf(_moment2.default),
-    maxDate: _propTypes2.default.instanceOf(_moment2.default),
-    selectedDate: _propTypes2.default.instanceOf(_moment2.default)
+    minDate: _propTypes2.default.instanceOf(_momentTimezone2.default),
+    maxDate: _propTypes2.default.instanceOf(_momentTimezone2.default),
+    selectedDate: _propTypes2.default.instanceOf(_momentTimezone2.default)
 };
 
 
