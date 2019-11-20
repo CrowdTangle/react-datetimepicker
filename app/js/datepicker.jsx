@@ -85,12 +85,12 @@ class DatePicker extends React.Component {
     componentDidMount() {
         if (this.props.isRange) {
             this.props.onChange({
-                startDate: this.state.startDate.toDate(),
-                endDate: this.state.endDate.toDate()
+                startDate: this.state.startDate,
+                endDate: this.state.endDate
             });
         } else {
             this.props.onChange({
-                date: this.state.startDate.toDate()
+                date: this.state.startDate
             });
         }
     }
@@ -340,12 +340,12 @@ class DatePicker extends React.Component {
     handleOnChange() {
         if (this.props.isRange) {
             this.props.onChange({
-                startDate: this.state.startDate.toDate(),
-                endDate: this.state.endDate.toDate()
+                startDate: this.state.startDate,
+                endDate: this.state.endDate
             });
         } else {
             this.props.onChange({
-                date: this.state.startDate.toDate()
+                date: this.state.startDate
             });
         }
 
@@ -361,6 +361,7 @@ class DatePicker extends React.Component {
                 ref={this.dateView}
                 enableTime={this.props.enableTime}
                 selectedDate={this.state[type]}
+                timezone={this.props.timezone}
                 maxDate={this.getMaxDateForType(type)}
                 minDate={this.getMinDateForType(type)}
                 handleSelection={this.handleDateSelection.bind(this, type)} />;

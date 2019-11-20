@@ -7,7 +7,7 @@ import classnames from 'classnames';
 class WeekRow extends React.Component {
 
     static propTypes = {
-        date: PropTypes.instanceOf(moment).isRequired,
+        dates: PropTypes.array,
         month: PropTypes.number.isRequired,
         handleSelection: PropTypes.func.isRequired,
         minDate: PropTypes.instanceOf(moment),
@@ -20,37 +20,36 @@ class WeekRow extends React.Component {
     }
 
     handleClick(date) {
-        this.props.handleSelection(date);
+        this.props.handleSelection(moment.tz(date, "MM/DD/YYYY", this.props.timezone));
     }
 
     renderDates() {
-        var currentDate = this.props.date.clone(), dates = [], count = 0, now = moment();
+        let dates = this.props.dates;
+        let dateViews = [];
 
-        while(count < 7) {
-            count++;
+        for(let i = 0; i < dates.length; i++) {
+          let currentDate = dates[i];
+
             var classes = classnames("day-block", {
-                "in-month": currentDate.month() === this.props.month,
-                "today": currentDate.format("MM/DD/YYYY") === now.format("MM/DD/YYYY"),
-                "selected": this.props.selectedDate && currentDate.format("MM/DD/YYYY") === this.props.selectedDate.format("MM/DD/YYYY"),
-                "disabled": currentDate.isBefore(this.props.minDate) || currentDate.isAfter(this.props.maxDate)
+                "in-month": currentDate.inMonth,
+                "today": currentDate.today,
+                "selected": currentDate.selected,
+                "disabled": currentDate.disabled
             });
 
-            const dateToSelect = currentDate.clone();
 
-            dates.push(
+            dateViews.push(
               <span
                 onClick={() => {
-                  this.handleClick(dateToSelect);
+                  this.handleClick(currentDate.formattedDate);
                 }}
                 className={classes}
-                key={currentDate.date()}>{currentDate.date()}
+                key={currentDate.date}>{currentDate.date}
               </span>
             );
-
-            currentDate.add(1, "days");
         }
 
-        return dates;
+        return dateViews;
     }
 
     render() {

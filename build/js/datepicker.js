@@ -93,12 +93,12 @@ var DatePicker = function (_React$Component) {
         value: function componentDidMount() {
             if (this.props.isRange) {
                 this.props.onChange({
-                    startDate: this.state.startDate.toDate(),
-                    endDate: this.state.endDate.toDate()
+                    startDate: this.state.startDate,
+                    endDate: this.state.endDate
                 });
             } else {
                 this.props.onChange({
-                    date: this.state.startDate.toDate()
+                    date: this.state.startDate
                 });
             }
         }
@@ -371,12 +371,12 @@ var DatePicker = function (_React$Component) {
         value: function handleOnChange() {
             if (this.props.isRange) {
                 this.props.onChange({
-                    startDate: this.state.startDate.toDate(),
-                    endDate: this.state.endDate.toDate()
+                    startDate: this.state.startDate,
+                    endDate: this.state.endDate
                 });
             } else {
                 this.props.onChange({
-                    date: this.state.startDate.toDate()
+                    date: this.state.startDate
                 });
             }
 
@@ -393,6 +393,7 @@ var DatePicker = function (_React$Component) {
                     ref: this.dateView,
                     enableTime: this.props.enableTime,
                     selectedDate: this.state[type],
+                    timezone: this.props.timezone,
                     maxDate: this.getMaxDateForType(type),
                     minDate: this.getMinDateForType(type),
                     handleSelection: this.handleDateSelection.bind(this, type) });
