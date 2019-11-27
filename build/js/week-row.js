@@ -42,51 +42,46 @@ var WeekRow = function (_React$Component) {
     _createClass(WeekRow, [{
         key: 'handleClick',
         value: function handleClick(date) {
-            this.props.handleSelection(date);
+            this.props.handleSelection(_momentTimezone2.default.tz(date, "MM/DD/YYYY", this.props.timezone));
         }
     }, {
         key: 'renderDates',
         value: function renderDates() {
             var _this2 = this;
 
-            var currentDate = this.props.date.clone(),
-                dates = [],
-                count = 0,
-                now = (0, _momentTimezone2.default)();
+            var dates = this.props.dates;
+            var dateViews = [];
 
-            var _loop = function _loop() {
-                count++;
+            var _loop = function _loop(i) {
+                var currentDate = dates[i];
+
                 classes = (0, _classnames2.default)("day-block", {
-                    "in-month": currentDate.month() === _this2.props.month,
-                    "today": currentDate.format("MM/DD/YYYY") === now.format("MM/DD/YYYY"),
-                    "selected": _this2.props.selectedDate && currentDate.format("MM/DD/YYYY") === _this2.props.selectedDate.format("MM/DD/YYYY"),
-                    "disabled": currentDate.isBefore(_this2.props.minDate) || currentDate.isAfter(_this2.props.maxDate)
+                    "in-month": currentDate.inMonth,
+                    "today": currentDate.today,
+                    "selected": currentDate.selected,
+                    "disabled": currentDate.disabled
                 });
 
 
-                var dateToSelect = currentDate.clone();
-
-                dates.push(_react2.default.createElement(
+                dateViews.push(_react2.default.createElement(
                     'span',
                     {
                         onClick: function onClick() {
-                            _this2.handleClick(dateToSelect);
+                            _this2.handleClick(currentDate.formattedDate);
                         },
                         className: classes,
-                        key: currentDate.date() },
-                    currentDate.date()
+                        key: currentDate.date },
+                    currentDate.date
                 ));
-
-                currentDate.add(1, "days");
             };
 
-            while (count < 7) {
+            for (var i = 0; i < dates.length; i++) {
                 var classes;
 
-                _loop();
+                _loop(i);
             }
 
-            return dates;
+            return dateViews;
         }
     }, {
         key: 'render',
@@ -103,7 +98,7 @@ var WeekRow = function (_React$Component) {
 }(_react2.default.Component);
 
 WeekRow.propTypes = {
-    date: _propTypes2.default.instanceOf(_momentTimezone2.default).isRequired,
+    dates: _propTypes2.default.array,
     month: _propTypes2.default.number.isRequired,
     handleSelection: _propTypes2.default.func.isRequired,
     minDate: _propTypes2.default.instanceOf(_momentTimezone2.default),

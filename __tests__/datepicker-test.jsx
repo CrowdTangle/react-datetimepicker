@@ -76,7 +76,7 @@ describe('datepicker', function() {
             datepicker.handleDateSelection("startDate", moment("10/14/1988", 'MM/DD/YYYY'));
 
             expect(callback).toHaveBeenCalledWith({
-                date: moment("10/14/1988", 'MM/DD/YYYY').toDate()
+                date: moment("10/14/1988", 'MM/DD/YYYY')
             });
         });
     });
