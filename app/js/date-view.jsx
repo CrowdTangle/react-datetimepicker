@@ -190,13 +190,13 @@ class DatePicker extends React.Component {
     renderDayLetters() {
         return (
             <div className="datepicker-day-headers">
-                <span>S</span>
-                <span>M</span>
-                <span>T</span>
-                <span>W</span>
-                <span>T</span>
-                <span>F</span>
-                <span>S</span>
+                <span>SUN</span>
+                <span>MON</span>
+                <span>TUE</span>
+                <span>WED</span>
+                <span>THU</span>
+                <span>FRI</span>
+                <span>SAT</span>
             </div>
         );
     }

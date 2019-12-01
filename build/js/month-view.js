@@ -50,6 +50,14 @@ var MonthView = function (_React$Component) {
             var weeks = [];
             var i = 0;
 
+            /**
+             * So the basic plan here is to walk up by day. When we hit a sunday,
+             * collect the next 7 days and pass them into the week to render. If the first
+             * day isn't a sunday, we need to render the days from the previous month,
+             * so we'll subtract those off the bat. Finally, cloning moments is a little
+             * tempermental, so rather than passing in moment objects, we just pass in
+             * the data we need to the week view
+             */
             while (currentDate.month() <= currentMonth) {
                 var dayOfWeek = currentDate.day();
 

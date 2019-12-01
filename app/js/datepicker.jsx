@@ -374,9 +374,9 @@ class DatePicker extends React.Component {
         if (this.props.inputWidth) {
             styles.width = this.props.inputWidth + "px";
         } else if (this.props.enableTime) {
-            styles.width = "120px";
+            styles.width = "165px";
         } else {
-            styles.width = "70px";
+            styles.width = "115px";
         }
 
         if (this.props.isRange) {

@@ -246,37 +246,37 @@ var DatePicker = function (_React$Component) {
                 _react2.default.createElement(
                     'span',
                     null,
-                    'S'
+                    'SUN'
                 ),
                 _react2.default.createElement(
                     'span',
                     null,
-                    'M'
+                    'MON'
                 ),
                 _react2.default.createElement(
                     'span',
                     null,
-                    'T'
+                    'TUE'
                 ),
                 _react2.default.createElement(
                     'span',
                     null,
-                    'W'
+                    'WED'
                 ),
                 _react2.default.createElement(
                     'span',
                     null,
-                    'T'
+                    'THU'
                 ),
                 _react2.default.createElement(
                     'span',
                     null,
-                    'F'
+                    'FRI'
                 ),
                 _react2.default.createElement(
                     'span',
                     null,
-                    'S'
+                    'SAT'
                 )
             );
         }
