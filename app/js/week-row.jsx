@@ -19,9 +19,7 @@ class WeekRow extends React.Component {
     }
 
     handleClick(date) {
-        console.log("handling selection!", date, this.props.timezone);
         const m = moment.tz(date, "MM/DD/YYYY", this.props.timezone);
-        console.log("moment!", m)
         this.props.handleSelection(m);
     }
 

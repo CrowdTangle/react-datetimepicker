@@ -55,9 +55,5 @@ ReactDOM.render(
 )
 
 ReactDOM.render(
-    <DatePicker onChange={(res) => {
-      console.log("change", res);
-      console.log("change", res.date.tz());
-      console.log("change", res.date.clone().tz());
-    }} enableTime={true} defaultDate={moment("10/31/2019", "MM/DD/YYYY")} timezone="Asia/Hong_Kong" />, document.getElementById("example-7")
+    <DatePicker enableTime={true} defaultDate={moment("10/31/2019", "MM/DD/YYYY")} timezone="Asia/Hong_Kong" />, document.getElementById("example-7")
 )
