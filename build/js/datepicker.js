@@ -220,7 +220,6 @@ var DatePicker = function (_React$Component) {
     }, {
         key: "handleDateSelection",
         value: function handleDateSelection(type, date, options) {
-            console.log("handling date selection", type, date.format(), options);
             var mutableDate = date.clone();
 
             // round to make sure it's simply the same date;
@@ -398,6 +397,10 @@ var DatePicker = function (_React$Component) {
         key: "renderDatepicker",
         value: function renderDatepicker(type) {
             if (this.state.datepickerVisible === type) {
+                console.log("rendering datepicker with selected date");
+                console.log(type);
+                console.log(this.state[type]);
+                console.log(this.state[type].format());
                 return _react2.default.createElement(_dateView2.default, {
                     ref: this.dateView,
                     enableTime: this.props.enableTime,
