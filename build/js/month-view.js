@@ -51,8 +51,6 @@ var MonthView = function (_React$Component) {
             var weeks = [];
             var i = 0;
 
-            console.log("currentMonth", currentMonth);
-
             /**
              * So the basic plan here is to walk up by day. When we hit a sunday,
              * collect the next 7 days and pass them into the week to render. If the first
