@@ -102,8 +102,7 @@ WeekRow.propTypes = {
     month: _propTypes2.default.number.isRequired,
     handleSelection: _propTypes2.default.func.isRequired,
     minDate: _propTypes2.default.instanceOf(_momentTimezone2.default),
-    maxDate: _propTypes2.default.instanceOf(_momentTimezone2.default),
-    selectedDate: _propTypes2.default.instanceOf(_momentTimezone2.default)
+    maxDate: _propTypes2.default.instanceOf(_momentTimezone2.default)
 };
 
 

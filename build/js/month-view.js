@@ -101,14 +101,13 @@ var MonthView = function (_React$Component) {
                     }
 
                     weeks.push(_react2.default.createElement(_weekRow2.default, {
-                        selectedDate: this.props.selectedDate,
                         maxDate: this.props.maxDate,
                         minDate: this.props.minDate,
                         timezone: this.props.timezone,
                         handleSelection: this.props.handleSelection,
                         month: currentMonth,
                         dates: dates,
-                        key: currentDate.date() }));
+                        key: currentDate.date() + "_" + currentDate.year() }));
 
                     currentDate.add(1, "days");
                     i++;

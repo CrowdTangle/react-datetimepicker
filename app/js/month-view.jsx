@@ -79,14 +79,13 @@ class MonthView extends React.Component {
               }
 
                weeks.push(<WeekRow
-                 selectedDate={this.props.selectedDate}
                  maxDate={this.props.maxDate}
                  minDate={this.props.minDate}
                  timezone={this.props.timezone}
                  handleSelection={this.props.handleSelection}
                  month={currentMonth}
                  dates={dates}
-                 key={currentDate.date()} />);
+                 key={currentDate.date() + "_" + currentDate.year()} />);
 
 
                 currentDate.add(1, "days");
