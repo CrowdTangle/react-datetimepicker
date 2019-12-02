@@ -61,7 +61,6 @@ var MonthView = function (_React$Component) {
              */
             while (currentDate.month() <= currentMonth && currentDate.year() <= currentYear) {
                 var dayOfWeek = currentDate.day();
-                console.log("rendering", currentDate.format());
 
                 // if it's the first day of the month
                 if (i === 0) {
@@ -117,8 +116,6 @@ var MonthView = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log(this.props);
-
             return _react2.default.createElement(
                 'div',
                 { className: 'datepicker-monthview' },

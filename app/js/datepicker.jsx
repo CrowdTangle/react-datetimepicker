@@ -72,8 +72,6 @@ class DatePicker extends React.Component {
             format: dateFormat
         };
 
-        console.log("setting state", endDate.format(), startDate.format());
-
         var toggleFunction = this.toggleDatepicker.bind(this, null);
 
         this.naturalBinders = getBinders(toggleFunction);
@@ -313,8 +311,6 @@ class DatePicker extends React.Component {
         const endDate = moment.tz(dateString, timezone);
         const minDate = this.getMinDateForType("endDate");
         const maxDate = this.getMaxDateForType("endDate");
-
-        console.log("Setting end date");
 
 
         if (!enableTime) {

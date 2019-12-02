@@ -131,8 +131,6 @@ var DatePicker = function (_React$Component) {
                 value += 12;
             }
 
-            console.log("setting hour to " + value);
-
             date.hour(value);
 
             this.setState({

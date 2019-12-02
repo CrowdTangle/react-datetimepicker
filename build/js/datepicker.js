@@ -77,8 +77,6 @@ var DatePicker = function (_React$Component) {
             format: dateFormat
         };
 
-        console.log("setting state", endDate.format(), startDate.format());
-
         var toggleFunction = _this.toggleDatepicker.bind(_this, null);
 
         _this.naturalBinders = getBinders(toggleFunction);
@@ -342,8 +340,6 @@ var DatePicker = function (_React$Component) {
             var endDate = _momentTimezone2.default.tz(dateString, timezone);
             var minDate = this.getMinDateForType("endDate");
             var maxDate = this.getMaxDateForType("endDate");
-
-            console.log("Setting end date");
 
             if (!enableTime) {
                 // round to make sure it's simply the same date;
