@@ -211,7 +211,6 @@ class DatePicker extends React.Component {
     }
 
     handleDateSelection(type, date, options) {
-        console.log("handling date selection", type, date.format(), options);
         var mutableDate = date.clone();
 
         // round to make sure it's simply the same date;
@@ -368,6 +367,10 @@ class DatePicker extends React.Component {
 
     renderDatepicker(type) {
         if (this.state.datepickerVisible === type) {
+            console.log("rendering datepicker with selected date");
+            console.log(type);
+            console.log(this.state[type]);
+            console.log(this.state[type].format());
             return <DateView
                 ref={this.dateView}
                 enableTime={this.props.enableTime}
