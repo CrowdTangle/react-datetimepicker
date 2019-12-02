@@ -47,7 +47,7 @@ ReactDOM.render(
 )
 
 ReactDOM.render(
-    <DatePicker defaultDate={moment("10/31/2015", "MM/DD/YYYY")} minDate={moment("10/21/2015", "MM/DD/YYYY")} maxDate={moment("11/21/2015", "MM/DD/YYYY")} />, document.getElementById("example-4")
+    <DatePicker defaultDate={moment("10/31/2019", "MM/DD/YYYY")} minDate={moment("01/01/2019", "MM/DD/YYYY")} maxDate={moment("01/01/2020", "MM/DD/YYYY")} />, document.getElementById("example-4")
 )
 
 ReactDOM.render(

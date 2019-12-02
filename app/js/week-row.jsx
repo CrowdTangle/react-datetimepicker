@@ -11,8 +11,7 @@ class WeekRow extends React.Component {
         month: PropTypes.number.isRequired,
         handleSelection: PropTypes.func.isRequired,
         minDate: PropTypes.instanceOf(moment),
-        maxDate: PropTypes.instanceOf(moment),
-        selectedDate: PropTypes.instanceOf(moment)
+        maxDate: PropTypes.instanceOf(moment)
     };
 
     constructor(props) {

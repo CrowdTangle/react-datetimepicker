@@ -32,7 +32,7 @@ class DatePicker extends React.Component {
     }
 
     shiftDate(direction) {
-        var date = this.state.date;
+        var date = this.state.date.clone();
         if(direction === "back") {
             date = date.subtract(1, "months");
         } else {
@@ -95,8 +95,6 @@ class DatePicker extends React.Component {
         if(this.getAmPm() === "pm") {
             value += 12;
         }
-
-        console.log("setting hour to " + value);
 
         date.hour(value);
 
@@ -190,13 +188,13 @@ class DatePicker extends React.Component {
     renderDayLetters() {
         return (
             <div className="datepicker-day-headers">
-                <span>S</span>
-                <span>M</span>
-                <span>T</span>
-                <span>W</span>
-                <span>T</span>
-                <span>F</span>
-                <span>S</span>
+                <span>SUN</span>
+                <span>MON</span>
+                <span>TUE</span>
+                <span>WED</span>
+                <span>THU</span>
+                <span>FRI</span>
+                <span>SAT</span>
             </div>
         );
     }

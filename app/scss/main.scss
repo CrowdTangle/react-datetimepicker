@@ -1,241 +1,279 @@
-$font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-$width: 250px;
-$light-gray: #f7f7f7;
+$font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$width: 325px;
+$border-radius: 4px;
+
+$light-gray: #f1f3f4;
+$dark-gray: #2d2d2d;
+$bright-blue: #2684FF;
 
 .datepicker-wrapper {
-    display: flex;
+  display: flex;
+  margin: 5px 0 0;
 }
 
-
 .datepicker {
+  position: absolute;
+  font-family: $font-family;
+  font-size: 13px;
+  width: $width;
+  box-sizing: border-box;
+  background: white;
+  margin-top: 10px;
+  padding: 0 0 15px;
+  border-radius: $border-radius;
+  box-shadow: 0 1px 7px rgba(27, 31, 35, 0.35);
+  overflow: hidden;
+  z-index: 999999;
+
+  &.time-enabled {
+    padding-bottom: 40px;
+  }
+
+  h3 {
     font-family: $font-family;
-    font-size: 13px;
-    width: $width;
-    box-sizing: border-box;
-    background: white;
-    margin-top: 10px;
-    box-shadow: 0px 0px 3px rgba(0,0,0,.5);
-    position: absolute;
-    padding-bottom: 0px;
-    overflow: hidden;
+    text-align: center;
+    height: 35px;
+    align-items: center;
+    font-size: 16px;
+    background: $bright-blue;
+    padding: 10px 0px;
+    margin: 0;
+    color: white;
+    display: flex;
+    justify-content: space-between;
 
-    &.time-enabled {
-        padding-bottom: 20px;
+    span {
+      font-weight: bold;
+      font-size: 16px;
     }
-
-    h3 {
-        text-align: center;
-        height: 35px;
-        align-items: center;
-        font-size: 16px;
-        background: steelblue;
-        padding: 10px 0px;
-        margin-top: 0px;
-        color: white;
-        display: flex;
-        justify-content: space-between;
-    }
+  }
 }
 
 .datepicker-container {
-    input {
-        border: 0px;
-        margin-left: 5px;
-        &:read-only {
-            outline: none;
-        }
+  position: relative;
+
+  .datepicker-input {
+    font-family: $font-family;
+    font-size: 12px;
+    width: 100%;
+    margin: 0 0 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    background: $light-gray;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: none;
+    transition: all 0.15s ease-in-out;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    &:focus-within {
+      background: white;
+      border: 2px solid $bright-blue;
     }
 
-    i.fa-calendar {
-        color: #666;
-        font-size: 12px;
+    &:read-only {
+      outline: none;
     }
+  }
+
+  i.fa-calendar {
+    position: absolute;
+    top: 12px;
+    right: 13px;
+    font-size: 14px;
+    z-index: 1;
+    color: $dark-gray;
+  }
 }
 
 .datepicker-timepicker {
-    text-align: center;
+  text-align: center;
+  box-sizing: border-box;
+  color: steelblue;
+  border-top: 1px solid darken(#f7f7f7, 5%);
+  transition: all .15s;
+  cursor: pointer;
+  position: absolute;
+  bottom: -40px;
+  width: 100%;
+  height: 80px;
+
+  &:hover {
+    background: darken(#f7f7f7, 5%);
+  }
+
+  .datepicker-timepicker-header {
+    font-size: 14px;
+    line-height: 28px;
+    color: $bright-blue;
+    height: 40px;
+    padding: 5px 0;
     box-sizing: border-box;
-    color: steelblue;
-    border-top: 1px solid darken(#f7f7f7, 5%);
-    transition: all .2s;
-    cursor: pointer;
-    position: absolute;
-    bottom: -55px;
-    width: 100%;
-    height: 80px;
+    text-align: center;
+  }
 
-    &:hover {
-        background: darken(#f7f7f7, 5%);
-    }
-
+  &.visible {
+    background: white;
+    bottom: 0px;
 
     .datepicker-timepicker-header {
-        text-align: center;
-        color: steelblue;
-        padding: 5px;
-        box-sizing: border-box;
-        height: 25px;
+      font-weight: 500;
+      color: $dark-gray;
+      background: $light-gray;
+      height: 36px;
 
+      span {
+        line-height: 24px;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .header-time {
+    display: inline-block;
+    margin-left: 5px;
+  }
+
+  .timepicker-inputs {
+    font-family: $font-family;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+
+    .input-row {
+      display: flex;
+      align-items: baseline;
+      width: 150px;
+      margin: auto;
+      padding-left: 45px;
     }
 
-    &.visible {
-        background: white;
-        bottom: 0px;
-
-        .datepicker-timepicker-header {
-            color: white;
-            animation: blue-pulse 5s infinite;
-
-            span {
-                line-height: 15px;
-            }
-
-        }
+    input[type='number'] {
+      -moz-appearance: textfield;
     }
 
-    .header-time {
-        display: inline-block;
-        margin-left: 5px;
+    .input-minutes {
+      margin-right: 5px;
     }
 
-    .timepicker-inputs {
-        display: flex;
-        align-items: center;
-        height: 55px;
-        font-size: 30px;
-
-        .input-row {
-            margin: auto;
-            width: 150px;
-            display: flex;
-            padding-left: 20px;
-            align-items: baseline;
-        }
-
-        input[type='number'] {
-            -moz-appearance:textfield;
-        }
-
-        .input-minutes {
-            width: 45px;
-            margin-right: 5px;
-        }
-
-        .input-hours {
-            width: 35px;
-        }
-
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-        }
-
-        input, select {
-            border: 0px;
-            font-size: 35px;
-            background: none;
-            text-align: right;
-            color: steelblue;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-
-            &:focus {
-                outline: none;
-            }
-        }
-
-        select {
-            font-size: 20px;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            width: 30px;
-        }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
     }
+
+    input, select {
+      font-family: $font-family;
+      font-size: 18px;
+      color: $bright-blue;
+      border: 0px;
+      background: none;
+      text-align: right;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 30px;
+    }
+  }
 }
 
 .datepicker-day-headers {
-    display: flex;
-    justify-content: space-between;
-    font-size: 9px;
-    padding: 5px;
-    color: #666;
+  font-weight: bold;
+  font-size: 11px;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 5px 5px;
+  color: $dark-gray;
+  opacity: 0.5;
 
-    span {
-        text-align: center;
-        display: block;
-        width: 100%;
-    }
+  span {
+    text-align: center;
+    display: block;
+    width: 100%;
+  }
 }
 
 .month-switcher {
-    font-size: 20px;
-    cursor: pointer;
+  font-size: 20px;
+  cursor: pointer;
 
-    &.back {
-        padding-left: 20px;
-    }
+  &.back {
+    padding-left: 20px;
+  }
 
-    &.forward {
-        padding-right: 20px;
-    }
+  &.forward {
+    padding-right: 20px;
+  }
 }
 
 .datepicker-divider {
-    text-align: center;
-    display: block;
-    width: 20px;
-    margin-right: 10px;
-    line-height: 15px;
+  text-align: center;
+  display: block;
+  width: 20px;
+  margin-right: 10px;
+  line-height: 15px;
 }
 
-
 .datepicker-weekrow {
-    box-sizing: border-box;
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .datepicker-monthview {
-    padding: 5px;
+  padding: 5px;
 }
 
 .day-block {
-    text-align: center;
-    color: steelblue;
-    opacity: .5;
-    width: 100%;
-    cursor: pointer;
-    height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+  color: $dark-gray;
+  width: 100%;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: $border-radius;
+  text-align: center;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: background 0.15s ease-in-out;
 
-    &.in-month {
-        opacity: 1;
+  &:hover {
+    background: $light-gray;
+  }
+
+  &.in-month {
+    opacity: 1;
+  }
+
+  &.today {
+    font-weight: bold;
+    border: 1px solid $dark-gray;
+  }
+
+  &.selected {
+    font-weight: bold;
+    background: $bright-blue;
+    color: white;
+    border: 1px solid $bright-blue;
+  }
+
+  &.disabled {
+    opacity: 0.3;
+    cursor: initial;
+
+    &:hover {
+      background: none;
     }
-
-    &.today {
-        font-weight: bold;
-    }
-
-    &.selected {
-        background: white;
-        border-radius: 50%;
-        background: lighten(steelblue, 50%);
-        color: black;
-        border: 1px solid steelblue;
-    }
-
-    &.disabled {
-        opacity: .3;
-        cursor: initial;
-    }
-
-}
-
-@keyframes blue-pulse {
-  0%   { background: steelblue; }
-  50% { background: #33adff; }
-  100% { background: steelblue; }
+  }
 }

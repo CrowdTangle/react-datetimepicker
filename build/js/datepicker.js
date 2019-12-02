@@ -50,11 +50,11 @@ var DatePicker = function (_React$Component) {
         var startDate = _this.props.defaultDate;
 
         if (!startDate) {
-            startDate = (0, _momentTimezone2.default)();
+            startDate = _momentTimezone2.default.tz(_this.props.timezone);
         }
 
         if (!endDate) {
-            endDate = (0, _momentTimezone2.default)(startDate).add(1, "months");
+            endDate = _momentTimezone2.default.tz(startDate, _this.props.timezone).add(1, "months");
         }
 
         var dateFormat = void 0;
@@ -76,8 +76,6 @@ var DatePicker = function (_React$Component) {
             startInputHasChanged: false,
             format: dateFormat
         };
-
-        console.log("setting state", endDate.format(), startDate.format());
 
         var toggleFunction = _this.toggleDatepicker.bind(_this, null);
 
@@ -107,7 +105,7 @@ var DatePicker = function (_React$Component) {
         value: function componentWillReceiveProps(newProps) {
             // if the date has changed from the parent AND
             // it's different than the date we have in state, use it
-            if (!newProps.defaultEndDate.isSame(this.state.endDate) && !newProps.defaultEndDate.isSame(this.props.defaultEndDate) || !newProps.defaultDate.isSame(this.state.startDate) && !newProps.defaultDate.isSame(this.props.defaultDate)) {
+            if (!this.state.endDate.isSame(newProps.defaultEndDate) && newProps.defaultEndDate !== this.props.defaultEndDate && !newProps.defaultEndDate.isSame(this.props.defaultEndDate) || !this.state.startDate.isSame(newProps.defaultDate) && !newProps.defaultDate !== this.props.defaultDate && !newProps.defaultDate.isSame(this.props.defaultDate)) {
                 var endDate = newProps.defaultEndDate;
                 var startDate = newProps.defaultDate;
 
@@ -116,7 +114,7 @@ var DatePicker = function (_React$Component) {
                 }
 
                 if (!endDate) {
-                    endDate = _momentTimezone2.default.tz(newProps.timezone, startDate).add(1, "months");
+                    endDate = startDate.clone().add(1, "months");
                 }
 
                 this.setState({
@@ -392,7 +390,7 @@ var DatePicker = function (_React$Component) {
                 return _react2.default.createElement(_dateView2.default, {
                     ref: this.dateView,
                     enableTime: this.props.enableTime,
-                    selectedDate: this.state[type],
+                    selectedDate: this.state[type].clone(),
                     timezone: this.props.timezone,
                     maxDate: this.getMaxDateForType(type),
                     minDate: this.getMinDateForType(type),
@@ -409,9 +407,9 @@ var DatePicker = function (_React$Component) {
             if (this.props.inputWidth) {
                 styles.width = this.props.inputWidth + "px";
             } else if (this.props.enableTime) {
-                styles.width = "120px";
+                styles.width = "165px";
             } else {
-                styles.width = "70px";
+                styles.width = "115px";
             }
 
             if (this.props.isRange) {

@@ -62,7 +62,7 @@ var DatePicker = function (_React$Component) {
     }, {
         key: 'shiftDate',
         value: function shiftDate(direction) {
-            var date = this.state.date;
+            var date = this.state.date.clone();
             if (direction === "back") {
                 date = date.subtract(1, "months");
             } else {
@@ -130,8 +130,6 @@ var DatePicker = function (_React$Component) {
             if (this.getAmPm() === "pm") {
                 value += 12;
             }
-
-            console.log("setting hour to " + value);
 
             date.hour(value);
 
@@ -246,37 +244,37 @@ var DatePicker = function (_React$Component) {
                 _react2.default.createElement(
                     'span',
                     null,
-                    'S'
+                    'SUN'
                 ),
                 _react2.default.createElement(
                     'span',
                     null,
-                    'M'
+                    'MON'
                 ),
                 _react2.default.createElement(
                     'span',
                     null,
-                    'T'
+                    'TUE'
                 ),
                 _react2.default.createElement(
                     'span',
                     null,
-                    'W'
+                    'WED'
                 ),
                 _react2.default.createElement(
                     'span',
                     null,
-                    'T'
+                    'THU'
                 ),
                 _react2.default.createElement(
                     'span',
                     null,
-                    'F'
+                    'FRI'
                 ),
                 _react2.default.createElement(
                     'span',
                     null,
-                    'S'
+                    'SAT'
                 )
             );
         }

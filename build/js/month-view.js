@@ -44,13 +44,22 @@ var MonthView = function (_React$Component) {
         value: function renderWeeks() {
             // start at the first of the month
             var now = _momentTimezone2.default.tz(this.props.timezone);
-            var currentDate = this.props.date.clone().date(1).hour(0).minute(0).second(0).milliseconds(0),
-                currentMonth = currentDate.month();
+            var currentDate = this.props.date.clone().date(1).hour(0).minute(0).second(0).milliseconds(0);
+            var currentMonth = currentDate.month();
+            var currentYear = currentDate.year();
 
             var weeks = [];
             var i = 0;
 
-            while (currentDate.month() <= currentMonth) {
+            /**
+             * So the basic plan here is to walk up by day. When we hit a sunday,
+             * collect the next 7 days and pass them into the week to render. If the first
+             * day isn't a sunday, we need to render the days from the previous month,
+             * so we'll subtract those off the bat. Finally, cloning moments is a little
+             * tempermental, so rather than passing in moment objects, we just pass in
+             * the data we need to the week view
+             */
+            while (currentDate.month() <= currentMonth && currentDate.year() <= currentYear) {
                 var dayOfWeek = currentDate.day();
 
                 // if it's the first day of the month
@@ -76,6 +85,7 @@ var MonthView = function (_React$Component) {
 
                     while (currentDate.day() < 6) {
                         currentDate.add(1, "days");
+
                         dates.push({
                             inMonth: currentDate.month() === currentMonth,
                             today: currentDate.format("MM/DD/YYYY") === now.format("MM/DD/YYYY"),
@@ -88,14 +98,13 @@ var MonthView = function (_React$Component) {
                     }
 
                     weeks.push(_react2.default.createElement(_weekRow2.default, {
-                        selectedDate: this.props.selectedDate,
                         maxDate: this.props.maxDate,
                         minDate: this.props.minDate,
                         timezone: this.props.timezone,
                         handleSelection: this.props.handleSelection,
                         month: currentMonth,
                         dates: dates,
-                        key: currentDate.date() }));
+                        key: currentDate.date() + "_" + currentDate.month() + "_" + currentDate.year() }));
 
                     currentDate.add(1, "days");
                     i++;

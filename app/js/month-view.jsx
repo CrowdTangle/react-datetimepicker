@@ -21,12 +21,12 @@ class MonthView extends React.Component {
     renderWeeks() {
         // start at the first of the month
         const now = moment.tz(this.props.timezone);
-        var currentDate = this.props.date.clone().date(1).hour(0).minute(0).second(0).milliseconds(0),
-            currentMonth = currentDate.month();
+        let currentDate = this.props.date.clone().date(1).hour(0).minute(0).second(0).milliseconds(0);
+        let currentMonth = currentDate.month();
+        let currentYear = currentDate.year();
 
         const weeks = [];
         let i = 0;
-
 
         /**
          * So the basic plan here is to walk up by day. When we hit a sunday,
@@ -36,7 +36,7 @@ class MonthView extends React.Component {
          * tempermental, so rather than passing in moment objects, we just pass in
          * the data we need to the week view
          */
-        while(currentDate.month() <= currentMonth) {
+        while(currentDate.month() <= currentMonth && currentDate.year() <= currentYear) {
             let dayOfWeek = currentDate.day();
 
             // if it's the first day of the month
@@ -62,6 +62,7 @@ class MonthView extends React.Component {
 
               while(currentDate.day() < 6) {
                 currentDate.add(1, "days");
+
                 dates.push({
                   inMonth: currentDate.month() === currentMonth,
                   today: currentDate.format("MM/DD/YYYY") === now.format("MM/DD/YYYY"),
@@ -74,14 +75,13 @@ class MonthView extends React.Component {
               }
 
                weeks.push(<WeekRow
-                 selectedDate={this.props.selectedDate}
                  maxDate={this.props.maxDate}
                  minDate={this.props.minDate}
                  timezone={this.props.timezone}
                  handleSelection={this.props.handleSelection}
                  month={currentMonth}
                  dates={dates}
-                 key={currentDate.date()} />);
+                 key={currentDate.date() + "_" + currentDate.month() + "_" + currentDate.year()} />);
 
 
                 currentDate.add(1, "days");
