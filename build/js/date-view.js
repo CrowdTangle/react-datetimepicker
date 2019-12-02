@@ -62,7 +62,7 @@ var DatePicker = function (_React$Component) {
     }, {
         key: 'shiftDate',
         value: function shiftDate(direction) {
-            var date = this.state.date;
+            var date = this.state.date.clone();
             if (direction === "back") {
                 date = date.subtract(1, "months");
             } else {

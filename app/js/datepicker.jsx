@@ -117,7 +117,7 @@ class DatePicker extends React.Component {
             }
 
             if (!endDate) {
-                endDate = moment.tz(newProps.timezone, startDate).add(1, "months");
+                endDate = startDate.clone().add(1, "months");
             }
 
             this.setState({
@@ -374,7 +374,7 @@ class DatePicker extends React.Component {
             return <DateView
                 ref={this.dateView}
                 enableTime={this.props.enableTime}
-                selectedDate={this.state[type]}
+                selectedDate={this.state[type].clone()}
                 timezone={this.props.timezone}
                 maxDate={this.getMaxDateForType(type)}
                 minDate={this.getMinDateForType(type)}
