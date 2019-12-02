@@ -44,11 +44,14 @@ var MonthView = function (_React$Component) {
         value: function renderWeeks() {
             // start at the first of the month
             var now = _momentTimezone2.default.tz(this.props.timezone);
-            var currentDate = this.props.date.clone().date(1).hour(0).minute(0).second(0).milliseconds(0),
-                currentMonth = currentDate.month();
+            var currentDate = this.props.date.clone().date(1).hour(0).minute(0).second(0).milliseconds(0);
+            var currentMonth = currentDate.month();
+            var currentYear = currentDate.year();
 
             var weeks = [];
             var i = 0;
+
+            console.log("currentMonth", currentMonth);
 
             /**
              * So the basic plan here is to walk up by day. When we hit a sunday,
@@ -58,8 +61,9 @@ var MonthView = function (_React$Component) {
              * tempermental, so rather than passing in moment objects, we just pass in
              * the data we need to the week view
              */
-            while (currentDate.month() <= currentMonth) {
+            while (currentDate.month() <= currentMonth && currentDate.year() <= currentYear) {
                 var dayOfWeek = currentDate.day();
+                console.log("rendering", currentDate.format());
 
                 // if it's the first day of the month
                 if (i === 0) {
@@ -84,6 +88,7 @@ var MonthView = function (_React$Component) {
 
                     while (currentDate.day() < 6) {
                         currentDate.add(1, "days");
+
                         dates.push({
                             inMonth: currentDate.month() === currentMonth,
                             today: currentDate.format("MM/DD/YYYY") === now.format("MM/DD/YYYY"),
@@ -115,6 +120,8 @@ var MonthView = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            console.log(this.props);
+
             return _react2.default.createElement(
                 'div',
                 { className: 'datepicker-monthview' },

@@ -50,11 +50,11 @@ var DatePicker = function (_React$Component) {
         var startDate = _this.props.defaultDate;
 
         if (!startDate) {
-            startDate = (0, _momentTimezone2.default)();
+            startDate = _momentTimezone2.default.tz(_this.props.timezone);
         }
 
         if (!endDate) {
-            endDate = (0, _momentTimezone2.default)(startDate).add(1, "months");
+            endDate = _momentTimezone2.default.tz(startDate, _this.props.timezone).add(1, "months");
         }
 
         var dateFormat = void 0;
@@ -107,9 +107,11 @@ var DatePicker = function (_React$Component) {
         value: function componentWillReceiveProps(newProps) {
             // if the date has changed from the parent AND
             // it's different than the date we have in state, use it
-            if (!newProps.defaultEndDate.isSame(this.state.endDate) && !newProps.defaultEndDate.isSame(this.props.defaultEndDate) || !newProps.defaultDate.isSame(this.state.startDate) && !newProps.defaultDate.isSame(this.props.defaultDate)) {
+            if (!this.state.endDate.isSame(newProps.defaultEndDate) && newProps.defaultEndDate !== this.props.defaultEndDate && !newProps.defaultEndDate.isSame(this.props.defaultEndDate) || !this.state.startDate.isSame(newProps.defaultDate) && !newProps.defaultDate !== this.props.defaultDate && !newProps.defaultDate.isSame(this.props.defaultDate)) {
                 var endDate = newProps.defaultEndDate;
                 var startDate = newProps.defaultDate;
+
+                console.log("resetting datees");
 
                 if (!startDate) {
                     startDate = _momentTimezone2.default.tz(newProps.timezone);
@@ -218,6 +220,7 @@ var DatePicker = function (_React$Component) {
     }, {
         key: "handleDateSelection",
         value: function handleDateSelection(type, date, options) {
+            console.log("handling date selection", type, date.format(), options);
             var mutableDate = date.clone();
 
             // round to make sure it's simply the same date;
@@ -244,6 +247,8 @@ var DatePicker = function (_React$Component) {
                     newState.datepickerVisible = type;
                 }
             }
+
+            console.log("date change handled");
 
             newState[type] = date;
             if (this.props.inputEditable) {
@@ -300,6 +305,8 @@ var DatePicker = function (_React$Component) {
             var minDate = this.getMinDateForType("startDate");
             var maxDate = this.getMaxDateForType("startDate");
 
+            console.log("Setting start date");
+
             if (!enableTime) {
                 // round to make sure it's simply the same date;
                 startDate.hour(0).minute(0).second(0).millisecond(0);
@@ -342,6 +349,8 @@ var DatePicker = function (_React$Component) {
             var endDate = _momentTimezone2.default.tz(dateString, timezone);
             var minDate = this.getMinDateForType("endDate");
             var maxDate = this.getMaxDateForType("endDate");
+
+            console.log("Setting end date");
 
             if (!enableTime) {
                 // round to make sure it's simply the same date;
