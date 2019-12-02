@@ -404,7 +404,7 @@ var DatePicker = function (_React$Component) {
                     this.renderArrow("forward")
                 ),
                 this.renderDayLetters(),
-                _react2.default.createElement(_monthView2.default, { selectedDate: this.props.selectedDate, minDate: this.props.minDate, maxDate: this.props.maxDate, handleSelection: this.handleSelection.bind(this), date: this.state.date }),
+                _react2.default.createElement(_monthView2.default, { timezone: this.props.timezone, selectedDate: this.props.selectedDate, minDate: this.props.minDate, maxDate: this.props.maxDate, handleSelection: this.handleSelection.bind(this), date: this.state.date }),
                 this.renderTimePicker()
             );
         }

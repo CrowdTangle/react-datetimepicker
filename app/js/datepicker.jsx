@@ -45,11 +45,15 @@ class DatePicker extends React.Component {
 
 
         if (!startDate) {
-            startDate = moment.tz(this.props.timezone);
+          startDate = moment.tz(this.props.timezone);
+        } else {
+          startDate.tz(this.props.timezone);
         }
 
         if (!endDate) {
-            endDate = moment.tz(startDate, this.props.timezone).add(1, "months");
+          endDate = moment.tz(startDate, this.props.timezone).add(1, "months");
+        } else {
+          endDate.tz(this.props.timezone);
         }
 
         let dateFormat;
@@ -109,11 +113,15 @@ class DatePicker extends React.Component {
             let startDate = newProps.defaultDate;
 
             if (!startDate) {
-                startDate = moment.tz(newProps.timezone);
+              startDate = moment.tz(newProps.timezone);
+            } else {
+              startDate = startDate.tz(newProps.timezone);
             }
 
             if (!endDate) {
-                endDate = startDate.clone().add(1, "months");
+              endDate = startDate.clone().tz(newProps.timezone).add(1, "months");
+            } else {
+              endDate = endDate.tz(newProps.timezone);
             }
 
             this.setState({
@@ -165,8 +173,10 @@ class DatePicker extends React.Component {
     }
 
     validateDateString(string) {
-        // Chrono returns a datetime stamp for valid dates, and for invalid dates, returns null
-        return chrono.parseDate(string);
+      // add the timezone onto the string so it's properly converted
+      // Chrono returns a datetime stamp for valid dates, and for invalid dates, returns null
+      const date = chrono.parseDate(string + " " + moment.tz(this.props.timezone).format('Z'));
+      return date;
     }
 
     /**** handlers ****/

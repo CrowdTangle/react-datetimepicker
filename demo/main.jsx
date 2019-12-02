@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import DatePicker from '../app/js/datepicker.jsx';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 
 class ControlledComponent extends Component {
@@ -52,4 +52,12 @@ ReactDOM.render(
 
 ReactDOM.render(
     <ControlledComponent />, document.getElementById("example-5")
+)
+
+ReactDOM.render(
+    <DatePicker onChange={(res) => {
+      console.log("change", res);
+      console.log("change", res.date.tz());
+      console.log("change", res.date.clone().tz());
+    }} enableTime={true} defaultDate={moment("10/31/2019", "MM/DD/YYYY")} timezone="Asia/Hong_Kong" />, document.getElementById("example-7")
 )

@@ -51,10 +51,14 @@ var DatePicker = function (_React$Component) {
 
         if (!startDate) {
             startDate = _momentTimezone2.default.tz(_this.props.timezone);
+        } else {
+            startDate.tz(_this.props.timezone);
         }
 
         if (!endDate) {
             endDate = _momentTimezone2.default.tz(startDate, _this.props.timezone).add(1, "months");
+        } else {
+            endDate.tz(_this.props.timezone);
         }
 
         var dateFormat = void 0;
@@ -111,10 +115,14 @@ var DatePicker = function (_React$Component) {
 
                 if (!startDate) {
                     startDate = _momentTimezone2.default.tz(newProps.timezone);
+                } else {
+                    startDate = startDate.tz(newProps.timezone);
                 }
 
                 if (!endDate) {
-                    endDate = startDate.clone().add(1, "months");
+                    endDate = startDate.clone().tz(newProps.timezone).add(1, "months");
+                } else {
+                    endDate = endDate.tz(newProps.timezone);
                 }
 
                 this.setState({
@@ -170,8 +178,10 @@ var DatePicker = function (_React$Component) {
     }, {
         key: "validateDateString",
         value: function validateDateString(string) {
+            // add the timezone onto the string so it's properly converted
             // Chrono returns a datetime stamp for valid dates, and for invalid dates, returns null
-            return _chronoNode2.default.parseDate(string);
+            var date = _chronoNode2.default.parseDate(string + " " + _momentTimezone2.default.tz(this.props.timezone).format('Z'));
+            return date;
         }
 
         /**** handlers ****/
