@@ -469,7 +469,7 @@ function noop(data) {
 }
 
 function clone(m, tz) {
-  return moment.tz(m.unix() * 1000, tz);
+  return moment.tz(m.valueOf(), tz);
 }
 
 
