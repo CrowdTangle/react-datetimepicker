@@ -95,13 +95,27 @@ var DatePicker = function (_React$Component) {
         value: function componentDidMount() {
             if (this.props.isRange) {
                 this.props.onChange({
-                    startDate: this.state.startDate,
-                    endDate: this.state.endDate
+                    startDate: clone(this.state.startDate, this.props.timezone),
+                    endDate: clone(this.state.endDate, this.props.timezone)
                 });
             } else {
                 this.props.onChange({
-                    date: this.state.startDate
+                    date: clone(this.state.startDate, this.props.timezone)
                 });
+            }
+        }
+    }, {
+        key: "getValue",
+        value: function getValue() {
+            if (this.props.isRange) {
+                return {
+                    startDate: clone(this.state.startDate, this.props.timezone),
+                    endDate: clone(this.state.endDate, this.props.timezone)
+                };
+            } else {
+                return {
+                    date: clone(this.state.startDate, this.props.timezone)
+                };
             }
         }
     }, {
@@ -521,6 +535,10 @@ function getBinders(callback) {
 
 function noop(data) {
     console.log("changing", data);
+}
+
+function clone(m, tz) {
+    return _momentTimezone2.default.tz(m.millisecond(), tz);
 }
 
 module.exports = DatePicker;
