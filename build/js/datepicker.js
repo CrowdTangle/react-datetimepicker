@@ -134,7 +134,7 @@ var DatePicker = function (_React$Component) {
                 }
 
                 if (!endDate) {
-                    endDate = startDate.clone().tz(newProps.timezone).add(1, "months");
+                    endDate = clone(startDate, newProps.timezone).add(1, "months");
                 } else {
                     endDate = endDate.tz(newProps.timezone);
                 }
@@ -240,7 +240,7 @@ var DatePicker = function (_React$Component) {
     }, {
         key: "handleDateSelection",
         value: function handleDateSelection(type, date, options) {
-            var mutableDate = date.clone();
+            var mutableDate = clone(date, this.props.timezone);
 
             // round to make sure it's simply the same date;
             mutableDate.hour(0).minute(0).second(0).millisecond(0);
@@ -414,7 +414,7 @@ var DatePicker = function (_React$Component) {
                 return _react2.default.createElement(_dateView2.default, {
                     ref: this.dateView,
                     enableTime: this.props.enableTime,
-                    selectedDate: this.state[type].clone(),
+                    selectedDate: clone(this.state[type], this.props.timezone),
                     timezone: this.props.timezone,
                     maxDate: this.getMaxDateForType(type),
                     minDate: this.getMinDateForType(type),
@@ -538,7 +538,7 @@ function noop(data) {
 }
 
 function clone(m, tz) {
-    return _momentTimezone2.default.tz(m.millisecond(), tz);
+    return _momentTimezone2.default.tz(m.unix() * 1000, tz);
 }
 
 module.exports = DatePicker;
