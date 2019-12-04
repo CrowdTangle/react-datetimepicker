@@ -67,6 +67,18 @@
     </code></pre>
             </section>
             <section class="example">
+                <h3>Datepicker with timezone</h3>
+                <p>Give the datepicker a timezone to get dates properly zoned in and out</p>
+                <div id="example-7"></div>
+                <pre><code>
+    var DatePicker = require("react-datetimepicker");
+
+    ReactDOM.render(&lt;DatePicker timezone="Asia/Hong_Kong" defaultDate={moment("10/31/2019", "MM/DD/YYYY")} /&gt;,
+                    document.getElementById("content"));
+
+    </code></pre>
+            </section>
+            <section class="example">
                 <h3>Controlled Component</h3>
                 <p>Controlling the date from a parent component.</p>
                 <div id="example-5"></div>

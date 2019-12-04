@@ -42,7 +42,8 @@ var WeekRow = function (_React$Component) {
     _createClass(WeekRow, [{
         key: 'handleClick',
         value: function handleClick(date) {
-            this.props.handleSelection(_momentTimezone2.default.tz(date, "MM/DD/YYYY", this.props.timezone));
+            var m = _momentTimezone2.default.tz(date, "MM/DD/YYYY", this.props.timezone);
+            this.props.handleSelection(m);
         }
     }, {
         key: 'renderDates',

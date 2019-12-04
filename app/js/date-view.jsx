@@ -277,7 +277,7 @@ class DatePicker extends React.Component {
                     {this.renderArrow("forward")}
                 </h3>
                 {this.renderDayLetters()}
-                <MonthView selectedDate={this.props.selectedDate} minDate={this.props.minDate} maxDate={this.props.maxDate} handleSelection={this.handleSelection.bind(this)} date={this.state.date} />
+                <MonthView timezone={this.props.timezone} selectedDate={this.props.selectedDate} minDate={this.props.minDate} maxDate={this.props.maxDate} handleSelection={this.handleSelection.bind(this)} date={this.state.date} />
                 {this.renderTimePicker()}
             </div>
         );

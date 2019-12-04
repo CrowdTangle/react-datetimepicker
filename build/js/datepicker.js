@@ -51,10 +51,14 @@ var DatePicker = function (_React$Component) {
 
         if (!startDate) {
             startDate = _momentTimezone2.default.tz(_this.props.timezone);
+        } else {
+            startDate.tz(_this.props.timezone);
         }
 
         if (!endDate) {
             endDate = _momentTimezone2.default.tz(startDate, _this.props.timezone).add(1, "months");
+        } else {
+            endDate.tz(_this.props.timezone);
         }
 
         var dateFormat = void 0;
@@ -91,13 +95,27 @@ var DatePicker = function (_React$Component) {
         value: function componentDidMount() {
             if (this.props.isRange) {
                 this.props.onChange({
-                    startDate: this.state.startDate,
-                    endDate: this.state.endDate
+                    startDate: clone(this.state.startDate, this.props.timezone),
+                    endDate: clone(this.state.endDate, this.props.timezone)
                 });
             } else {
                 this.props.onChange({
-                    date: this.state.startDate
+                    date: clone(this.state.startDate, this.props.timezone)
                 });
+            }
+        }
+    }, {
+        key: "getValue",
+        value: function getValue() {
+            if (this.props.isRange) {
+                return {
+                    startDate: clone(this.state.startDate, this.props.timezone),
+                    endDate: clone(this.state.endDate, this.props.timezone)
+                };
+            } else {
+                return {
+                    date: clone(this.state.startDate, this.props.timezone)
+                };
             }
         }
     }, {
@@ -111,10 +129,14 @@ var DatePicker = function (_React$Component) {
 
                 if (!startDate) {
                     startDate = _momentTimezone2.default.tz(newProps.timezone);
+                } else {
+                    startDate = startDate.tz(newProps.timezone);
                 }
 
                 if (!endDate) {
-                    endDate = startDate.clone().add(1, "months");
+                    endDate = clone(startDate, newProps.timezone).add(1, "months");
+                } else {
+                    endDate = endDate.tz(newProps.timezone);
                 }
 
                 this.setState({
@@ -170,8 +192,10 @@ var DatePicker = function (_React$Component) {
     }, {
         key: "validateDateString",
         value: function validateDateString(string) {
+            // add the timezone onto the string so it's properly converted
             // Chrono returns a datetime stamp for valid dates, and for invalid dates, returns null
-            return _chronoNode2.default.parseDate(string);
+            var date = _chronoNode2.default.parseDate(string + " " + _momentTimezone2.default.tz(this.props.timezone).format('Z'));
+            return date;
         }
 
         /**** handlers ****/
@@ -216,7 +240,7 @@ var DatePicker = function (_React$Component) {
     }, {
         key: "handleDateSelection",
         value: function handleDateSelection(type, date, options) {
-            var mutableDate = date.clone();
+            var mutableDate = clone(date, this.props.timezone);
 
             // round to make sure it's simply the same date;
             mutableDate.hour(0).minute(0).second(0).millisecond(0);
@@ -390,7 +414,7 @@ var DatePicker = function (_React$Component) {
                 return _react2.default.createElement(_dateView2.default, {
                     ref: this.dateView,
                     enableTime: this.props.enableTime,
-                    selectedDate: this.state[type].clone(),
+                    selectedDate: clone(this.state[type], this.props.timezone),
                     timezone: this.props.timezone,
                     maxDate: this.getMaxDateForType(type),
                     minDate: this.getMinDateForType(type),
@@ -511,6 +535,10 @@ function getBinders(callback) {
 
 function noop(data) {
     console.log("changing", data);
+}
+
+function clone(m, tz) {
+    return _momentTimezone2.default.tz(m.unix() * 1000, tz);
 }
 
 module.exports = DatePicker;

@@ -45,11 +45,15 @@ class DatePicker extends React.Component {
 
 
         if (!startDate) {
-            startDate = moment.tz(this.props.timezone);
+          startDate = moment.tz(this.props.timezone);
+        } else {
+          startDate.tz(this.props.timezone);
         }
 
         if (!endDate) {
-            endDate = moment.tz(startDate, this.props.timezone).add(1, "months");
+          endDate = moment.tz(startDate, this.props.timezone).add(1, "months");
+        } else {
+          endDate.tz(this.props.timezone);
         }
 
         let dateFormat;
@@ -83,14 +87,27 @@ class DatePicker extends React.Component {
     componentDidMount() {
         if (this.props.isRange) {
             this.props.onChange({
-                startDate: this.state.startDate,
-                endDate: this.state.endDate
+                startDate: clone(this.state.startDate, this.props.timezone),
+                endDate: clone(this.state.endDate, this.props.timezone)
             });
         } else {
             this.props.onChange({
-                date: this.state.startDate
+                date: clone(this.state.startDate, this.props.timezone)
             });
         }
+    }
+
+    getValue() {
+      if (this.props.isRange) {
+          return {
+              startDate: clone(this.state.startDate, this.props.timezone),
+              endDate: clone(this.state.endDate, this.props.timezone)
+          };
+      } else {
+          return {
+              date: clone(this.state.startDate, this.props.timezone)
+          };
+      }
     }
 
     componentWillReceiveProps(newProps) {
@@ -109,11 +126,15 @@ class DatePicker extends React.Component {
             let startDate = newProps.defaultDate;
 
             if (!startDate) {
-                startDate = moment.tz(newProps.timezone);
+              startDate = moment.tz(newProps.timezone);
+            } else {
+              startDate = startDate.tz(newProps.timezone);
             }
 
             if (!endDate) {
-                endDate = startDate.clone().add(1, "months");
+              endDate = clone(startDate, newProps.timezone).add(1, "months");
+            } else {
+              endDate = endDate.tz(newProps.timezone);
             }
 
             this.setState({
@@ -165,8 +186,10 @@ class DatePicker extends React.Component {
     }
 
     validateDateString(string) {
-        // Chrono returns a datetime stamp for valid dates, and for invalid dates, returns null
-        return chrono.parseDate(string);
+      // add the timezone onto the string so it's properly converted
+      // Chrono returns a datetime stamp for valid dates, and for invalid dates, returns null
+      const date = chrono.parseDate(string + " " + moment.tz(this.props.timezone).format('Z'));
+      return date;
     }
 
     /**** handlers ****/
@@ -207,7 +230,7 @@ class DatePicker extends React.Component {
     }
 
     handleDateSelection(type, date, options) {
-        var mutableDate = date.clone();
+        var mutableDate = clone(date, this.props.timezone);
 
         // round to make sure it's simply the same date;
         mutableDate.hour(0).minute(0).second(0).millisecond(0);
@@ -360,7 +383,7 @@ class DatePicker extends React.Component {
             return <DateView
                 ref={this.dateView}
                 enableTime={this.props.enableTime}
-                selectedDate={this.state[type].clone()}
+                selectedDate={clone(this.state[type], this.props.timezone)}
                 timezone={this.props.timezone}
                 maxDate={this.getMaxDateForType(type)}
                 minDate={this.getMinDateForType(type)}
@@ -443,6 +466,10 @@ function getBinders(callback) {
 
 function noop(data) {
     console.log("changing", data);
+}
+
+function clone(m, tz) {
+  return moment.tz(m.valueOf(), tz);
 }
 
 
