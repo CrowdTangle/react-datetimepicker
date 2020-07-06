@@ -1,0 +1,22 @@
+{
+    "plugins": [
+        "@babel/plugin-proposal-class-properties"
+    ],
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react"
+    ],
+    "env": {
+        "test": {
+            "presets": [
+                "@babel/preset-env",
+                "@babel/preset-react"
+            ]
+        }
+    },
+    "ignore": [
+        "build/**/*",
+        "build/*.js"
+    ],
+    "sourceMaps": "inline"
+}

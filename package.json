@@ -7,9 +7,9 @@
     "prepublish": "yarn build",
     "test": "jest",
     "watch": "npm run watch:js && npm run watch:css",
-    "watch:js": "watchify -t [ babelify --presets [ es2015 react stage-0 ] ] --extension=.jsx demo/main.jsx -o demo/bundle.js -dv",
+    "watch:js": "watchify -t [ babelify --presets [ @babel/preset-env @babel/preset-react ] ] --extension=.jsx demo/main.jsx -o demo/bundle.js -dv",
     "build": "npm run build:js && npm run build:css",
-    "build:js": "babel --presets react,es2015,stage-0 app/js/ --out-dir build/js/",
+    "build:js": "babel --presets @babel/preset-react,@babel/preset-env app/js/ --out-dir build/js/",
     "build:css": "npm run build:sass && npm run build:postcss",
     "build:sass": "node-sass app/scss/main.scss build/css/main.css",
     "build:postcss": "postcss build/css/*.css -d build/css/ --use autoprefixer",
@@ -21,13 +21,6 @@
     "timepicker",
     "react"
   ],
-  "babel": {
-    "presets": [
-      "es2015",
-      "react",
-      "stage-0"
-    ]
-  },
   "extensify": {
     "extensions": [
       "jsx"
@@ -48,7 +41,7 @@
     "unmockedModulePathPatterns": [
       "./node_modules/react",
       "./node_modules/react-dom",
-      "./node_modules/react-addons-test-utils"
+      "./node_modules/react-dom/test-utils"
     ],
     "modulePathIgnorePatterns": [
       "./node_modules/"
@@ -57,29 +50,31 @@
   "author": "George Mayer",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^7.1.2",
-    "babel-cli": "^6.4.0",
-    "babel-jest": "^6.0.1",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-react": "^6.3.13",
-    "babel-preset-stage-0": "^6.3.13",
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/preset-env": "^7.1.5",
+    "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.5.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.4.2",
     "babelify": "^7.2.0",
     "browserify": "^12.0.1",
     "extensify": "^1.0.2",
     "jest": "^23.6.0",
-    "node-sass": "^3.4.2",
+    "jest-cli": "^23.6.0",
+    "node-sass": "^4.13.1",
     "nodemon": "^1.18.9",
     "postcss-cli": "^4.1.0",
-    "react": "^16.6.0",
-    "react-addons-test-utils": "^15.6.2",
-    "react-dom": "^16.6.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "reactify": "^1.1.1",
+    "regenerator-runtime": "^0.12.1",
     "watchify": "^3.7.0"
   },
   "dependencies": {
     "chrono-node": "^1.3.5",
     "classnames": "^2.2.6",
-    "jest-cli": "^23.6.0",
     "moment": "^2.11.0",
     "moment-timezone": "^0.5.23",
     "prop-types": "^15.6.2"
@@ -88,5 +83,8 @@
     "moment-timezone": "0.5.x",
     "react": "16.x",
     "react-dom": "^16.x"
+  },
+  "resolutions": {
+    "nan": "~2.14.1"
   }
 }
