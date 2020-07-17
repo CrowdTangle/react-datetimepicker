@@ -39,7 +39,6 @@ class DatePicker extends React.Component {
     }
 
     getHourIn12Format(hourVal) {
-        console.log("HANNA FORMATTING HOUR " + hourVal);
         let result = hourVal;
         if (result < 0) {
             result = 0;
@@ -53,7 +52,6 @@ class DatePicker extends React.Component {
     }
 
     getMinuteFormatted(minuteVal) {
-        console.log("HANNA FORMATTING MINUTE ", minuteVal);
         let result = minuteVal;
         if (result < 0) {
             result = 0;
@@ -75,12 +73,8 @@ class DatePicker extends React.Component {
             hourIn24 += 12;
         }
 
-        console.log("HANNA 24 HR ", hourIn24);
-
         currentDate.hour(hourIn24);
         currentDate.minute(currentMinute);
-
-        console.log("HANNA CURRENT DATE ", currentDate.format("MM/DD/YYYY hh:mm a Z"));
 
         return currentDate;
     }
@@ -118,8 +112,6 @@ class DatePicker extends React.Component {
     }
 
     handleHourChange() {
-        console.log("HANNA NAN CHECK ", this.hour.value, parseInt(this.hour.value), this.hour.value === '', this.hour.value === "");
-
         let hourVal = this.hour.value ? parseInt(this.hour.value) : 0;
         hourVal = isNaN(hourVal) ? 0 : hourVal;
 
@@ -174,14 +166,11 @@ class DatePicker extends React.Component {
 
         const wasOpenButNowShouldBeClosed = timepickerVisible;
 
-        console.log("HANNA TIMEPICKER VISIBLE ", timepickerVisible);
-
         this.setState({
             timepickerVisible: !timepickerVisible
         }, function() {
             if(wasOpenButNowShouldBeClosed) {
                 const dateObj = this.getDateObj(currentHour, currentMinute, currentAmpm);
-                console.log("HANNA - HANDLING SELECTION ", dateObj);
                 this.handleTimeSelection(dateObj, {
                     collapse: false
                 });
@@ -257,8 +246,6 @@ class DatePicker extends React.Component {
 
         if(!enableTime) { return; }
 
-        console.log("HANNA - STATE.HOUR", currentHour);
-
         var classes = classnames("datepicker-timepicker", {
             "visible": timepickerVisible
         });
@@ -266,7 +253,6 @@ class DatePicker extends React.Component {
         const currentDate = this.getDateObj(currentHour, currentMinute, currentAmpm);
         const displayHr = currentHour === 0 ? currentHour : currentDate.format("hh");
         const displayMin = currentDate.format("mm");
-        console.log("HANNA CURRENT DATE MINUTE", currentDate.minute());
 
         return (
             <div className={classes}>
