@@ -80,7 +80,7 @@ class DatePicker extends React.Component {
         currentDate.hour(hourIn24);
         currentDate.minute(currentMinute);
 
-        console.log("HANNA CURRENT DATE ", currentDate);
+        console.log("HANNA CURRENT DATE ", currentDate.format("MM/DD/YYYY hh:mm a Z"));
 
         return currentDate;
     }

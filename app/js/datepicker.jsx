@@ -299,10 +299,10 @@ class DatePicker extends React.Component {
         const {enableTime, timezone} = this.props;
         const dateString = this.validateDateString(startDateInputValue);
         // const startDate = moment.tz(dateString, timezone);
-        const hannaoldstartdate = moment.tz(dateString, timezone);
+        // const hannaoldstartdate = moment.tz(dateString, timezone);
         console.log("HANNA ====== startDateInputValue", startDateInputValue);
         const startDate = moment(startDateInputValue, "MM/DD/YYYY hh:mm a").tz(timezone, true);
-        console.log("HANNA ----- STARTDATE ", hannaoldstartdate.format("MM/DD/YYYY hh:mm a Z"), startDate.format("MM/DD/YYYY hh:mm a Z"));
+        // console.log("HANNA ----- STARTDATE ", hannaoldstartdate.format("MM/DD/YYYY hh:mm a Z"), hannanewstartDate.format("MM/DD/YYYY hh:mm a Z"));
         const minDate = this.getMinDateForType("startDate");
         const maxDate = this.getMaxDateForType("startDate");
 
@@ -336,7 +336,7 @@ class DatePicker extends React.Component {
         const {endInputHasChanged, endDateInputValue, format} = this.state;
         const {enableTime, timezone} = this.props;
         const dateString = this.validateDateString(endDateInputValue);
-        const endDate = moment.tz(dateString, timezone);
+        const endDate = moment(startDateInputValue, "MM/DD/YYYY hh:mm a").tz(timezone, true);
         const minDate = this.getMinDateForType("endDate");
         const maxDate = this.getMaxDateForType("endDate");
 
