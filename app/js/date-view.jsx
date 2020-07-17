@@ -5,9 +5,6 @@ import moment from 'moment-timezone';
 import MonthView from './month-view';
 import classnames from 'classnames';
 
-const DEFAULT_HOUR_VAL = 12;
-const DEFAULT_MINUTE_VAL = 0;
-
 class DatePicker extends React.Component {
 
     static propTypes = {
@@ -19,142 +16,162 @@ class DatePicker extends React.Component {
 
     constructor(props) {
         super(props);
+        const {selectedDate} = this.props;
+
         this.state = {
-            date: this.props.selectedDate,
+            currentHour: this.getHourIn12Format(selectedDate.hour()),
+            currentMinute: this.getMinuteFormatted(selectedDate.minute()),
+            currentAmpm: selectedDate.format("a"),
+            currentDateWithoutTime: selectedDate,
             timepickerVisible: false
         };
     }
 
     reset() {
-      this.setState({
-        date: this.props.selectedDate
-      });
+        const {selectedDate} = this.props;
+
+        this.setState({
+            currentHour: this.getHourIn12Format(selectedDate.hour()),
+            currentMinute: this.getMinuteFormatted(selectedDate.minute()),
+            currentAmpm: selectedDate.format("a"),
+            currentDateWithoutTime: selectedDate,
+        });
+    }
+
+    getHourIn12Format(hourVal) {
+        let result = hourVal;
+        if (result < 0) {
+            result = 0;
+        }
+        result = parseInt(result);
+        result = result % 12;
+        if (result === 0) {
+            result = 12;
+        }
+        return result;
+    }
+
+    getMinuteFormatted(minuteVal) {
+        let result = minuteVal;
+        if (result < 0) {
+            result = 0;
+        }
+        result = parseInt(result);
+        return result % 60;
+    }
+
+    getDateObj(currentHour, currentMinute, currentAmpm, newDate) {
+        const {currentDateWithoutTime} = this.state;
+
+        const dateToUse = newDate ? newDate : currentDateWithoutTime;
+
+        const currentDate = dateToUse.clone();
+        let hourIn24 = currentHour;
+        if (currentAmpm === "am" && currentHour === 12) {
+            hourIn24 = 0;
+        } else if (currentAmpm === "pm" && currentHour < 12) {
+            hourIn24 += 12;
+        }
+
+        currentDate.hour(hourIn24);
+        currentDate.minute(currentMinute);
+
+        return currentDate;
     }
 
     shiftDate(direction) {
-        var date = this.state.date.clone();
+        const {currentHour, currentMinute, currentAmpm} = this.state;
+
+        let currentDate = this.getDateObj(currentHour, currentMinute, currentAmpm);
         if(direction === "back") {
-            date = date.subtract(1, "months");
+            currentDate = currentDate.subtract(1, "months");
         } else {
-            date = date.add(1, "months");
+            currentDate = currentDate.add(1, "months");
         }
 
         this.setState({
-            date: date
-        })
+            currentHour,
+            currentMinute,
+            currentAmpm,
+            currentDateWithoutTime: currentDate,
+        });
     }
 
-    getMinute() {
-        let minute = this.state.date.minute();
-        if (isNaN(minute)) {
-            minute = DEFAULT_MINUTE_VAL;
-        }
+    handleDateSelection(date, options) {
+        const {handleSelection} = this.props;
+        const {currentHour, currentMinute, currentAmpm} = this.state;
 
-        if(minute < 10) {
-            minute = "0" + minute;
-        }
-
-        return minute;
+        const dateObj = this.getDateObj(currentHour, currentMinute, currentAmpm, date);
+        handleSelection(dateObj, options);
     }
 
-    getHour() {
-        let hour = this.state.date.hour();
-        if (isNaN(hour)) {
-            hour = DEFAULT_HOUR_VAL;
-        }
-        if(hour > 12) {
-            hour = hour - 12;
-        }
+    handleTimeSelection(date, options) {
+        const {handleSelection} = this.props;
 
-        if(hour === 0) {
-            hour = 12;
-        }
-
-        return hour;
-    }
-
-    getAmPm() {
-        return this.state.date.format("a");
-    }
-
-    handleSelection(date, options) {
-        date.hour(this.state.date.hour());
-        date.minute(this.state.date.minute());
-        this.props.handleSelection(date, options);
+        handleSelection(date, options);
     }
 
     handleHourChange() {
-        let date = this.state.date;
-        const hourVal = parseInt(this.hour.value);
-        let value = DEFAULT_HOUR_VAL;
-
-        if (!isNaN(hourVal)) {
-            value = hourVal;
-        }
-
-        if(this.getAmPm() === "pm") {
-            value += 12;
-        }
-
-        date.hour(value);
+        let hourVal = this.hour.value ? parseInt(this.hour.value) : 0;
+        hourVal = isNaN(hourVal) ? 0 : hourVal;
 
         this.setState({
-            date: date
-        })
+            currentHour: hourVal,
+        });
     }
 
     handleMinuteChange() {
-        let date = this.state.date;
-        const minuteVal = parseInt(this.minute.value);
-        let value = DEFAULT_MINUTE_VAL;
-
-        if (!isNaN(minuteVal)) {
-            value = minuteVal;
-        }
-
-        date.minute(value);
+        const minuteVal = this.minute.value ? parseInt(this.minute.value) : 0;
 
         this.setState({
-            date: date
-        })
+            currentMinute: minuteVal,
+        });
     }
 
     handleAmPmChange() {
-        var currentValue = this.getAmPm(),
-            changedValue = this.ampm.value,
-            hour = this.state.date.hour();
+        const {currentHour, currentMinute} = this.state;
 
-        if(currentValue != changedValue) {
-            if(changedValue === "am" && hour >= 12) {
-                hour -= 12;
-            } else if(changedValue === "pm" && hour < 12) {
-                hour += 12;
-            }
+        const ampmVal = this.ampm.value;
+        const formattedHr = this.getHourIn12Format(currentHour);
+        const formattedMin = this.getMinuteFormatted(currentMinute);
 
-            var date = this.state.date;
-            date.hour(hour);
+        this.setState({
+            currentHour: formattedHr,
+            currentMinute: formattedMin,
+            currentAmpm: ampmVal,
+        });
 
-            this.setState({
-                date: date
-            })
-        }
+        const dateObj = this.getDateObj(formattedHr, formattedMin, ampmVal);
+        this.handleTimeSelection(dateObj, {collapse: false});
     }
 
     handleKeyDown(e) {
+        const {currentHour, currentMinute} = this.state;
         var key = e.which || e.keyCode,
             wasEnter = key === 13;
 
         if(wasEnter) {
+            const formattedHr = this.getHourIn12Format(currentHour);
+            const formattedMin = this.getMinuteFormatted(currentMinute);
+            this.setState({
+                currentHour: formattedHr,
+                currentMinute: formattedMin,
+            });
             this.toggleTimepicker();
         }
     }
 
     toggleTimepicker() {
+        const {currentHour, currentMinute, currentAmpm, timepickerVisible} = this.state;
+
+        const wasOpenButNowShouldBeClosed = timepickerVisible;
+
         this.setState({
-            timepickerVisible: !this.state.timepickerVisible
+            timepickerVisible: !timepickerVisible
         }, function() {
-            if(!this.state.timepickerVisible) {
-                this.handleSelection(this.state.date, {
+            if(wasOpenButNowShouldBeClosed) {
+                const dateObj = this.getDateObj(currentHour, currentMinute, currentAmpm);
+                this.handleTimeSelection(dateObj, {
                     collapse: false
                 });
             }
@@ -163,8 +180,10 @@ class DatePicker extends React.Component {
     }
 
     renderArrow(direction) {
+        const {ignoreFontAwesome} = this.props;
+
         var classes = "month-switcher " + direction, content;
-        if(this.props.ignoreFontAwesome) {
+        if(ignoreFontAwesome) {
             if(direction === "back") {
                 content = <span>&lsaquo;</span>;
             } else {
@@ -200,16 +219,21 @@ class DatePicker extends React.Component {
     }
 
     renderTimePickerHeaderContent() {
+        const {currentHour, currentMinute, currentAmpm, timepickerVisible} = this.state;
+
+        const currentDate = this.getDateObj(currentHour, currentMinute, currentAmpm);
+        const displayMin = currentDate.format("mm");
+
         var content = (
             <span>
                 <i className="fa fa-clock-o"></i>
                 <span className="header-time">
-                    {this.getHour()}:{this.getMinute()}&nbsp;{this.getAmPm()}
+                    {currentHour}:{displayMin}&nbsp;{currentAmpm}
                 </span>
             </span>
         );
 
-        if(this.state.timepickerVisible) {
+        if(timepickerVisible) {
             content = <span>done</span>
         }
 
@@ -217,11 +241,18 @@ class DatePicker extends React.Component {
     }
 
     renderTimePicker() {
-        if(!this.props.enableTime) { return; }
+        const {enableTime} = this.props;
+        const {currentHour, currentMinute, currentAmpm, timepickerVisible} = this.state;
+
+        if(!enableTime) { return; }
 
         var classes = classnames("datepicker-timepicker", {
-            "visible": this.state.timepickerVisible
+            "visible": timepickerVisible
         });
+
+        const currentDate = this.getDateObj(currentHour, currentMinute, currentAmpm);
+        const displayHr = currentHour === 0 ? currentHour : currentDate.format("hh");
+        const displayMin = currentDate.format("mm");
 
         return (
             <div className={classes}>
@@ -232,7 +263,7 @@ class DatePicker extends React.Component {
                     <div className="input-row">
                         <input className="input-hours"
                                ref={(h) => { this.hour = h; }}
-                               value={this.getHour()}
+                               value={displayHr}
                                type="number"
                                min={1}
                                max={12}
@@ -242,7 +273,7 @@ class DatePicker extends React.Component {
                                tabIndex="-1" />:
                         <input className="input-minutes"
                                ref={(m) => { this.minute = m; }}
-                               value={this.getMinute()}
+                               value={displayMin}
                                type="number"
                                min={0}
                                max={59}
@@ -252,7 +283,7 @@ class DatePicker extends React.Component {
                                tabIndex="-1" />
                         <select className="ampm-picker ignore-chosen"
                                 ref={(ampm) => { this.ampm = ampm; }}
-                                value={this.getAmPm()}
+                                value={currentAmpm}
                                 onChange={this.handleAmPmChange.bind(this)}
                                 tabIndex="-1" >
                             <option value="am">AM</option>
@@ -265,19 +296,23 @@ class DatePicker extends React.Component {
     }
 
     render() {
-        var classes = classnames("datepicker", {
-            "time-enabled": this.props.enableTime
-        })
+        const {enableTime, maxDate, minDate, selectedDate, timezone} = this.props;
+        const {currentHour, currentMinute, currentAmpm} = this.state;
+
+        const classes = classnames("datepicker", {
+            "time-enabled": enableTime
+        });
+        const dateObj = this.getDateObj(currentHour, currentMinute, currentAmpm);
 
         return (
             <div className={classes}>
                 <h3>
                     {this.renderArrow("back")}
-                    <span>{this.state.date.format("MMMM YYYY")}</span>
+                    <span>{dateObj.format("MMMM YYYY")}</span>
                     {this.renderArrow("forward")}
                 </h3>
                 {this.renderDayLetters()}
-                <MonthView timezone={this.props.timezone} selectedDate={this.props.selectedDate} minDate={this.props.minDate} maxDate={this.props.maxDate} handleSelection={this.handleSelection.bind(this)} date={this.state.date} />
+                <MonthView timezone={timezone} selectedDate={selectedDate} minDate={minDate} maxDate={maxDate} handleSelection={this.handleDateSelection.bind(this)} date={dateObj} />
                 {this.renderTimePicker()}
             </div>
         );
