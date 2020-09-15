@@ -331,7 +331,7 @@ class DatePicker extends React.Component {
         const {endInputHasChanged, endDateInputValue, format} = this.state;
         const {enableTime, timezone} = this.props;
         const dateString = this.validateDateString(endDateInputValue);
-        const endDate = moment(startDateInputValue, "MM/DD/YYYY hh:mm a").tz(timezone, true);
+        const endDate = moment(endDateInputValue, "MM/DD/YYYY hh:mm a").tz(timezone, true);
         const minDate = this.getMinDateForType("endDate");
         const maxDate = this.getMaxDateForType("endDate");
 
