@@ -86,6 +86,7 @@
     "nan": "~2.14.1",
     "json-schema": "0.4.0",
     "ansi-regex": "5.0.1",
-    "set-value": "2.0.1"
+    "set-value": "2.0.1",
+    "minimist": "1.2.6"
   }
 }
